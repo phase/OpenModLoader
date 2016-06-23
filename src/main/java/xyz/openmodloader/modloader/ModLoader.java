@@ -13,12 +13,16 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
+import org.apache.commons.io.FileUtils;
 import xyz.openmodloader.OpenModLoader;
+import xyz.openmodloader.launcher.OMLAccessTransformer;
 
 public final class ModLoader {
 
@@ -57,7 +61,7 @@ public final class ModLoader {
                 File[] files = MOD_DIRECTORY.listFiles();
                 if (files != null) {
                     for (File mod : files) {
-                        ((LaunchClassLoader) ModLoader.class.getClassLoader()).addURL(mod.toURI().toURL());
+                        Launch.classLoader.addURL(mod.toURI().toURL());
                     }
                 }
             }
@@ -75,12 +79,10 @@ public final class ModLoader {
                         }
                         else if (file.getName().endsWith(".at")) {
                     	    Multimap<String, String> entries = OMLAccessTransformer.getEntries();
-                    	    for (String line: FileUtils.readLines(file)) {
-                    	    	if (line.matches("\\w+((\\.\\w+)+|)\\s+\\w+(\\(\\S+|)")) {
-                    	    		String[] parts = line.split(" ");
-                    	    		entries.put(parts[0], parts[1]);
-                    	    	}
-                    	    }
+                            FileUtils.readLines(file).stream().filter(line -> line.matches("\\w+((\\.\\w+)+|)\\s+\\w+(\\(\\S+|)")).forEach(line -> {
+                                String[] parts = line.split(" ");
+                                entries.put(parts[0], parts[1]);
+                            });
                         }
                     }
                 }
