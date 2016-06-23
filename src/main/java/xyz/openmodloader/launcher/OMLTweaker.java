@@ -10,6 +10,7 @@ import net.minecraft.client.main.Main;
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
+import xyz.openmodloader.modloader.ModLoader;
 
 public class OMLTweaker implements ITweaker {
     private Map<String, String> args;
@@ -48,6 +49,8 @@ public class OMLTweaker implements ITweaker {
         classLoader.registerTransformer(OMLSideTransformer.class.getCanonicalName());
         classLoader.registerTransformer(OMLAccessTransformer.class.getCanonicalName());
         classLoader.addClassLoaderExclusion("com.google.common");
+        classLoader.addClassLoaderExclusion("xyz.openmodloader.modloader.ModLoader");
+        ModLoader.loadMods();
     }
 
     @Override
