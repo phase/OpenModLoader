@@ -136,9 +136,9 @@ public class EnchantmentEvent extends Event {
          * @return The list of enchantments to apply. If this is null or empty, no
          *         enchantments should be applied.
          */
-        public static List<EnchantmentData> onItemEnchanted(EntityPlayer player, ItemStack stack, ItemStack fuel, int levels, List<EnchantmentData> enchantments) {
+        public static List<EnchantmentData> handle(EntityPlayer player, ItemStack stack, ItemStack fuel, int levels, List<EnchantmentData> enchantments) {
             final ItemEnchanted event = new ItemEnchanted(player, stack, fuel, levels, enchantments);
-            return OpenModLoader.INSTANCE.EVENT_BUS.post(event) ? event.getEnchantments() : null;
+            return OpenModLoader.INSTANCE.getEventBus().post(event) ? event.getEnchantments() : null;
         }
     }
 
@@ -237,9 +237,9 @@ public class EnchantmentEvent extends Event {
          * @param level The current level of the enchantment.
          * @return The new level of the enchantment.
          */
-        public static int getEnchantmentLevel(EntityLivingBase entityLiving, Enchantment enchantment, ItemStack heldItem, int level) {
+        public static int handle(EntityLivingBase entityLiving, Enchantment enchantment, ItemStack heldItem, int level) {
             final EnchantmentLevel event = new EnchantmentLevel(entityLiving, enchantment, heldItem, level);
-            OpenModLoader.INSTANCE.EVENT_BUS.post(event);
+            OpenModLoader.INSTANCE.getEventBus().post(event);
             return event.getLevel();
         }
     }

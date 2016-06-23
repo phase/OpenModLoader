@@ -1,4 +1,4 @@
-package xyz.openmodloader.client;
+package xyz.openmodloader.launcher;
 
 import com.google.common.base.Strings;
 import net.minecraft.launchwrapper.Launch;
@@ -9,12 +9,10 @@ import java.util.*;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.strippable.Side;
 
-public class RunOMLClient {
-
+public class OpenModLoaderClient {
     public static void main(String[] args) {
         System.setProperty("org.lwjgl.librarypath", new File("../.gradle/minecraft/natives/").getAbsolutePath());
-
-        OpenModLoader.SIDE = Side.CLIENT;
+        OMLSideTransformer.SIDE = Side.CLIENT;
         Launch.main(getArgs(args));
     }
 

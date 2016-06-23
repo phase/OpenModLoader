@@ -5,13 +5,10 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
@@ -24,8 +21,7 @@ import org.apache.commons.io.FileUtils;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.launcher.OMLAccessTransformer;
 
-public final class ModLoader {
-
+public class ModLoader {
     /**
      * A map of all loaded mods. Key is the ID and value is the ModContainer.
      */
@@ -42,16 +38,6 @@ public final class ModLoader {
     private static final File MOD_DIRECTORY = new File(RUN_DIRECTORY, "mods");
 
     /**
-     * GSON instance used by loader to read mod.json file.
-     */
-    private static final Gson GSON = new Gson();
-
-    /**
-     * Json parser instance used by loader to read mod.json file.
-     */
-    private static final JsonParser PARSER = new JsonParser();
-
-    /**
      * Attempts to load all mods from the mods directory. While this is public,
      * it is intended for internal use only!
      */
@@ -66,19 +52,16 @@ public final class ModLoader {
                 }
             }
 
-            URL roots = ModLoader.class.getClassLoader().getResource("");
-            if (roots != null) {
+            URL roots;
+            Enumeration<URL> metas = Launch.classLoader.getResources("");
+            while (metas.hasMoreElements()) {
+                roots = metas.nextElement();
                 File root = new File(roots.getPath());
                 File[] files = root.listFiles();
                 if (files != null) {
                     for (File file : files) {
-                        if (file.getName().equals("mod.json")) {
-                            final FileInputStream stream = new FileInputStream(file);
-                            loadMod(stream);
-                            stream.close();
-                        }
-                        else if (file.getName().endsWith(".at")) {
-                    	    Multimap<String, String> entries = OMLAccessTransformer.getEntries();
+                        if (file.getName().endsWith(".at")) {
+                            Multimap<String, String> entries = OMLAccessTransformer.getEntries();
                             FileUtils.readLines(file).stream().filter(line -> line.matches("\\w+((\\.\\w+)+|)\\s+\\w+(\\(\\S+|)")).forEach(line -> {
                                 String[] parts = line.split(" ");
                                 entries.put(parts[0], parts[1]);
@@ -87,31 +70,41 @@ public final class ModLoader {
                     }
                 }
             }
+            metas = Launch.classLoader.getResources("META-INF");
+            while (metas.hasMoreElements()) {
+                roots = metas.nextElement();
+                File root = new File(roots.getPath());
+                File[] files = root.listFiles();
+                if (files != null) {
+                    for (File file : files) {
+                        if (file.getName().equals("MANIFEST.MF")) {
+                            FileInputStream stream = new FileInputStream(file);
+                            loadMod(file, new Manifest(stream));
+                            stream.close();
+                        }
+                    }
+                }
+            }
         } catch (Exception e) {
-            OpenModLoader.INSTANCE.LOGGER.warn(e);
+            OpenModLoader.INSTANCE.getLogger().warn(e);
         }
     }
 
     /**
      * Attempts to load a mod from an input stream. This will parse the
      * mods.json file and add the mod to {@link #MODS}.
-     * 
-     * @param stream The input stream to read the mod data from.
+     *
+     * @param manifest the manifest instance
      */
-    private static void loadMod(InputStream stream) {
-        List<ModContainer> containerList = new ArrayList<>();
-        JsonElement element = PARSER.parse(new InputStreamReader(stream));
-        if (element.isJsonArray()) {
-            for (JsonElement e : element.getAsJsonArray()) {
-                containerList.add(GSON.fromJson(e, ModContainer.class));
-            }
-        } else {
-            containerList.add(GSON.fromJson(element, ModContainer.class));
+    private static void loadMod(File file, Manifest manifest) {
+        OpenModLoader.INSTANCE.getLogger().info(file.getAbsolutePath());
+        ModContainer container = ModContainer.create(manifest);
+        if (container == null) {
+            OpenModLoader.INSTANCE.getLogger().error("Found invalid manifest in file " + file.getAbsolutePath().replace("!", "").replace(File.separator + "META-INF" + File.separator + "MANIFEST.MF", ""));
+            return;
         }
-        containerList.stream().filter(container -> container != null).forEach(container -> {
-            OpenModLoader.INSTANCE.LOGGER.info("Found mod " + container.getName() + " (with id " + container.getModID() + ")");
-            MODS.put(container.getModID(), container);
-        });
+        OpenModLoader.INSTANCE.getLogger().info("Found mod " + container.getName() + " with id " + container.getModID());
+        MODS.put(container.getModID(), container);
     }
 
     /**
@@ -123,8 +116,8 @@ public final class ModLoader {
             try {
                 mod.getInstance().onEnable();
             } catch (RuntimeException e) {
-                OpenModLoader.INSTANCE.LOGGER.warn("An error occurred while enabling mod " + mod.getModID());
-                OpenModLoader.INSTANCE.LOGGER.warn(e);
+                OpenModLoader.INSTANCE.getLogger().warn("An error occurred while enabling mod " + mod.getModID());
+                OpenModLoader.INSTANCE.getLogger().warn(e);
                 MODS.remove(mod.getModID());
             }
         }

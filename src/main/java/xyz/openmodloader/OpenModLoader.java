@@ -10,13 +10,31 @@ import xyz.openmodloader.modloader.ModLoader;
 public enum OpenModLoader {
     INSTANCE;
 
-    public static Side SIDE;
-    public final Logger LOGGER = LogManager.getLogger();
-    public final EventBus EVENT_BUS = new EventBus();
+    private String version = "0.0.1-develop";
+    private Logger logger = LogManager.getLogger();
+    private EventBus eventBus = new EventBus();
+    private Side side;
 
-    public void minecraftConstruction() {
-        LOGGER.info("Loading Open Mod Loader");
+    public void minecraftConstruction(Side side) {
+        this.side = side;
+        getLogger().info("Loading OpenModLoader " + getVersion());
         ModLoader.loadMods();
         ModLoader.registerMods();
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public EventBus getEventBus() {
+        return eventBus;
+    }
+
+    public Side getSide() {
+        return side;
     }
 }

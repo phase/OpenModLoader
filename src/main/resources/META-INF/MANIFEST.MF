@@ -1,0 +1,9 @@
+Mod-Class: xyz.openmodloader.test.OMLTestMod
+ID: test
+Name: Test!
+Major: 1
+Minor: 0
+Patch: 0
+Description: This is a description!
+UpdateURL: http://example.com/
+Logo: logo.png

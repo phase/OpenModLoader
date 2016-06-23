@@ -4,7 +4,7 @@
     }
  
     private void startGame() throws LWJGLException {
-+      xyz.openmodloader.OpenModLoader.INSTANCE.minecraftConstruction();
++      xyz.openmodloader.OpenModLoader.INSTANCE.minecraftConstruction(xyz.openmodloader.event.strippable.Side.CLIENT);
        this.gameSettings = new GameSettings(this, this.mcDataDir);
        this.defaultResourcePacks.add(this.mcDefaultResourcePack);
        this.startTimerHackThread();
@@ -13,7 +13,7 @@
  
     public void displayGuiScreen(@Nullable GuiScreen var1) {
 +      xyz.openmodloader.event.impl.GuiEvent.Open event = new xyz.openmodloader.event.impl.GuiEvent.Open(var1);
-+      if (!xyz.openmodloader.OpenModLoader.INSTANCE.EVENT_BUS.post(event)) return; else var1 = event.getGui();
++      if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(event)) return; else var1 = event.getGui();
        if(this.currentScreen != null) {
           this.currentScreen.onGuiClosed();
        }
@@ -21,7 +21,7 @@
        GlStateManager.enableTexture2D();
        this.mcProfiler.endSection();
        if(!this.skipRenderWorld) {
-+         xyz.openmodloader.OpenModLoader.INSTANCE.EVENT_BUS.post(new xyz.openmodloader.event.impl.UpdateEvent.RenderUpdate(this.timer.renderPartialTicks));
++         xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.RenderUpdate(this.timer.renderPartialTicks));
           this.mcProfiler.endStartSection("gameRenderer");
           this.entityRenderer.updateCameraAndRender(this.timer.renderPartialTicks, var1);
           this.mcProfiler.endSection();

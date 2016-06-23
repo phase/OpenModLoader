@@ -16,7 +16,7 @@
              }
           }
  
-+         drops = xyz.openmodloader.event.impl.BlockEvent.HarvestDrops.onHarvestDrops(var1, var3, var2, var4, var5, drops);
++         drops = xyz.openmodloader.event.impl.BlockEvent.HarvestDrops.handle(var1, var3, var2, var4, var5, drops);
 +         for (ItemStack stack : drops) spawnAsEntity(var1, var2, stack);
        }
     }

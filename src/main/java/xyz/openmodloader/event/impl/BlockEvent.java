@@ -79,9 +79,9 @@ public class BlockEvent extends Event {
          * @param pos   The position of the event.
          * @return The state for the block to be placed.
          */
-        public static IBlockState onPlace(World world, IBlockState state, BlockPos pos) {
+        public static IBlockState handle(World world, IBlockState state, BlockPos pos) {
             xyz.openmodloader.event.impl.BlockEvent.Place event = new xyz.openmodloader.event.impl.BlockEvent.Place(world, state, pos);
-            return OpenModLoader.INSTANCE.EVENT_BUS.post(event) ? event.getBlockState() : null;
+            return OpenModLoader.INSTANCE.getEventBus().post(event) ? event.getBlockState() : null;
         }
     }
 
@@ -154,9 +154,9 @@ public class BlockEvent extends Event {
          * @param pos      The position of the event.
          * @return The state for the block to be placed.
          */
-        public static float onDig(float digSpeed, World world, IBlockState state, BlockPos pos) {
+        public static float handle(float digSpeed, World world, IBlockState state, BlockPos pos) {
             DigSpeed event = new DigSpeed(digSpeed, world, state, pos);
-            return !OpenModLoader.INSTANCE.EVENT_BUS.post(event) || event.getDigSpeed() < 0F ? 0f : event.getDigSpeed();
+            return !OpenModLoader.INSTANCE.getEventBus().post(event) || event.getDigSpeed() < 0F ? 0f : event.getDigSpeed();
         }
     }
 
@@ -237,9 +237,9 @@ public class BlockEvent extends Event {
          * @param drops   The list of drops that the block can drop
          * @return The list of items that the block will drop
          */
-        public static List<ItemStack> onHarvestDrops(World world, IBlockState state, BlockPos pos, float chance, int fortune, List<ItemStack> drops) {
+        public static List<ItemStack> handle(World world, IBlockState state, BlockPos pos, float chance, int fortune, List<ItemStack> drops) {
             BlockEvent.HarvestDrops event = new xyz.openmodloader.event.impl.BlockEvent.HarvestDrops(world, state, pos, chance, fortune, ImmutableList.copyOf(drops));
-            OpenModLoader.INSTANCE.EVENT_BUS.post(event);
+            OpenModLoader.INSTANCE.getEventBus().post(event);
             return event.getDrops();
         }
     }

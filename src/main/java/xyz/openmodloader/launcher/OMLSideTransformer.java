@@ -3,6 +3,7 @@ package xyz.openmodloader.launcher;
 import java.util.List;
 
 import xyz.openmodloader.OpenModLoader;
+import xyz.openmodloader.event.strippable.Side;
 import xyz.openmodloader.event.strippable.Strippable;
 
 import net.minecraft.launchwrapper.IClassTransformer;
@@ -14,6 +15,7 @@ import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
 
 public class OMLSideTransformer implements IClassTransformer {
+    static Side SIDE;
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
@@ -22,7 +24,7 @@ public class OMLSideTransformer implements IClassTransformer {
         classReader.accept(classNode, 0);
 
         if (remove(classNode.visibleAnnotations)) {
-            throw new RuntimeException(String.format("Loading class %s on wrong side %s", name, OpenModLoader.SIDE));
+            throw new RuntimeException(String.format("Loading class %s on wrong side %s", name, OpenModLoader.INSTANCE.getSide()));
         }
 
         classNode.methods.removeIf(method -> remove(method.visibleAnnotations));
@@ -44,7 +46,7 @@ public class OMLSideTransformer implements IClassTransformer {
                         if (key instanceof String && ((String) key).equalsIgnoreCase("side")) {
                             if (value instanceof String[]) {
                                 String side = ((String[]) value)[1];
-                                if (!side.equalsIgnoreCase("universal") && !side.equalsIgnoreCase(OpenModLoader.SIDE.toString())) {
+                                if (!side.equalsIgnoreCase("universal") && !side.equalsIgnoreCase(SIDE.toString())) {
                                     return true;
                                 }
                             }

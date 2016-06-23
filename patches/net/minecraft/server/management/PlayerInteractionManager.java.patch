@@ -20,7 +20,7 @@
     }
  
     public boolean tryHarvestBlock(BlockPos var1) {
-+      if (!xyz.openmodloader.OpenModLoader.INSTANCE.EVENT_BUS.post(new xyz.openmodloader.event.impl.BlockEvent.Destroy(this.theWorld, this.theWorld.getBlockState(var1), var1))) return false;
++      if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.BlockEvent.Destroy(this.theWorld, this.theWorld.getBlockState(var1), var1))) return false;
        if(this.gameType.isCreative() && this.thisPlayerMP.getHeldItemMainhand() != null && this.thisPlayerMP.getHeldItemMainhand().getItem() instanceof ItemSword) {
           return false;
        } else {

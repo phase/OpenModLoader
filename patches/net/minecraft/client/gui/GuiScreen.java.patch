@@ -4,7 +4,7 @@
           for(int var4 = 0; var4 < this.buttonList.size(); ++var4) {
              GuiButton var5 = (GuiButton)this.buttonList.get(var4);
              if(var5.mousePressed(this.mc, var1, var2)) {
-+               if (!xyz.openmodloader.OpenModLoader.INSTANCE.EVENT_BUS.post(new xyz.openmodloader.event.impl.GuiEvent.ButtonClick(this, var5))) return;
++               if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.GuiEvent.ButtonClick(this, var5))) return;
                 this.selectedButton = var5;
                 var5.playPressSound(this.mc.getSoundHandler());
                 this.actionPerformed(var5);
@@ -13,7 +13,7 @@
        this.height = var3;
        this.buttonList.clear();
 +      xyz.openmodloader.event.impl.GuiEvent.Init event = new xyz.openmodloader.event.impl.GuiEvent.Init(this, this.buttonList);
-+      if (!xyz.openmodloader.OpenModLoader.INSTANCE.EVENT_BUS.post(event)) return; else this.buttonList = event.getButtonList();
++      if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(event)) return; else this.buttonList = event.getButtonList();
        this.initGui();
     }
  

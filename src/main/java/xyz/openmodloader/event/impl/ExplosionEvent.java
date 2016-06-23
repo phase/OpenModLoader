@@ -217,6 +217,6 @@ public class ExplosionEvent extends Event {
      */
     public static Explosion onExplosion(World world, Entity entity, double x, double y, double z, float explosionSize, boolean isFlaming, boolean isSmoking) {
         ExplosionEvent event = new ExplosionEvent(world, entity, x, y, z, explosionSize, isFlaming, isSmoking);
-        return OpenModLoader.INSTANCE.EVENT_BUS.post(event) ? new Explosion(event.world, event.entity, event.x, event.y, event.z, event.explosionSize, event.isFlaming, event.isSmoking) : null;
+        return OpenModLoader.INSTANCE.getEventBus().post(event) ? new Explosion(event.world, event.entity, event.x, event.y, event.z, event.explosionSize, event.isFlaming, event.isSmoking) : null;
     }
 }

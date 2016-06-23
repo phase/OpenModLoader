@@ -26,7 +26,7 @@ public class Event {
      */
     public void setCanceled(boolean canceled) {
         if (!this.isCancelable()) {
-            OpenModLoader.INSTANCE.LOGGER.warn("An attempt was made to cancel the " + this.getClass().getName() + " event, but that event can not be canceled!");
+            OpenModLoader.INSTANCE.getLogger().warn("An attempt was made to cancel the " + this.getClass().getName() + " event, but that event can not be canceled!");
         }
         this.canceled = canceled;
     }

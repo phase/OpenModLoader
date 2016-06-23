@@ -19,5 +19,5 @@ Warning: Setup for OpenModLoader is not yet fully automated. As the project furt
 5. Add `.gradle/minecraft/libs` to your build path.
 6. Add `.gradle/minecraft/natives` to the natives on LWJGL
 7. The project should now build without errors. If anything is missing you can download the libraries from Mojang directly.
-8. Create a new run configuration with the main class set to `xyz.openmodloader.client.RunOMLClient`
+8. Create a new run configuration with the main class set to `xyz.openmodloader.launcher.OpenModLoaderClient`
 9. You should now be able to run Open Mod Loader.

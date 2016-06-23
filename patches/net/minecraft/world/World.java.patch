@@ -14,7 +14,7 @@
     }
  
     public void tick() {
-+      xyz.openmodloader.OpenModLoader.INSTANCE.EVENT_BUS.post(new xyz.openmodloader.event.impl.UpdateEvent.WorldUpdate(this));
++      xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.WorldUpdate(this));
        this.updateWeather();
     }
  

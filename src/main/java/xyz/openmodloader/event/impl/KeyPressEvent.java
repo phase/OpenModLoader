@@ -8,6 +8,7 @@ import xyz.openmodloader.event.Event;
  * An event fired when a key is pressed.
  */
 public class KeyPressEvent extends Event {
+
     /**
      * The character corresponding to the key pressed.
      * @see #getCharPressed()
@@ -41,7 +42,7 @@ public class KeyPressEvent extends Event {
         if (Keyboard.getEventKeyState()) {
             int keyCode = Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey();
             KeyPressEvent event = new KeyPressEvent(Keyboard.getEventCharacter(), keyCode);
-            return OpenModLoader.INSTANCE.EVENT_BUS.post(event);
+            return OpenModLoader.INSTANCE.getEventBus().post(event);
         }
         return true;
     }

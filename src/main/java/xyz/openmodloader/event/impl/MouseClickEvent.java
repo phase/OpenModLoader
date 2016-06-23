@@ -29,7 +29,6 @@ public class MouseClickEvent extends Event {
 
     public static boolean handle(int button) {
         MouseClickEvent event = new MouseClickEvent(button);
-        return OpenModLoader.INSTANCE.EVENT_BUS.post(event);
+        return OpenModLoader.INSTANCE.getEventBus().post(event);
     }
-
 }

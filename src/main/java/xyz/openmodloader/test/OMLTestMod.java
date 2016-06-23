@@ -19,40 +19,40 @@ import java.util.Arrays;
 public class OMLTestMod implements IMod {
     @Override
     public void onEnable() {
-        OpenModLoader.INSTANCE.LOGGER.info("Loading test mod");
+        OpenModLoader.INSTANCE.getLogger().info("Loading test mod");
 
-        OpenModLoader.INSTANCE.EVENT_BUS.register(BlockEvent.Place.class, this::onBlockPlace);
-        OpenModLoader.INSTANCE.EVENT_BUS.register(BlockEvent.Destroy.class, this::onBlockDestroy);
-        OpenModLoader.INSTANCE.EVENT_BUS.register(BlockEvent.DigSpeed.class, this::onBlockDigSpeed);
-        OpenModLoader.INSTANCE.EVENT_BUS.register(BlockEvent.HarvestDrops.class, this::onHarvestDrops);
+        OpenModLoader.INSTANCE.getEventBus().register(BlockEvent.Place.class, this::onBlockPlace);
+        OpenModLoader.INSTANCE.getEventBus().register(BlockEvent.Destroy.class, this::onBlockDestroy);
+        OpenModLoader.INSTANCE.getEventBus().register(BlockEvent.DigSpeed.class, this::onBlockDigSpeed);
+        OpenModLoader.INSTANCE.getEventBus().register(BlockEvent.HarvestDrops.class, this::onHarvestDrops);
 
-        OpenModLoader.INSTANCE.EVENT_BUS.register(GuiEvent.Open.class, this::onGuiOpen);
-        OpenModLoader.INSTANCE.EVENT_BUS.register(GuiEvent.Draw.class, this::onGuiDraw);
+        OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.Open.class, this::onGuiOpen);
+        OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.Draw.class, this::onGuiDraw);
 
-        OpenModLoader.INSTANCE.EVENT_BUS.register(EnchantmentEvent.ItemEnchanted.class, this::onItemEnchanted);
-        OpenModLoader.INSTANCE.EVENT_BUS.register(EnchantmentEvent.EnchantmentLevel.class, this::onEnchantmentLevelCheck);
+        OpenModLoader.INSTANCE.getEventBus().register(EnchantmentEvent.ItemEnchanted.class, this::onItemEnchanted);
+        OpenModLoader.INSTANCE.getEventBus().register(EnchantmentEvent.EnchantmentLevel.class, this::onEnchantmentLevelCheck);
 
-        OpenModLoader.INSTANCE.EVENT_BUS.register(ExplosionEvent.class, this::onExplosion);
+        OpenModLoader.INSTANCE.getEventBus().register(ExplosionEvent.class, this::onExplosion);
 
-        OpenModLoader.INSTANCE.EVENT_BUS.register(SplashLoadEvent.class, this::onSplashLoad);
+        OpenModLoader.INSTANCE.getEventBus().register(SplashLoadEvent.class, this::onSplashLoad);
 
-        OpenModLoader.INSTANCE.EVENT_BUS.register(ScreenshotEvent.class, this::onScreenshot);
+        OpenModLoader.INSTANCE.getEventBus().register(ScreenshotEvent.class, this::onScreenshot);
 
-        OpenModLoader.INSTANCE.EVENT_BUS.register(CommandEvent.class, this::onCommandRan);
+        OpenModLoader.INSTANCE.getEventBus().register(CommandEvent.class, this::onCommandRan);
 
-        OpenModLoader.INSTANCE.EVENT_BUS.register(KeyPressEvent.class, this::onKeyPressed);
-        OpenModLoader.INSTANCE.EVENT_BUS.register(MouseClickEvent.class, this::onMouseClick);
+        OpenModLoader.INSTANCE.getEventBus().register(KeyPressEvent.class, this::onKeyPressed);
+        OpenModLoader.INSTANCE.getEventBus().register(MouseClickEvent.class, this::onMouseClick);
     }
 
     private void onBlockPlace(BlockEvent.Place event) {
-        OpenModLoader.INSTANCE.LOGGER.info("Placed block: " + event.getBlockState() + " isRemote: " + event.getWorld().isRemote);
+        OpenModLoader.INSTANCE.getLogger().info("Placed block: " + event.getBlockState() + " isRemote: " + event.getWorld().isRemote);
         if (event.getBlockState().getBlock() == Blocks.GRASS) {
             event.setBlockState(Blocks.DIRT.getDefaultState());
         }
     }
 
     private void onBlockDestroy(BlockEvent.Destroy event) {
-        OpenModLoader.INSTANCE.LOGGER.info("Destroyed block: " + event.getBlockState() + " isRemote: " + event.getWorld().isRemote);
+        OpenModLoader.INSTANCE.getLogger().info("Destroyed block: " + event.getBlockState() + " isRemote: " + event.getWorld().isRemote);
         if (event.getBlockState().getBlock() == Blocks.GRASS) {
             event.setCanceled(true);
         }
@@ -65,7 +65,7 @@ public class OMLTestMod implements IMod {
     }
 
     private void onGuiOpen(GuiEvent.Open event) {
-        OpenModLoader.INSTANCE.LOGGER.info("Opening gui: " + event.getGui());
+        OpenModLoader.INSTANCE.getLogger().info("Opening gui: " + event.getGui());
         if (event.getGui() instanceof GuiLanguage) {
             event.setCanceled(true);
         }
@@ -78,7 +78,7 @@ public class OMLTestMod implements IMod {
     }
 
     private void onItemEnchanted(EnchantmentEvent.ItemEnchanted event) {
-        OpenModLoader.INSTANCE.LOGGER.info(event.getItemStack().getDisplayName() + " " + event.getEnchantments().toString());
+        OpenModLoader.INSTANCE.getLogger().info(event.getItemStack().getDisplayName() + " " + event.getEnchantments().toString());
     }
 
     private void onEnchantmentLevelCheck(EnchantmentEvent.EnchantmentLevel event) {
@@ -86,7 +86,7 @@ public class OMLTestMod implements IMod {
             int oldLevel = event.getLevel();
             int newLevel = (oldLevel + 1) * 10;
             event.setLevel(newLevel);
-            OpenModLoader.INSTANCE.LOGGER.info("Set fortune level from " + oldLevel + " to " + newLevel);
+            OpenModLoader.INSTANCE.getLogger().info("Set fortune level from " + oldLevel + " to " + newLevel);
         }
     }
 
@@ -110,12 +110,12 @@ public class OMLTestMod implements IMod {
     }
 
     private void onHarvestDrops(BlockEvent.HarvestDrops event){
-        OpenModLoader.INSTANCE.LOGGER.info("Dropping items: " + event.getDrops() + ", with fortune: " + event.getFortune() + ", with chance: " + event.getChance());
+        OpenModLoader.INSTANCE.getLogger().info("Dropping items: " + event.getDrops() + ", with fortune: " + event.getFortune() + ", with chance: " + event.getChance());
         event.getDrops().add(new ItemStack(Blocks.DIRT));
     }
 
     private void onCommandRan(CommandEvent event) {
-        OpenModLoader.INSTANCE.LOGGER.info("Player: " + event.getSender().getName() + " ran command: " + event.getCommand().getCommandName() + " with arguments: " + Arrays.toString(event.getArgs()));
+        OpenModLoader.INSTANCE.getLogger().info("Player: " + event.getSender().getName() + " ran command: " + event.getCommand().getCommandName() + " with arguments: " + Arrays.toString(event.getArgs()));
         event.setCanceled(true);
     }
 

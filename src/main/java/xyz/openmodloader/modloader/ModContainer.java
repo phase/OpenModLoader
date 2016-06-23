@@ -1,27 +1,69 @@
 package xyz.openmodloader.modloader;
 
 import com.google.gson.annotations.SerializedName;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.util.ResourceLocation;
+import xyz.openmodloader.event.strippable.Side;
+import xyz.openmodloader.event.strippable.Strippable;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 public class ModContainer {
     private transient Class<?> mainClass;
-    private transient BufferedImage logo;
+    private transient ResourceLocation logo;
     private transient IMod instance;
 
-    @SerializedName("main_class")
+    @SerializedName("Mod-Class")
     private String classString;
-    @SerializedName("id")
+    @SerializedName("ID")
     private String modID;
+    @SerializedName("Name")
     private String name;
-    private String version;
+    @SerializedName("Major")
+    private String major;
+    @SerializedName("Minor")
+    private String minor;
+    @SerializedName("Patch")
+    private String patch;
+    @SerializedName("Description")
     private String description;
-    @SerializedName("update_url")
+    @SerializedName("UpdateURL")
     private String updateURL;
-    @SerializedName("logo")
+    @SerializedName("Logo")
     private String logoString;
+
+    public static ModContainer create(Manifest manifest) {
+        Set<String> attributeNames = manifest.getEntries().keySet();
+        System.out.println(manifest.getEntries());
+        if (!attributeNames.containsAll(Arrays.asList("Mod-Class", "ID"))) {
+            return null;
+        }
+        ModContainer container = new ModContainer();
+        Map<String, Attributes> attributes = manifest.getEntries();
+        for (Field field : ModContainer.class.getDeclaredFields()) {
+            if (field.isAnnotationPresent(SerializedName.class)) {
+                String name = field.getAnnotation(SerializedName.class).value();
+                if (attributes.containsKey(name)) {
+                    try {
+                        field.set(container, attributes.get(name));
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+            }
+        }
+        return container;
+    }
 
     public Class<?> getMainClass() {
         if (this.mainClass == null) {
@@ -34,10 +76,13 @@ public class ModContainer {
         return mainClass;
     }
 
-    public BufferedImage getLogo() {
+    @Strippable(side = Side.CLIENT)
+    public ResourceLocation getLogo() {
         if (this.logo == null) {
             try {
-                this.logo = ImageIO.read(ModContainer.class.getResourceAsStream("/" + this.logoString));
+                BufferedImage image = ImageIO.read(ModContainer.class.getResourceAsStream("/" + this.logoString));
+                DynamicTexture texture = new DynamicTexture(image);
+                this.logo = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("mods/" + getModID(), texture);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -64,8 +109,20 @@ public class ModContainer {
         return name;
     }
 
+    public String getMajor() {
+        return major;
+    }
+
+    public String getMinor() {
+        return minor;
+    }
+
+    public String getPatch() {
+        return patch;
+    }
+
     public String getVersion() {
-        return version;
+        return getMajor() + "." + getMinor() + "." + getPatch();
     }
 
     public String getDescription() {

@@ -4,7 +4,7 @@
  
              try {
                 this.mc.currentScreen.drawScreen(var22, var23, var1);
-+               xyz.openmodloader.OpenModLoader.INSTANCE.EVENT_BUS.post(new xyz.openmodloader.event.impl.GuiEvent.Draw(mc.currentScreen, var1));
++               xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.GuiEvent.Draw(mc.currentScreen, var1));
              } catch (Throwable var16) {
                 CrashReport var26 = CrashReport.makeCrashReport(var16, "Rendering screen");
                 CrashReportCategory var13 = var26.makeCategory("Screen render details");

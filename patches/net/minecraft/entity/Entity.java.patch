@@ -4,7 +4,7 @@
     }
  
     public void onUpdate() {
-+      xyz.openmodloader.OpenModLoader.INSTANCE.EVENT_BUS.post(new xyz.openmodloader.event.impl.UpdateEvent.EntityUpdate(this));
++      xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.EntityUpdate(this));
        if(!this.worldObj.isRemote) {
           this.setFlag(6, this.isGlowing());
        }
