@@ -1,18 +1,6 @@
 --- /net/minecraft/inventory
 +++ /net/minecraft/inventory
-@@ -11,11 +11,6 @@
- import net.minecraft.init.Blocks;
- import net.minecraft.init.Items;
- import net.minecraft.init.SoundEvents;
--import net.minecraft.inventory.Container;
--import net.minecraft.inventory.IContainerListener;
--import net.minecraft.inventory.IInventory;
--import net.minecraft.inventory.InventoryBasic;
--import net.minecraft.inventory.Slot;
- import net.minecraft.item.EnumDyeColor;
- import net.minecraft.item.ItemStack;
- import net.minecraft.stats.StatList;
-@@ -209,6 +204,7 @@
+@@ -209,6 +209,7 @@
           if(!this.worldPointer.isRemote) {
              List var6 = this.getEnchantmentList(var3, var2, this.enchantLevels[var2]);
              boolean var7 = var3.getItem() == Items.BOOK;

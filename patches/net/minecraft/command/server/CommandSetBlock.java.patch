@@ -1,0 +1,11 @@
+--- /net/minecraft/command/server
++++ /net/minecraft/command/server
+@@ -52,6 +52,8 @@
+          if(!var7.isBlockLoaded(var4)) {
+             throw new CommandException("commands.setblock.outOfWorld", new Object[0]);
+          } else {
++            var5 = xyz.openmodloader.event.impl.BlockEvent.Place.handle(var7, var5.getDefaultState(), var4).getBlock();
++            if (var5 == null) return;
+             NBTTagCompound var8 = new NBTTagCompound();
+             boolean var9 = false;
+             if(var3.length >= 7 && var5.hasTileEntity()) {

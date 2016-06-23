@@ -1,16 +1,6 @@
 --- /net/minecraft/enchantment
 +++ /net/minecraft/enchantment
-@@ -10,8 +10,7 @@
- import java.util.Random;
- import java.util.Map.Entry;
- import javax.annotation.Nullable;
--import net.minecraft.enchantment.Enchantment;
--import net.minecraft.enchantment.EnchantmentData;
-+
- import net.minecraft.entity.Entity;
- import net.minecraft.entity.EntityLivingBase;
- import net.minecraft.entity.EnumCreatureAttribute;
-@@ -34,6 +33,11 @@
+@@ -34,6 +34,11 @@
     private static final EnchantmentHelper.b ENCHANTMENT_ITERATOR_HURT = new EnchantmentHelper.b();
     private static final EnchantmentHelper.a ENCHANTMENT_ITERATOR_DAMAGE = new EnchantmentHelper.a();
  
@@ -22,7 +12,7 @@
     public static int getEnchantmentLevel(Enchantment var0, @Nullable ItemStack var1) {
        if(var1 == null) {
           return 0;
-@@ -167,7 +171,7 @@
+@@ -167,7 +172,7 @@
           int var3 = 0;
  
           for(ItemStack var5 : var2) {
@@ -31,7 +21,7 @@
              if(var6 > var3) {
                 var3 = var6;
              }
-@@ -226,7 +230,7 @@
+@@ -226,7 +231,7 @@
           ArrayList var3 = Lists.newArrayList();
  
           for(ItemStack var5 : var2) {
