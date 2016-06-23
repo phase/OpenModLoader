@@ -1,20 +1,21 @@
 package xyz.openmodloader.launcher;
 
-import net.minecraft.client.main.Main;
-import net.minecraft.launchwrapper.ITweaker;
-import net.minecraft.launchwrapper.Launch;
-import net.minecraft.launchwrapper.LaunchClassLoader;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.client.main.Main;
+import net.minecraft.launchwrapper.ITweaker;
+import net.minecraft.launchwrapper.Launch;
+import net.minecraft.launchwrapper.LaunchClassLoader;
+
 public class OMLTweaker implements ITweaker {
     private Map<String, String> args;
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile) {
         this.args = (Map<String, String>) Launch.blackboard.get("launchArgs");
         if (this.args == null) {
@@ -45,6 +46,8 @@ public class OMLTweaker implements ITweaker {
     public void injectIntoClassLoader(LaunchClassLoader classLoader) {
         classLoader.registerTransformer(OMLClassTransformer.class.getCanonicalName());
         classLoader.registerTransformer(OMLSideTransformer.class.getCanonicalName());
+        classLoader.registerTransformer(OMLAccessTransformer.class.getCanonicalName());
+        classLoader.addClassLoaderExclusion("com.google.common");
     }
 
     @Override

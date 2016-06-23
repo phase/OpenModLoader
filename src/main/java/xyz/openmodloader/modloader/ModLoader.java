@@ -73,6 +73,15 @@ public final class ModLoader {
                             loadMod(stream);
                             stream.close();
                         }
+                        else if (file.getName().endsWith(".at")) {
+                    	    Multimap<String, String> entries = OMLAccessTransformer.getEntries();
+                    	    for (String line: FileUtils.readLines(file)) {
+                    	    	if (line.matches("\\w+((\\.\\w+)+|)\\s+\\w+(\\(\\S+|)")) {
+                    	    		String[] parts = line.split(" ");
+                    	    		entries.put(parts[0], parts[1]);
+                    	    	}
+                    	    }
+                        }
                     }
                 }
             }
