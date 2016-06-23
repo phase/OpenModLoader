@@ -51,10 +51,10 @@ public class EnchantmentEvent extends Event {
         /**
          * Constructs an event that is fired when the player enchants an item.
          *
-         * @param player The player enchanting the item.
-         * @param stack The ItemStack being enchanted.
-         * @param fuel The ItemStack in the fuel/lapis slot.
-         * @param levels The experience level cost for the enchantment.
+         * @param player       The player enchanting the item.
+         * @param stack        The ItemStack being enchanted.
+         * @param fuel         The ItemStack in the fuel/lapis slot.
+         * @param levels       The experience level cost for the enchantment.
          * @param enchantments A list of enchantment data being applied to the item.
          */
         public ItemEnchanted(EntityPlayer player, ItemStack stack, ItemStack fuel, int levels, List<EnchantmentData> enchantments) {
@@ -127,14 +127,14 @@ public class EnchantmentEvent extends Event {
         /**
          * Hook to make related patches much cleaner.
          *
-         * @param player The player who enchanted the item.
-         * @param stack The item being enchanted.
-         * @param fuel The item in the fuel slot.
-         * @param levels The amount of levels being paid for the enchantment.
+         * @param player       The player who enchanted the item.
+         * @param stack        The item being enchanted.
+         * @param fuel         The item in the fuel slot.
+         * @param levels       The amount of levels being paid for the enchantment.
          * @param enchantments The list of enchantment data being applied to the
-         *        enchanted item.
+         *                     enchanted item.
          * @return The list of enchantments to apply. If this is null or empty, no
-         *         enchantments should be applied.
+         * enchantments should be applied.
          */
         public static List<EnchantmentData> handle(EntityPlayer player, ItemStack stack, ItemStack fuel, int levels, List<EnchantmentData> enchantments) {
             final ItemEnchanted event = new ItemEnchanted(player, stack, fuel, levels, enchantments);
@@ -171,9 +171,9 @@ public class EnchantmentEvent extends Event {
          * Constructs an event that is fired when an enchantment level is being looked up.
          *
          * @param entityLiving The entity for which the enchantment is being checked.
-         * @param enchantment The enchantment for which the level is being evaluated.
-         * @param heldItem The item the entity is currently holding.
-         * @param level The current level of the enchantment.
+         * @param enchantment  The enchantment for which the level is being evaluated.
+         * @param heldItem     The item the entity is currently holding.
+         * @param level        The current level of the enchantment.
          */
         public EnchantmentLevel(EntityLivingBase entityLiving, Enchantment enchantment, ItemStack heldItem, int level) {
             this.entityLiving = entityLiving;
@@ -232,9 +232,9 @@ public class EnchantmentEvent extends Event {
          * Hook to make related patches much cleaner.
          *
          * @param entityLiving The entity for which the enchantment is being checked.
-         * @param enchantment The enchantment for which the level is being evaluated.
-         * @param heldItem The item the entity is currently holding.
-         * @param level The current level of the enchantment.
+         * @param enchantment  The enchantment for which the level is being evaluated.
+         * @param heldItem     The item the entity is currently holding.
+         * @param level        The current level of the enchantment.
          * @return The new level of the enchantment.
          */
         public static int handle(EntityLivingBase entityLiving, Enchantment enchantment, ItemStack heldItem, int level) {

@@ -6,7 +6,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
 
 public class BlockTest extends Block {
-    public BlockTest () {
+    public BlockTest() {
         super(Material.ROCK);
 //        this.setRegistryName(new ResourceLocation("test:test"));
         this.setCreativeTab(CreativeTabs.BREWING);

@@ -8,12 +8,12 @@ import xyz.openmodloader.event.Event;
  * Parent class for generic update events. All events that fall within this scope should extend this class. They should also be added as an inner class however this is not required.
  */
 public class UpdateEvent extends Event {
-    
+
     /**
      * Fired every time the world has an update tick.
      */
     public static class WorldUpdate extends UpdateEvent {
-        
+
         /**
          * The world that has updated.
          */
@@ -21,6 +21,7 @@ public class UpdateEvent extends Event {
 
         /**
          * Constructs a new event that is fired when the world has an update tick.
+         *
          * @param world The world that has updated.
          */
         public WorldUpdate(World world) {
@@ -29,6 +30,7 @@ public class UpdateEvent extends Event {
 
         /**
          * Gets the world that has updated.
+         *
          * @return The world that has updated.
          */
         public World getWorld() {
@@ -40,7 +42,7 @@ public class UpdateEvent extends Event {
      * Fired every time an entity has an update tick.
      */
     public static class EntityUpdate extends UpdateEvent {
-        
+
         /**
          * The entity that has updated.
          */
@@ -48,6 +50,7 @@ public class UpdateEvent extends Event {
 
         /**
          * Constructs a new event that is fired when an entity has an update tick.
+         *
          * @param entity The entity that has updated.
          */
         public EntityUpdate(Entity entity) {
@@ -56,6 +59,7 @@ public class UpdateEvent extends Event {
 
         /**
          * Gets the entity that updated.
+         *
          * @return The entity that updated.
          */
         public Entity getEntity() {
@@ -67,7 +71,7 @@ public class UpdateEvent extends Event {
      * Fired when there is a render update.
      */
     public static class RenderUpdate extends UpdateEvent {
-        
+
         /**
          * The partial ticks for the update.
          */
@@ -75,6 +79,7 @@ public class UpdateEvent extends Event {
 
         /**
          * Constructs a new event that is fired every render update.
+         *
          * @param partialTicks The partial ticks for the update.
          */
         public RenderUpdate(float partialTicks) {
@@ -83,6 +88,7 @@ public class UpdateEvent extends Event {
 
         /**
          * Gets the partial ticks for the update.
+         *
          * @return The partial ticks for the update.
          */
         public float getPartialTicks() {

@@ -21,7 +21,7 @@ public class GuiEvent extends Event {
     /**
      * Constructor for the base GUI event. This constructor should only be
      * accessed through super calls.
-     * 
+     *
      * @param gui The GUI that the event was triggered for.
      */
     public GuiEvent(GuiScreen gui) {
@@ -35,7 +35,7 @@ public class GuiEvent extends Event {
 
         /**
          * Constructor for a new event that is fired when a GUI is opened.
-         * 
+         *
          * @param gui The GUI to be opened.
          */
         public Open(GuiScreen gui) {
@@ -44,7 +44,7 @@ public class GuiEvent extends Event {
 
         /**
          * Sets the GUI to be opened to a new one.
-         * 
+         *
          * @param gui The new GUI to be opened.
          */
         public void setGui(GuiScreen gui) {
@@ -69,8 +69,8 @@ public class GuiEvent extends Event {
 
         /**
          * Constructor for a new event that is fired when a GUI is initialized.
-         * 
-         * @param gui The GUI to be initialized.
+         *
+         * @param gui        The GUI to be initialized.
          * @param buttonList The list of buttons that are used by the GUI.
          */
         public Init(GuiScreen gui, List<GuiButton> buttonList) {
@@ -80,7 +80,7 @@ public class GuiEvent extends Event {
 
         /**
          * Gets the list of buttons used by the GUI.
-         * 
+         *
          * @return The list of buttons used by the GUI.
          */
         public List<GuiButton> getButtonList() {
@@ -100,8 +100,8 @@ public class GuiEvent extends Event {
 
         /**
          * Constructs a new event that is fired when a button is clicked.
-         * 
-         * @param gui The GUI that contains the button.
+         *
+         * @param gui    The GUI that contains the button.
          * @param button The button that was clicked.
          */
         public ButtonClick(GuiScreen gui, GuiButton button) {
@@ -111,7 +111,7 @@ public class GuiEvent extends Event {
 
         /**
          * Gets the button that was clicked.
-         * 
+         *
          * @return The button that was clieck.
          */
         public GuiButton getButton() {
@@ -134,7 +134,7 @@ public class GuiEvent extends Event {
         /**
          * Constructs a new event that is fired when a GUI is drawn.
          *
-         * @param gui The GUI being drawn.
+         * @param gui          The GUI being drawn.
          * @param partialTicks
          */
         public Draw(GuiScreen gui, float partialTicks) {

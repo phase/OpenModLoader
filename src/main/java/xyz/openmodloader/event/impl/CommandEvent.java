@@ -26,10 +26,11 @@ public class CommandEvent extends Event {
     private String[] args;
 
     /**
-     *  Constructs a new event that is fired when a command is ran.
-     * @param args The Arguments sent
+     * Constructs a new event that is fired when a command is ran.
+     *
+     * @param args    The Arguments sent
      * @param command The command ran
-     * @param sender The person who ran the command
+     * @param sender  The person who ran the command
      */
     public CommandEvent(String[] args, ICommand command, ICommandSender sender) {
         this.args = args;
@@ -39,6 +40,7 @@ public class CommandEvent extends Event {
 
     /**
      * Gets the arguments that were used
+     *
      * @return The arguments used to run the command
      */
     public String[] getArgs() {
@@ -47,6 +49,7 @@ public class CommandEvent extends Event {
 
     /**
      * Gets the command that was run
+     *
      * @return The Command that was run
      */
     public ICommand getCommand() {
@@ -54,7 +57,8 @@ public class CommandEvent extends Event {
     }
 
     /**
-     *  Gets the sender who ran the command
+     * Gets the sender who ran the command
+     *
      * @return The sender who ran the command
      */
     public ICommandSender getSender() {
@@ -63,6 +67,7 @@ public class CommandEvent extends Event {
 
     /**
      * Sets the arguments to be used in the commands
+     *
      * @param args The arguments to use
      */
     public void setArgs(String[] args) {
@@ -76,9 +81,10 @@ public class CommandEvent extends Event {
 
     /**
      * Hook to make related patches much cleaner.
-     * @param args The arguments used in the command
+     *
+     * @param args    The arguments used in the command
      * @param command The command ran
-     * @param sender The sender who ran the command
+     * @param sender  The sender who ran the command
      * @return The message to actually display.
      */
     public static String[] handle(String[] args, ICommand command, ICommandSender sender) {

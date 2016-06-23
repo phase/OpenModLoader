@@ -11,7 +11,7 @@ public class Event {
 
     /**
      * Checks if the event can be canceled.
-     * 
+     *
      * @return Whether or not the event can be canceled.
      */
     public boolean isCancelable() {
@@ -21,7 +21,7 @@ public class Event {
     /**
      * Updated the canceled status of the event. True means canceled, false
      * means not canceled.
-     * 
+     *
      * @param canceled The new canceled status for the event.
      */
     public void setCanceled(boolean canceled) {
@@ -33,7 +33,7 @@ public class Event {
 
     /**
      * Checks if the event has been canceled.
-     * 
+     *
      * @return Whether or not the event has been canceled.
      */
     public boolean isCanceled() {

@@ -50,15 +50,15 @@ public class ExplosionEvent extends Event {
 
     /**
      * Constructor for a new event that is fired when an explosion is created.
-     * 
-     * @param world The world that the explosion is created in.
-     * @param entity The source of the event.
-     * @param x The X coordinate of the explosion.
-     * @param y The Y coordinate of the explosion.
-     * @param z The Z coordinate of the explosion.
+     *
+     * @param world         The world that the explosion is created in.
+     * @param entity        The source of the event.
+     * @param x             The X coordinate of the explosion.
+     * @param y             The Y coordinate of the explosion.
+     * @param z             The Z coordinate of the explosion.
      * @param explosionSize The size of the explosion.
-     * @param isFlaming Whether or not the explosion is on fire.
-     * @param isSmoking Whether or not the explosion is smoking.
+     * @param isFlaming     Whether or not the explosion is on fire.
+     * @param isSmoking     Whether or not the explosion is smoking.
      */
     public ExplosionEvent(World world, Entity entity, double x, double y, double z, float explosionSize, boolean isFlaming, boolean isSmoking) {
         this.world = world;
@@ -73,7 +73,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Gets the world that the explosion was created in.
-     * 
+     *
      * @return The world that the explosion was created in.
      */
     public World getWorld() {
@@ -82,7 +82,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Gets the entity that caused the explosion.
-     * 
+     *
      * @return The entity that caused the explosion.
      */
     public Entity getEntity() {
@@ -91,7 +91,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Gets the X coordinate of the explosion.
-     * 
+     *
      * @return The X coordinate of the explosion.
      */
     public double getX() {
@@ -100,7 +100,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Sets the X coordinate of the explosion.
-     * 
+     *
      * @param x The new X coordinate of the explosion.
      */
     public void setX(double x) {
@@ -109,7 +109,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Gets the Y coordinate of the explosion.
-     * 
+     *
      * @return The Y coordinate of the explosion.
      */
     public double getY() {
@@ -118,7 +118,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Sets the Y coordinate of the explosion.
-     * 
+     *
      * @param y The new Y coordinate of the explosion.
      */
     public void setY(double y) {
@@ -127,7 +127,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Gets the Z coordinate of the explosion.
-     * 
+     *
      * @return The Z coordinate of the explosion.
      */
     public double getZ() {
@@ -136,7 +136,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Sets the Z coordinate of the explosion.
-     * 
+     *
      * @param z The new Z coordinate of the explosion.
      */
     public void setZ(double z) {
@@ -145,7 +145,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Gets the size of the explosion.
-     * 
+     *
      * @return The size of the explosion.
      */
     public float getExplosionSize() {
@@ -154,7 +154,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Sets the size of the explosion.
-     * 
+     *
      * @param explosionSize The size of the explosion.
      */
     public void setExplosionSize(float explosionSize) {
@@ -163,7 +163,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Checks if the explosion is flaming.
-     * 
+     *
      * @return Whether or not the explosion is flaming.
      */
     public boolean isFlaming() {
@@ -172,7 +172,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Updates the flaming status of the explosion.
-     * 
+     *
      * @param flaming The new flaming status for the explosion.
      */
     public void setFlaming(boolean flaming) {
@@ -181,7 +181,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Checks if the explosion is smoking.
-     * 
+     *
      * @return Whether or not the explosion is smoking.
      */
     public boolean isSmoking() {
@@ -190,7 +190,7 @@ public class ExplosionEvent extends Event {
 
     /**
      * Updates the smoking status of the explosion.
-     * 
+     *
      * @param smoking The new smoking status for the explosion.
      */
     public void setSmoking(boolean smoking) {
@@ -204,15 +204,15 @@ public class ExplosionEvent extends Event {
 
     /**
      * Hook to make related patches much smaller.
-     * 
-     * @param world The world that the explosion is created in.
-     * @param entity The source of the event.
-     * @param x The X coordinate of the explosion.
-     * @param y The Y coordinate of the explosion.
-     * @param z The Z coordinate of the explosion.
+     *
+     * @param world         The world that the explosion is created in.
+     * @param entity        The source of the event.
+     * @param x             The X coordinate of the explosion.
+     * @param y             The Y coordinate of the explosion.
+     * @param z             The Z coordinate of the explosion.
      * @param explosionSize The size of the explosion.
-     * @param isFlaming Whether or not the explosion is on fire.
-     * @param isSmoking Whether or not the explosion is smoking.
+     * @param isFlaming     Whether or not the explosion is on fire.
+     * @param isSmoking     Whether or not the explosion is smoking.
      * @return The explosion to create in the world.
      */
     public static Explosion onExplosion(World world, Entity entity, double x, double y, double z, float explosionSize, boolean isFlaming, boolean isSmoking) {

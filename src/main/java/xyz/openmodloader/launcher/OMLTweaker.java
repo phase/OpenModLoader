@@ -16,7 +16,7 @@ public class OMLTweaker implements ITweaker {
     private Map<String, String> args;
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile) {
         this.args = (Map<String, String>) Launch.blackboard.get("launchArgs");
         if (this.args == null) {

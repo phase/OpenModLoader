@@ -20,7 +20,7 @@ public class SplashLoadEvent extends Event {
     /**
      * Constructs an event that is fired when the main menu splash text list is
      * being populated.
-     * 
+     *
      * @param splashTexts
      */
     public SplashLoadEvent(List<String> splashTexts) {
@@ -31,7 +31,7 @@ public class SplashLoadEvent extends Event {
      * Gets the list of all current splash text messages. Messages added to this
      * list will have a chance to appear on the main menu as a splash text
      * message. Messages can also be removed.
-     * 
+     *
      * @return The list of splash text messages.
      */
     public List<String> getSplashTexts() {

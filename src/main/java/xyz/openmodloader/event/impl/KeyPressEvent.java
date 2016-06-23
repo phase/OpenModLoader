@@ -11,11 +11,13 @@ public class KeyPressEvent extends Event {
 
     /**
      * The character corresponding to the key pressed.
+     *
      * @see #getCharPressed()
      */
     private final char charPressed;
     /**
      * The code for the key pressed.
+     *
      * @see #getKeyPressed()
      */
     private final int keyPressed;

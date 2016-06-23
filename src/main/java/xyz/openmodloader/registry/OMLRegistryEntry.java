@@ -5,12 +5,12 @@ import net.minecraft.util.ResourceLocation;
 public class OMLRegistryEntry<T> {
     private ResourceLocation name;
 
-    public T setRegistryName(ResourceLocation name){
+    public T setRegistryName(ResourceLocation name) {
         this.name = name;
-        return (T)this;
+        return (T) this;
     }
 
-    public ResourceLocation getRegistryName(){
+    public ResourceLocation getRegistryName() {
         return name;
     }
 }

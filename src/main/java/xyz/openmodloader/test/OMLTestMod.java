@@ -109,7 +109,7 @@ public class OMLTestMod implements IMod {
         graphics.drawString("Open Mod Loader", 20, 40);
     }
 
-    private void onHarvestDrops(BlockEvent.HarvestDrops event){
+    private void onHarvestDrops(BlockEvent.HarvestDrops event) {
         OpenModLoader.INSTANCE.getLogger().info("Dropping items: " + event.getDrops() + ", with fortune: " + event.getFortune() + ", with chance: " + event.getChance());
         event.getDrops().add(new ItemStack(Blocks.DIRT));
     }

@@ -42,12 +42,12 @@ public class ModContainer {
     private String updateURL;
     @SerializedName("Logo")
     private String logoString;
-    @SerializedName("MANIFESTISTHEMOSTHORRIBLEIDEAEVER")
+    @SerializedName("Transformer")
     private String transformer;
 
     /**
      * Uses a manifest to create a mod container.
-     * Worst idea in the entire library.
+     * Best idea in the entire library.
      */
     public static ModContainer create(Manifest manifest) {
         Set<Object> attributeNames = manifest.getMainAttributes().keySet();
@@ -141,6 +141,6 @@ public class ModContainer {
     }
 
     public String getTransformer() {
-    	return transformer;
+        return transformer;
     }
 }

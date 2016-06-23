@@ -18,28 +18,32 @@ public class OMLRegistry {
     private static RegistryNamespaced<ResourceLocation, Item> REGISTRY_ITEM;
     private static Map<Block, Item> blockItemMap;
 
-    public static RegistryNamespacedDefaultedByKey<ResourceLocation, Block> getBlockRegistry () {
-        if(REGISTRY_BLOCK == null)
+    public static RegistryNamespacedDefaultedByKey<ResourceLocation, Block> getBlockRegistry() {
+        if (REGISTRY_BLOCK == null) {
             REGISTRY_BLOCK = new RegistryNamespacedDefaultedByKey<>(new ResourceLocation("air"));
+        }
 
         return REGISTRY_BLOCK;
     }
 
-    public static ObjectIntIdentityMap<IBlockState> getBlockIDMap () {
-        if(blockIDMap == null)
+    public static ObjectIntIdentityMap<IBlockState> getBlockIDMap() {
+        if (blockIDMap == null) {
             blockIDMap = new ObjectIntIdentityMap<>();
+        }
         return blockIDMap;
     }
 
-    public static RegistryNamespaced<ResourceLocation, Item> getItemRegistry () {
-        if(REGISTRY_ITEM == null)
+    public static RegistryNamespaced<ResourceLocation, Item> getItemRegistry() {
+        if (REGISTRY_ITEM == null) {
             REGISTRY_ITEM = new RegistryNamespacedDefaultedByKey<>(new ResourceLocation("air"));
+        }
         return REGISTRY_ITEM;
     }
 
-    public static Map<Block, Item> getBlockItemMap () {
-        if(blockItemMap == null)
+    public static Map<Block, Item> getBlockItemMap() {
+        if (blockItemMap == null) {
             blockItemMap = new HashMap<>();
+        }
 
         return blockItemMap;
     }

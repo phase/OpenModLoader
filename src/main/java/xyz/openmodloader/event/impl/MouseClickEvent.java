@@ -10,6 +10,7 @@ public class MouseClickEvent extends Event {
 
     /**
      * The mouse button that was pressed.
+     *
      * @see #getButton()
      */
     private final int button;

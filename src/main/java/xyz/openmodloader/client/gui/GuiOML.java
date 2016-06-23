@@ -15,35 +15,36 @@ import java.awt.*;
 @Strippable(side = Side.CLIENT)
 public class GuiOML extends GuiScreen {
 
-	protected GuiScreen prevScreen;
+    protected GuiScreen prevScreen;
 	private GuiButton backButton;
 
-	public GuiOML(GuiScreen prevScreen) {
-		this.prevScreen = prevScreen;
-	}
+    public GuiOML(GuiScreen prevScreen) {
+        this.prevScreen = prevScreen;
+    }
 
-	@Override
-	public void initGui() {
-		this.backButton = new GuiButton(0, this.width / 2 - 100, this.height - 28, 200, 20, I18n.format("gui.cancel"));
-		this.buttonList.add(backButton);
-	}
+    @Override
+    public void initGui() {
+        this.backButton = new GuiButton(0, this.width / 2 - 100, this.height - 28, 200, 20, I18n.format("gui.cancel"));
+        this.buttonList.add(backButton);
+    }
 
-	@Override
-	protected void actionPerformed(GuiButton button) {
-		if(button == this.backButton)
+    @Override
+    protected void actionPerformed(GuiButton button) {
+		if (button == this.backButton) {
 			Minecraft.getMinecraft().displayGuiScreen(prevScreen);
-	}
-
-	@Override
-	public void drawScreen(int mousex, int mousey, float ticks) {
-		drawBackground(0);
-		super.drawScreen(mousex, mousey, ticks);
-		this.drawCenteredString(this.fontRendererObj, "Open Mod Loader Settings", this.width / 2, 20, 16777215);
-		this.drawString(this.fontRendererObj, ModLoader.MODS.size() + " loaded mod" + (ModLoader.MODS.size() > 1 ? "s" : "") + ":", 10, 50, Color.gray.getRGB());
-		int i = 0;
-		for(ModContainer mod : ModLoader.MODS.values()){
-			i++;
-			this.drawString(this.fontRendererObj, mod.getName() , 15, 70 * i, Color.LIGHT_GRAY.getRGB());
 		}
-	}
+    }
+
+    @Override
+    public void drawScreen(int mousex, int mousey, float ticks) {
+        drawBackground(0);
+        super.drawScreen(mousex, mousey, ticks);
+        this.drawCenteredString(this.fontRendererObj, "Open Mod Loader Settings", this.width / 2, 20, 16777215);
+        this.drawString(this.fontRendererObj, ModLoader.MODS.size() + " loaded mod" + (ModLoader.MODS.size() > 1 ? "s" : "") + ":", 10, 50, Color.gray.getRGB());
+        int i = 0;
+        for (ModContainer mod : ModLoader.MODS.values()) {
+            i++;
+            this.drawString(this.fontRendererObj, mod.getName(), 15, 70 * i, Color.LIGHT_GRAY.getRGB());
+        }
+    }
 }
