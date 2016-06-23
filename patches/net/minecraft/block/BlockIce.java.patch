@@ -1,0 +1,20 @@
+--- /net/minecraft/block
++++ /net/minecraft/block
+@@ -34,7 +34,7 @@
+    public void harvestBlock(World var1, EntityPlayer var2, BlockPos var3, IBlockState var4, @Nullable TileEntity var5, @Nullable ItemStack var6) {
+       var2.addStat(StatList.getBlockStats(this));
+       var2.addExhaustion(0.025F);
+-      if(this.canSilkHarvest() && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, var6) > 0) {
++      if(this.canSilkHarvest() && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, var6, var2) > 0) {
+          ItemStack var9 = this.createStackedBlock(var4);
+          if(var9 != null) {
+             spawnAsEntity(var1, var3, var9);
+@@ -45,7 +45,7 @@
+             return;
+          }
+ 
+-         int var7 = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, var6);
++         int var7 = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, var6, var2);
+          this.dropBlockAsItem(var1, var3, var4, var7);
+          Material var8 = var1.getBlockState(var3.down()).getMaterial();
+          if(var8.blocksMovement() || var8.isLiquid()) {

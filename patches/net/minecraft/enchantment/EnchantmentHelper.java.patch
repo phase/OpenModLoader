@@ -1,0 +1,32 @@
+--- /net/minecraft/enchantment
++++ /net/minecraft/enchantment
+@@ -34,6 +34,11 @@
+    private static final EnchantmentHelper.b ENCHANTMENT_ITERATOR_HURT = new EnchantmentHelper.b();
+    private static final EnchantmentHelper.a ENCHANTMENT_ITERATOR_DAMAGE = new EnchantmentHelper.a();
+ 
++   public static int getEnchantmentLevel(Enchantment enchantment, @Nullable ItemStack stack, EntityLivingBase entityLivingBase) {
++      return xyz.openmodloader.event.impl.EnchantmentEvent.EnchantmentLevel.getEnchantmentLevel(entityLivingBase, enchantment, stack, getEnchantmentLevel(enchantment, stack));
++   }
++
++   @Deprecated
+    public static int getEnchantmentLevel(Enchantment var0, @Nullable ItemStack var1) {
+       if(var1 == null) {
+          return 0;
+@@ -167,7 +172,7 @@
+          int var3 = 0;
+ 
+          for(ItemStack var5 : var2) {
+-            int var6 = getEnchantmentLevel(var0, var5);
++            int var6 = getEnchantmentLevel(var0, var5, var1);
+             if(var6 > var3) {
+                var3 = var6;
+             }
+@@ -226,7 +231,7 @@
+          ArrayList var3 = Lists.newArrayList();
+ 
+          for(ItemStack var5 : var2) {
+-            if(var5 != null && getEnchantmentLevel(var0, var5) > 0) {
++            if(var5 != null && getEnchantmentLevel(var0, var5, var1) > 0) {
+                var3.add(var5);
+             }
+          }

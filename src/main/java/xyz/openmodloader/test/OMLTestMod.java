@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import xyz.openmodloader.OpenModLoader;
@@ -28,7 +29,8 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.EVENT_BUS.register(GuiEvent.Open.class, this::onGuiOpen);
         OpenModLoader.INSTANCE.EVENT_BUS.register(GuiEvent.Draw.class, this::onGuiDraw);
 
-        OpenModLoader.INSTANCE.EVENT_BUS.register(ItemEnchantedEvent.class, this::onItemEnchanted);
+        OpenModLoader.INSTANCE.EVENT_BUS.register(EnchantmentEvent.ItemEnchanted.class, this::onItemEnchanted);
+        OpenModLoader.INSTANCE.EVENT_BUS.register(EnchantmentEvent.EnchantmentLevel.class, this::onEnchantmentLevelCheck);
 
         OpenModLoader.INSTANCE.EVENT_BUS.register(ExplosionEvent.class, this::onExplosion);
 
@@ -75,8 +77,17 @@ public class OMLTestMod implements IMod {
         }
     }
 
-    private void onItemEnchanted(ItemEnchantedEvent event) {
+    private void onItemEnchanted(EnchantmentEvent.ItemEnchanted event) {
         OpenModLoader.INSTANCE.LOGGER.info(event.getItemStack().getDisplayName() + " " + event.getEnchantments().toString());
+    }
+
+    private void onEnchantmentLevelCheck(EnchantmentEvent.EnchantmentLevel event) {
+        if (event.getEnchantment() == Enchantments.FORTUNE && event.getEntityLiving().isSneaking()) {
+            int oldLevel = event.getLevel();
+            int newLevel = (oldLevel + 1) * 10;
+            event.setLevel(newLevel);
+            OpenModLoader.INSTANCE.LOGGER.info("Set fortune level from " + oldLevel + " to " + newLevel);
+        }
     }
 
     private void onExplosion(ExplosionEvent event) {

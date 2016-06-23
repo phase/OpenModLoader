@@ -4,7 +4,7 @@
           if(!this.worldPointer.isRemote) {
              List var6 = this.getEnchantmentList(var3, var2, this.enchantLevels[var2]);
              boolean var7 = var3.getItem() == Items.BOOK;
-+            var6 = xyz.openmodloader.event.impl.ItemEnchantedEvent.onItemEnchanted(var1, var3, var4, var5, var6);
++            var6 = xyz.openmodloader.event.impl.EnchantmentEvent.ItemEnchanted.onItemEnchanted(var1, var3, var4, var5, var6);
              if(var6 != null) {
                 var1.removeExperienceLevel(var5);
                 if(var7) {
