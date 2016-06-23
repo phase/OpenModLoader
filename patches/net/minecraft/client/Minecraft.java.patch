@@ -1,15 +1,6 @@
 --- /net/minecraft/client
 +++ /net/minecraft/client
-@@ -40,8 +40,6 @@
- import net.minecraft.block.Block;
- import net.minecraft.block.material.Material;
- import net.minecraft.block.state.IBlockState;
--import net.minecraft.client.ClientBrandRetriever;
--import net.minecraft.client.LoadingScreenRenderer;
- import net.minecraft.client.audio.MusicTicker;
- import net.minecraft.client.audio.SoundHandler;
- import net.minecraft.client.entity.EntityPlayerSP;
-@@ -389,6 +387,7 @@
+@@ -389,6 +389,7 @@
     }
  
     private void startGame() throws LWJGLException {
@@ -17,7 +8,7 @@
        this.gameSettings = new GameSettings(this, this.mcDataDir);
        this.defaultResourcePacks.add(this.mcDefaultResourcePack);
        this.startTimerHackThread();
-@@ -787,6 +786,10 @@
+@@ -787,6 +788,10 @@
     }
  
     public void displayGuiScreen(@Nullable GuiScreen var1) {
@@ -28,7 +19,7 @@
        if(this.currentScreen != null) {
           this.currentScreen.onGuiClosed();
        }
-@@ -904,6 +907,9 @@
+@@ -904,6 +909,9 @@
        GlStateManager.enableTexture2D();
        this.mcProfiler.endSection();
        if(!this.skipRenderWorld) {
@@ -38,7 +29,7 @@
           this.mcProfiler.endStartSection("gameRenderer");
           this.entityRenderer.updateCameraAndRender(this.timer.renderPartialTicks, var1);
           this.mcProfiler.endSection();
-@@ -2454,7 +2460,8 @@
+@@ -2454,7 +2462,8 @@
                 if(var1 == this.gameSettings.keyBindFullscreen.getKeyCode()) {
                    this.toggleFullscreen();
                 } else if(var1 == this.gameSettings.keyBindScreenshot.getKeyCode()) {

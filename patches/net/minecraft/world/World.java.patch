@@ -1,26 +1,6 @@
 --- /net/minecraft/world
 +++ /net/minecraft/world
-@@ -48,19 +48,6 @@
- import net.minecraft.util.math.Vec3d;
- import net.minecraft.util.math.Vec3i;
- import net.minecraft.village.VillageCollection;
--import net.minecraft.world.DifficultyInstance;
--import net.minecraft.world.EnumDifficulty;
--import net.minecraft.world.EnumSkyBlock;
--import net.minecraft.world.Explosion;
--import net.minecraft.world.GameRules;
--import net.minecraft.world.IBlockAccess;
--import net.minecraft.world.IWorldEventListener;
--import net.minecraft.world.MinecraftException;
--import net.minecraft.world.NextTickListEntry;
--import net.minecraft.world.WorldProvider;
--import net.minecraft.world.WorldSavedData;
--import net.minecraft.world.WorldSettings;
--import net.minecraft.world.WorldType;
- import net.minecraft.world.biome.Biome;
- import net.minecraft.world.biome.BiomeProvider;
- import net.minecraft.world.border.WorldBorder;
-@@ -1667,7 +1654,8 @@
+@@ -1667,7 +1667,8 @@
     }
  
     public Explosion newExplosion(@Nullable Entity var1, double var2, double var4, double var6, float var8, boolean var9, boolean var10) {
@@ -30,7 +10,7 @@
        var11.doExplosionA();
        var11.doExplosionB(true);
        return var11;
-@@ -1836,6 +1824,9 @@
+@@ -1836,6 +1837,9 @@
     }
  
     public void tick() {
