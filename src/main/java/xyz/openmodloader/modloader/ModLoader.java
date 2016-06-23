@@ -53,24 +53,7 @@ public class ModLoader {
             }
 
             URL roots;
-            Enumeration<URL> metas = Launch.classLoader.getResources("");
-            while (metas.hasMoreElements()) {
-                roots = metas.nextElement();
-                File root = new File(roots.getPath());
-                File[] files = root.listFiles();
-                if (files != null) {
-                    for (File file : files) {
-                        if (file.getName().endsWith(".at")) {
-                            Multimap<String, String> entries = OMLAccessTransformer.getEntries();
-                            FileUtils.readLines(file).stream().filter(line -> line.matches("\\w+((\\.\\w+)+|)\\s+\\w+(\\(\\S+|)")).forEach(line -> {
-                                String[] parts = line.split(" ");
-                                entries.put(parts[0], parts[1]);
-                            });
-                        }
-                    }
-                }
-            }
-            metas = Launch.classLoader.getResources("META-INF");
+            Enumeration<URL> metas = Launch.classLoader.getResources("META-INF");
             while (metas.hasMoreElements()) {
                 roots = metas.nextElement();
                 File root = new File(roots.getPath());
@@ -81,6 +64,12 @@ public class ModLoader {
                             FileInputStream stream = new FileInputStream(file);
                             loadMod(file, new Manifest(stream));
                             stream.close();
+                        } else if (file.getName().endsWith(".at")) {
+                            Multimap<String, String> entries = OMLAccessTransformer.getEntries();
+                            FileUtils.readLines(file).stream().filter(line -> line.matches("\\w+((\\.\\w+)+|)\\s+\\w+(\\(\\S+|)")).forEach(line -> {
+                                String[] parts = line.split(" ");
+                                entries.put(parts[0], parts[1]);
+                            });
                         }
                     }
                 }
@@ -97,7 +86,6 @@ public class ModLoader {
      * @param manifest the manifest instance
      */
     private static void loadMod(File file, Manifest manifest) {
-        OpenModLoader.INSTANCE.getLogger().info(file.getAbsolutePath());
         ModContainer container = ModContainer.create(manifest);
         if (container == null) {
             OpenModLoader.INSTANCE.getLogger().error("Found invalid manifest in file " + file.getAbsolutePath().replace("!", "").replace(File.separator + "META-INF" + File.separator + "MANIFEST.MF", ""));

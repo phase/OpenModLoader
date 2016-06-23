@@ -42,16 +42,15 @@ public class ModContainer {
     private String logoString;
 
     public static ModContainer create(Manifest manifest) {
-        Set<String> attributeNames = manifest.getEntries().keySet();
-        System.out.println(manifest.getEntries());
-        if (!attributeNames.containsAll(Arrays.asList("Mod-Class", "ID"))) {
+        Set<Object> attributeNames = manifest.getMainAttributes().keySet();
+        if (!attributeNames.containsAll(Arrays.asList(new Attributes.Name("Mod-Class"), new Attributes.Name("ID")))) {
             return null;
         }
         ModContainer container = new ModContainer();
-        Map<String, Attributes> attributes = manifest.getEntries();
+        Map<Object, Object> attributes = manifest.getMainAttributes();
         for (Field field : ModContainer.class.getDeclaredFields()) {
             if (field.isAnnotationPresent(SerializedName.class)) {
-                String name = field.getAnnotation(SerializedName.class).value();
+                Attributes.Name name = new Attributes.Name(field.getAnnotation(SerializedName.class).value());
                 if (attributes.containsKey(name)) {
                     try {
                         field.set(container, attributes.get(name));
