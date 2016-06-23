@@ -25,8 +25,8 @@ public class OMLAccessTransformer implements IClassTransformer {
         Set<String> entries = OMLAccessTransformer.entries.get(transformedName);
         if (entries != null) {
             ClassNode c = createClassNode(basicClass);
-            c.fields.stream().filter(f -> entries.contains(f.name)).forEach(f -> f.access = getPublicAccess(f.access));
-            c.methods.stream().filter(f -> entries.contains(f.name + f.desc)).forEach(f -> f.access = getPublicAccess(f.access));
+            c.fields.stream().filter(f -> entries.contains(f.name) || entries.contains("*()")).forEach(f -> f.access = getPublicAccess(f.access));
+            c.methods.stream().filter(f -> entries.contains(f.name + f.desc) || entries.contains("*()")).forEach(f -> f.access = getPublicAccess(f.access));
             return getBytes(c);
         }
         return basicClass;

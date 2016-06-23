@@ -61,7 +61,7 @@ public class ModLoader {
                             stream.close();
                         } else if (file.getName().endsWith(".at")) {
                             Multimap<String, String> entries = OMLAccessTransformer.getEntries();
-                            FileUtils.readLines(file).stream().filter(line -> line.matches("\\w+((\\.\\w+)+|)\\s+\\w+(\\(\\S+|)")).forEach(line -> {
+                            FileUtils.readLines(file).stream().filter(line -> line.matches("\\w+((\\.\\w+)+|)\\s+(\\w+(\\(\\S+|)|\\*\\(\\)|\\*)")).forEach(line -> {
                                 String[] parts = line.split(" ");
                                 entries.put(parts[0], parts[1]);
                             });
