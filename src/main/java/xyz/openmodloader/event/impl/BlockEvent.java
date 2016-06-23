@@ -1,10 +1,16 @@
 package xyz.openmodloader.event.impl;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.Event;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Parent class for block related events. All events that fall within this scope
@@ -153,6 +159,111 @@ public class BlockEvent extends Event {
         public static float onDig(float digSpeed, World world, IBlockState state, BlockPos pos) {
             DigSpeed event = new DigSpeed(digSpeed, world, state, pos);
             return OpenModLoader.INSTANCE.EVENT_BUS.post(event) || event.getDigSpeed() < 0F ? 0f : event.getDigSpeed();
+        }
+    }
+
+    /**
+     * An event that is fired just after a block is mined to collect the drops of the block
+     * This event is only called in server side
+     */
+    public static class HarvestDrops extends BlockEvent {
+
+        /**
+         * The probability to drop one item when the block is mined
+         */
+        private float chance;
+
+        /**
+         * The level of the fortune enchantment in the tool used to mine the block
+         */
+        private int fortune;
+
+        /**
+         * The list of items that the block can drop without applying the drop chance
+         */
+        private ImmutableList<ItemStack> initialDrops;
+
+        /**
+         * The list of items that the block will drop
+         */
+        private List<ItemStack> finalDrops;
+
+        /**
+         * Constructor for the base block event. This constructor should only be
+         * accessed through super calls.
+         *
+         * @param world The world where the event took place.
+         * @param state The state of the block involved with the event.
+         * @param pos The position of the event.
+         * @param chance The probability to drop one item
+         * @param fortune The level of fortune used to mine the block
+         * @param initialDrops The list of items that the block can drop without applying chance
+         * @param finalDrops The list of items that the block will drop
+         */
+        public HarvestDrops(World world, IBlockState state, BlockPos pos, float chance, int fortune, ImmutableList<ItemStack> initialDrops, List<ItemStack> finalDrops) {
+            super(world, state, pos);
+            this.chance = chance;
+            this.fortune = fortune;
+            this.initialDrops = initialDrops;
+            this.finalDrops = finalDrops;
+        }
+
+        /**
+         * Gets the probability to drop one item from the drop list
+         *
+         * @return The chance to drop one item
+         */
+        public float getChance() {
+            return chance;
+        }
+
+        /**
+         * Gets the fortune level of the tool used to mine the block
+         *
+         * @return The fortune level used to mine the block
+         */
+        public int getFortune() {
+            return fortune;
+        }
+
+        /**
+         * Gets the list of item that the block will drop
+         *
+         * @return The list of drops
+         */
+        public List<ItemStack> getFinalDrops() {
+            return finalDrops;
+        }
+
+        /**
+         * Gets the list of item that the block it's trying to drop
+         *
+         * @return The list of drops
+         */
+        public ImmutableList<ItemStack> getInitialDrops() {
+            return initialDrops;
+        }
+
+        /**
+         * Hook to make related patches much cleaner.
+         *
+         * finalDrops is a list of items that the block will drop, it's calculated the same way as minecraft does,
+         * and every item in finalDrops it's copy of one item in initialDrops to avoid conflicts when any mod changes
+         * the stacksize of the items in finalDrops
+         *
+         * @param world The world where the event took place.
+         * @param state The state of the block involved with the event.
+         * @param pos The position of the event.
+         * @param chance The probability to drop one item
+         * @param fortune The level of fortune in the tool used to mine the block
+         * @param initialDrops The list of drops that the block can drop
+         * @return The list of items that the block will drop
+         */
+        public static List<ItemStack> onHarvestDrops(World world, IBlockState state, BlockPos pos, float chance, int fortune, List<ItemStack> initialDrops){
+            List<ItemStack> finalDrops = initialDrops.stream().filter(stack -> world.rand.nextFloat() <= chance).map(ItemStack::copy).collect(Collectors.toCollection(LinkedList::new));
+            BlockEvent.HarvestDrops event = new xyz.openmodloader.event.impl.BlockEvent.HarvestDrops(world, state, pos, chance, fortune, ImmutableList.copyOf(initialDrops), finalDrops);
+            OpenModLoader.INSTANCE.EVENT_BUS.post(event);
+            return event.getFinalDrops();
         }
     }
 

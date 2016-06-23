@@ -8,6 +8,7 @@ import java.io.File;
 
 import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.impl.*;
@@ -21,6 +22,7 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.EVENT_BUS.register(BlockEvent.Place.class, this::onBlockPlace);
         OpenModLoader.INSTANCE.EVENT_BUS.register(BlockEvent.Destroy.class, this::onBlockDestroy);
         OpenModLoader.INSTANCE.EVENT_BUS.register(BlockEvent.DigSpeed.class, this::onBlockDigSpeed);
+        OpenModLoader.INSTANCE.EVENT_BUS.register(BlockEvent.HarvestDrops.class, this::onHarvestDrops);
 
         OpenModLoader.INSTANCE.EVENT_BUS.register(GuiEvent.Open.class, this::onGuiOpen);
 
@@ -81,5 +83,10 @@ public class OMLTestMod implements IMod {
         graphics.setColor(Color.RED);
         graphics.setFont(new Font("Arial Black", Font.BOLD, 20));
         graphics.drawString("Open Mod Loader", 20, 40);
+    }
+
+    private void onHarvestDrops(BlockEvent.HarvestDrops event){
+        OpenModLoader.INSTANCE.LOGGER.info("Dropping items: " + event.getFinalDrops() + " from original items: " + event.getInitialDrops() + ", with fortune: " + event.getFortune() + ", with chance: " + event.getChance());
+        event.getFinalDrops().add(new ItemStack(Blocks.DIRT));
     }
 }
