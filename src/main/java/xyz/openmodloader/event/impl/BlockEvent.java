@@ -158,7 +158,7 @@ public class BlockEvent extends Event {
          */
         public static float onDig(float digSpeed, World world, IBlockState state, BlockPos pos) {
             DigSpeed event = new DigSpeed(digSpeed, world, state, pos);
-            return OpenModLoader.INSTANCE.EVENT_BUS.post(event) || event.getDigSpeed() < 0F ? 0f : event.getDigSpeed();
+            return !OpenModLoader.INSTANCE.EVENT_BUS.post(event) || event.getDigSpeed() < 0F ? 0f : event.getDigSpeed();
         }
     }
 
