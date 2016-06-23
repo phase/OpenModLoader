@@ -37,6 +37,8 @@ public class ModLoader {
      */
     private static final File MOD_DIRECTORY = new File(RUN_DIRECTORY, "mods");
 
+    private static ModContainer currentContainer;
+
     /**
      * Attempts to load all mods from the mods directory. While this is public,
      * it is intended for internal use only!
@@ -102,6 +104,7 @@ public class ModLoader {
     public static void registerMods() {
         for (ModContainer mod : MODS.values()) {
             try {
+                currentContainer = mod;
                 mod.getInstance().onEnable();
             } catch (RuntimeException e) {
                 OpenModLoader.INSTANCE.getLogger().warn("An error occurred while enabling mod " + mod.getModID());
@@ -109,5 +112,10 @@ public class ModLoader {
                 MODS.remove(mod.getModID());
             }
         }
+        currentContainer = null;
+    }
+
+    public static ModContainer getCurrentContainer() {
+        return currentContainer;
     }
 }
