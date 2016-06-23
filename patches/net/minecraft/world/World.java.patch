@@ -1,6 +1,6 @@
 --- /net/minecraft/world
 +++ /net/minecraft/world
-@@ -1667,7 +1667,8 @@
+@@ -1673,7 +1673,8 @@
     }
  
     public Explosion newExplosion(@Nullable Entity var1, double var2, double var4, double var6, float var8, boolean var9, boolean var10) {
@@ -10,13 +10,11 @@
        var11.doExplosionA();
        var11.doExplosionB(true);
        return var11;
-@@ -1836,6 +1837,9 @@
+@@ -1842,6 +1843,7 @@
     }
  
     public void tick() {
-+      //OML START
 +      xyz.openmodloader.OpenModLoader.INSTANCE.EVENT_BUS.post(new xyz.openmodloader.event.impl.UpdateEvent.WorldUpdate(this));
-+      //OML END
        this.updateWeather();
     }
  
