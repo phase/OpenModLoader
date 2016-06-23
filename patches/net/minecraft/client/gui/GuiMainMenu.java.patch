@@ -1,16 +1,14 @@
 --- /net/minecraft/client/gui
 +++ /net/minecraft/client/gui
-@@ -91,6 +91,9 @@
+@@ -91,6 +91,7 @@
              }
           }
  
-+//       OML START
 +         xyz.openmodloader.OpenModLoader.INSTANCE.EVENT_BUS.post(new xyz.openmodloader.event.impl.SplashLoadEvent(var2));
-+//       OML END
           if(!var2.isEmpty()) {
              while(true) {
                 this.splashText = (String)var2.get(RANDOM.nextInt(var2.size()));
-@@ -185,7 +188,8 @@
+@@ -185,7 +186,8 @@
     private void addSingleplayerMultiplayerButtons(int var1, int var2) {
        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, var1, I18n.format("menu.singleplayer", new Object[0])));
        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, var1 + var2 * 1, I18n.format("menu.multiplayer", new Object[0])));
@@ -20,7 +18,7 @@
     }
  
     private void addDemoButtons(int var1, int var2) {
-@@ -236,6 +240,9 @@
+@@ -236,6 +238,9 @@
           }
        }
  
@@ -30,7 +28,7 @@
     }
  
     private void switchToRealms() {
-@@ -438,6 +445,9 @@
+@@ -438,6 +443,9 @@
           var8 = var8 + ("release".equalsIgnoreCase(this.mc.getVersionType())?"":"/" + this.mc.getVersionType());
        }
  

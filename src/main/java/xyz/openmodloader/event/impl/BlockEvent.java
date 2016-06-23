@@ -8,9 +8,7 @@ import net.minecraft.world.World;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.Event;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Parent class for block related events. All events that fall within this scope
@@ -37,10 +35,10 @@ public class BlockEvent extends Event {
     /**
      * Constructor for the base block event. This constructor should only be
      * accessed through super calls.
-     * 
+     *
      * @param world The world where the event took place.
      * @param state The state of the block involved with the event.
-     * @param pos The position of the event.
+     * @param pos   The position of the event.
      */
     public BlockEvent(World world, IBlockState state, BlockPos pos) {
         this.world = world;
@@ -55,10 +53,10 @@ public class BlockEvent extends Event {
 
         /**
          * Constructor for a new event that is fired when a block is placed.
-         * 
+         *
          * @param world The world where the event took place.
          * @param state The state of the block involved with the event.
-         * @param pos The position of the event.
+         * @param pos   The position of the event.
          */
         public Place(World world, IBlockState state, BlockPos pos) {
             super(world, state, pos);
@@ -66,7 +64,7 @@ public class BlockEvent extends Event {
 
         /**
          * Sets the state to block state to a new one.
-         * 
+         *
          * @param state The new state for the block.
          */
         public void setBlockState(IBlockState state) {
@@ -75,10 +73,10 @@ public class BlockEvent extends Event {
 
         /**
          * Hook to make related patches much cleaner.
-         * 
+         *
          * @param world The world where the event took place.
          * @param state The state of the block involved with the event.
-         * @param pos The position of the event.
+         * @param pos   The position of the event.
          * @return The state for the block to be placed.
          */
         public static IBlockState onPlace(World world, IBlockState state, BlockPos pos) {
@@ -94,10 +92,10 @@ public class BlockEvent extends Event {
 
         /**
          * Constructor for a new event that is fired when a block is destroyed.
-         * 
+         *
          * @param world The world where the event took place.
          * @param state The state of the block involved with the event.
-         * @param pos The position of the event.
+         * @param pos   The position of the event.
          */
         public Destroy(World world, IBlockState state, BlockPos pos) {
             super(world, state, pos);
@@ -118,11 +116,11 @@ public class BlockEvent extends Event {
         /**
          * Constructor for a new event that is fired while a block is being
          * mined.
-         * 
+         *
          * @param digSpeed The speed that the block is being mined at.
-         * @param world The world where the event took place.
-         * @param state The state of the block involved with the event.
-         * @param pos The position of the event.
+         * @param world    The world where the event took place.
+         * @param state    The state of the block involved with the event.
+         * @param pos      The position of the event.
          */
         public DigSpeed(float digSpeed, World world, IBlockState state, BlockPos pos) {
             super(world, state, pos);
@@ -131,7 +129,7 @@ public class BlockEvent extends Event {
 
         /**
          * Gets the speed that the the block is being mined at.
-         * 
+         *
          * @return The speed the block is being mined at.
          */
         public float getDigSpeed() {
@@ -140,7 +138,7 @@ public class BlockEvent extends Event {
 
         /**
          * Sets the speed that the block should be mined at.
-         * 
+         *
          * @param digSpeed The new dig speed.
          */
         public void setDigSpeed(float digSpeed) {
@@ -149,11 +147,11 @@ public class BlockEvent extends Event {
 
         /**
          * Hook to make related patches much cleaner.
-         * 
+         *
          * @param digSpeed The speed at which the block is being mined.
-         * @param world The world where the event took place.
-         * @param state The state of the block involved with the event.
-         * @param pos The position of the event.
+         * @param world    The world where the event took place.
+         * @param state    The state of the block involved with the event.
+         * @param pos      The position of the event.
          * @return The state for the block to be placed.
          */
         public static float onDig(float digSpeed, World world, IBlockState state, BlockPos pos) {
@@ -179,33 +177,26 @@ public class BlockEvent extends Event {
         private int fortune;
 
         /**
-         * The list of items that the block can drop without applying the drop chance
-         */
-        private ImmutableList<ItemStack> initialDrops;
-
-        /**
          * The list of items that the block will drop
          */
-        private List<ItemStack> finalDrops;
+        private List<ItemStack> drops;
 
         /**
          * Constructor for the base block event. This constructor should only be
          * accessed through super calls.
          *
-         * @param world The world where the event took place.
-         * @param state The state of the block involved with the event.
-         * @param pos The position of the event.
-         * @param chance The probability to drop one item
+         * @param world   The world where the event took place.
+         * @param state   The state of the block involved with the event.
+         * @param pos     The position of the event.
+         * @param chance  The probability to drop one item
          * @param fortune The level of fortune used to mine the block
-         * @param initialDrops The list of items that the block can drop without applying chance
-         * @param finalDrops The list of items that the block will drop
+         * @param drops   The list of items that the block will drop
          */
-        public HarvestDrops(World world, IBlockState state, BlockPos pos, float chance, int fortune, ImmutableList<ItemStack> initialDrops, List<ItemStack> finalDrops) {
+        public HarvestDrops(World world, IBlockState state, BlockPos pos, float chance, int fortune, List<ItemStack> drops) {
             super(world, state, pos);
             this.chance = chance;
             this.fortune = fortune;
-            this.initialDrops = initialDrops;
-            this.finalDrops = finalDrops;
+            this.drops = drops;
         }
 
         /**
@@ -231,45 +222,31 @@ public class BlockEvent extends Event {
          *
          * @return The list of drops
          */
-        public List<ItemStack> getFinalDrops() {
-            return finalDrops;
-        }
-
-        /**
-         * Gets the list of item that the block it's trying to drop
-         *
-         * @return The list of drops
-         */
-        public ImmutableList<ItemStack> getInitialDrops() {
-            return initialDrops;
+        public List<ItemStack> getDrops() {
+            return drops;
         }
 
         /**
          * Hook to make related patches much cleaner.
          *
-         * finalDrops is a list of items that the block will drop, it's calculated the same way as minecraft does,
-         * and every item in finalDrops it's copy of one item in initialDrops to avoid conflicts when any mod changes
-         * the stacksize of the items in finalDrops
-         *
-         * @param world The world where the event took place.
-         * @param state The state of the block involved with the event.
-         * @param pos The position of the event.
-         * @param chance The probability to drop one item
+         * @param world   The world where the event took place.
+         * @param state   The state of the block involved with the event.
+         * @param pos     The position of the event.
+         * @param chance  The probability to drop one item
          * @param fortune The level of fortune in the tool used to mine the block
-         * @param initialDrops The list of drops that the block can drop
+         * @param drops   The list of drops that the block can drop
          * @return The list of items that the block will drop
          */
-        public static List<ItemStack> onHarvestDrops(World world, IBlockState state, BlockPos pos, float chance, int fortune, List<ItemStack> initialDrops){
-            List<ItemStack> finalDrops = initialDrops.stream().filter(stack -> world.rand.nextFloat() <= chance).map(ItemStack::copy).collect(Collectors.toCollection(LinkedList::new));
-            BlockEvent.HarvestDrops event = new xyz.openmodloader.event.impl.BlockEvent.HarvestDrops(world, state, pos, chance, fortune, ImmutableList.copyOf(initialDrops), finalDrops);
+        public static List<ItemStack> onHarvestDrops(World world, IBlockState state, BlockPos pos, float chance, int fortune, List<ItemStack> drops) {
+            BlockEvent.HarvestDrops event = new xyz.openmodloader.event.impl.BlockEvent.HarvestDrops(world, state, pos, chance, fortune, ImmutableList.copyOf(drops));
             OpenModLoader.INSTANCE.EVENT_BUS.post(event);
-            return event.getFinalDrops();
+            return event.getDrops();
         }
     }
 
     /**
      * Gets the world that the event took place in.
-     * 
+     *
      * @return The world where the event took place.
      */
     public World getWorld() {
@@ -278,7 +255,7 @@ public class BlockEvent extends Event {
 
     /**
      * Gets the state of the block involved with the event.
-     * 
+     *
      * @return The state of the block involved with the event.
      */
     public IBlockState getBlockState() {
@@ -287,7 +264,7 @@ public class BlockEvent extends Event {
 
     /**
      * Gets the position of the event.
-     * 
+     *
      * @return The position of the event.
      */
     public BlockPos getPos() {

@@ -1,25 +1,22 @@
 --- /net/minecraft/client/multiplayer
 +++ /net/minecraft/client/multiplayer
-@@ -106,6 +106,9 @@
+@@ -106,6 +106,7 @@
           }
        }
  
-+//    OML START
 +      if (!xyz.openmodloader.OpenModLoader.INSTANCE.EVENT_BUS.post(new xyz.openmodloader.event.impl.BlockEvent.Destroy(this.mc.theWorld, this.mc.theWorld.getBlockState(var1), var1))) return false;
-+//    OML END
        if(this.currentGameType.isCreative() && this.mc.thePlayer.getHeldItemMainhand() != null && this.mc.thePlayer.getHeldItemMainhand().getItem() instanceof ItemSword) {
           return false;
        } else {
-@@ -161,7 +164,7 @@
+@@ -161,6 +162,7 @@
        if(!this.mc.theWorld.getWorldBorder().contains(var1)) {
           return false;
        } else {
--         if(this.currentGameType.isCreative()) {
-+         if(false) {
++         if(false)
+          if(this.currentGameType.isCreative()) {
              this.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.a.START_DESTROY_BLOCK, var1, var2));
              clickBlockCreative(this.mc, this, var1, var2);
-             this.blockHitDelay = 5;
-@@ -173,11 +176,13 @@
+@@ -173,11 +175,13 @@
              this.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.a.START_DESTROY_BLOCK, var1, var2));
              IBlockState var5 = this.mc.theWorld.getBlockState(var1);
              boolean var4 = var5.getMaterial() != Material.AIR;
@@ -33,7 +30,7 @@
                 this.onPlayerDestroyBlock(var1);
              } else {
                 this.isHittingBlock = true;
-@@ -209,7 +214,7 @@
+@@ -209,7 +213,7 @@
        if(this.blockHitDelay > 0) {
           --this.blockHitDelay;
           return true;
@@ -42,7 +39,7 @@
           this.blockHitDelay = 5;
           this.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.a.START_DESTROY_BLOCK, var1, var2));
           clickBlockCreative(this.mc, this, var1, var2);
-@@ -231,6 +236,7 @@
+@@ -231,6 +235,7 @@
              if(this.curBlockDamageMP >= 1.0F) {
                 this.isHittingBlock = false;
                 this.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.a.STOP_DESTROY_BLOCK, var1, var2));

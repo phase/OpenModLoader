@@ -1,29 +1,23 @@
 --- /net/minecraft/block
 +++ /net/minecraft/block
-@@ -574,15 +574,21 @@
+@@ -574,15 +574,20 @@
        if(!var1.isRemote) {
           int var6 = this.quantityDroppedWithBonus(var5, var1.rand);
  
-+//       OML START
-+         java.util.List<ItemStack> drops = new java.util.LinkedList<>();
-+
++         java.util.List<ItemStack> drops = new java.util.ArrayList<>();
           for(int var7 = 0; var7 < var6; ++var7) {
--            if(var1.rand.nextFloat() <= var4) {
--               Item var8 = this.getItemDropped(var3, var1.rand, var5);
--               if(var8 != null) {
--                  spawnAsEntity(var1, var2, new ItemStack(var8, 1, this.damageDropped(var3)));
--               }
-+            Item var8 = this.getItemDropped(var3, var1.rand, var5);
-+            if(var8 != null) {
-+               drops.add(new ItemStack(var8, 1, this.damageDropped(var3)));
+             if(var1.rand.nextFloat() <= var4) {
+                Item var8 = this.getItemDropped(var3, var1.rand, var5);
+                if(var8 != null) {
++                  drops.add(new ItemStack(var8, 1, this.damageDropped(var3)));
++                  if (false)
+                   spawnAsEntity(var1, var2, new ItemStack(var8, 1, this.damageDropped(var3)));
+                }
              }
           }
-+         drops = xyz.openmodloader.event.impl.BlockEvent.HarvestDrops.onHarvestDrops(var1, var3, var2, var4, var5, drops);
  
-+         for(ItemStack stack : drops){
-+            spawnAsEntity(var1, var2, stack);
-+         }
-+//       OML END
++         drops = xyz.openmodloader.event.impl.BlockEvent.HarvestDrops.onHarvestDrops(var1, var3, var2, var4, var5, drops);
++         for (ItemStack stack : drops) spawnAsEntity(var1, var2, stack);
        }
     }
  

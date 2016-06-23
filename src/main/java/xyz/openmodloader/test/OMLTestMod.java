@@ -88,8 +88,8 @@ public class OMLTestMod implements IMod {
     }
 
     private void onHarvestDrops(BlockEvent.HarvestDrops event){
-        OpenModLoader.INSTANCE.LOGGER.info("Dropping items: " + event.getFinalDrops() + " from original items: " + event.getInitialDrops() + ", with fortune: " + event.getFortune() + ", with chance: " + event.getChance());
-        event.getFinalDrops().add(new ItemStack(Blocks.DIRT));
+        OpenModLoader.INSTANCE.LOGGER.info("Dropping items: " + event.getDrops() + ", with fortune: " + event.getFortune() + ", with chance: " + event.getChance());
+        event.getDrops().add(new ItemStack(Blocks.DIRT));
     }
 
     private void onKeyPressed(KeyPressEvent event) {
