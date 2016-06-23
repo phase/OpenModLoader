@@ -1,11 +1,5 @@
 package xyz.openmodloader.test;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-
 import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -13,6 +7,11 @@ import net.minecraft.util.text.TextComponentString;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.impl.*;
 import xyz.openmodloader.modloader.IMod;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.Arrays;
 
 public class OMLTestMod implements IMod {
     @Override
@@ -33,6 +32,8 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.EVENT_BUS.register(SplashLoadEvent.class, this::onSplashLoad);
 
         OpenModLoader.INSTANCE.EVENT_BUS.register(ScreenshotEvent.class, this::onScreenshot);
+
+        OpenModLoader.INSTANCE.EVENT_BUS.register(CommandEvent.class, this::onCommandRan);
 
         OpenModLoader.INSTANCE.EVENT_BUS.register(KeyPressEvent.class, this::onKeyPressed);
     }
@@ -90,6 +91,11 @@ public class OMLTestMod implements IMod {
     private void onHarvestDrops(BlockEvent.HarvestDrops event){
         OpenModLoader.INSTANCE.LOGGER.info("Dropping items: " + event.getDrops() + ", with fortune: " + event.getFortune() + ", with chance: " + event.getChance());
         event.getDrops().add(new ItemStack(Blocks.DIRT));
+    }
+
+    private void onCommandRan(CommandEvent event) {
+        OpenModLoader.INSTANCE.LOGGER.info("Player: " + event.getSender().getName() + " ran command: " + event.getCommand().getCommandName() + " with arguments: " + Arrays.toString(event.getArgs()));
+        event.setCanceled(true);
     }
 
     private void onKeyPressed(KeyPressEvent event) {
