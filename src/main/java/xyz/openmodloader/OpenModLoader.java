@@ -13,12 +13,13 @@ public enum OpenModLoader {
     private String version = "0.0.1-develop";
     private Logger logger = LogManager.getLogger();
     private EventBus eventBus = new EventBus();
-    private Side side;
+    private ISidedHandler sidedHandler;
 
-    public void minecraftConstruction(Side side) {
-        this.side = side;
+    public void minecraftConstruction(ISidedHandler sidedHandler) {
+        this.sidedHandler = sidedHandler;
         getLogger().info("Loading OpenModLoader " + getVersion());
         ModLoader.registerMods();
+        getSidedHandler().onInitialize();
     }
 
     public String getVersion() {
@@ -33,7 +34,7 @@ public enum OpenModLoader {
         return eventBus;
     }
 
-    public Side getSide() {
-        return side;
+    public ISidedHandler getSidedHandler() {
+        return sidedHandler;
     }
 }

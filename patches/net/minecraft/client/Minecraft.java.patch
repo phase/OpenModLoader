@@ -4,7 +4,7 @@
     }
  
     private void startGame() throws LWJGLException {
-+      xyz.openmodloader.OpenModLoader.INSTANCE.minecraftConstruction(xyz.openmodloader.event.strippable.Side.CLIENT);
++      xyz.openmodloader.OpenModLoader.INSTANCE.minecraftConstruction(xyz.openmodloader.client.OMLClientHandler.INSTANCE);
        this.gameSettings = new GameSettings(this, this.mcDataDir);
        this.defaultResourcePacks.add(this.mcDefaultResourcePack);
        this.startTimerHackThread();
@@ -17,15 +17,23 @@
        if(this.currentScreen != null) {
           this.currentScreen.onGuiClosed();
        }
-@@ -904,6 +907,7 @@
-       GlStateManager.enableTexture2D();
-       this.mcProfiler.endSection();
-       if(!this.skipRenderWorld) {
-+         xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.RenderUpdate(this.timer.renderPartialTicks));
+@@ -907,6 +910,7 @@
           this.mcProfiler.endStartSection("gameRenderer");
           this.entityRenderer.updateCameraAndRender(this.timer.renderPartialTicks, var1);
           this.mcProfiler.endSection();
-@@ -1511,6 +1515,7 @@
++         xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.RenderUpdate(this.timer.renderPartialTicks));
+       }
+ 
+       this.mcProfiler.endSection();
+@@ -1350,6 +1354,7 @@
+          --this.rightClickDelayTimer;
+       }
+ 
++      xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.ClientUpdate());
+       this.mcProfiler.startSection("gui");
+       if(!this.isGamePaused) {
+          this.ingameGUI.updateTick();
+@@ -1511,6 +1516,7 @@
              this.debugCrashKeyPressTime = getSystemTime();
           }
  
@@ -33,7 +41,7 @@
           this.dispatchKeypresses();
           if(this.currentScreen != null) {
              this.currentScreen.handleKeyboardInput();
-@@ -1743,6 +1748,7 @@
+@@ -1743,6 +1749,7 @@
           int var1 = Mouse.getEventButton();
           KeyBinding.setKeyBindState(var1 - 100, Mouse.getEventButtonState());
           if(Mouse.getEventButtonState()) {
@@ -41,7 +49,7 @@
              if(this.thePlayer.isSpectator() && var1 == 2) {
                 this.ingameGUI.getSpectatorGui().onMiddleClick();
              } else {
-@@ -2454,7 +2460,8 @@
+@@ -2454,7 +2461,8 @@
                 if(var1 == this.gameSettings.keyBindFullscreen.getKeyCode()) {
                    this.toggleFullscreen();
                 } else if(var1 == this.gameSettings.keyBindScreenshot.getKeyCode()) {

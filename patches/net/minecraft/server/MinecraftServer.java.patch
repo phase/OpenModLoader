@@ -1,0 +1,10 @@
+--- /net/minecraft/server
++++ /net/minecraft/server
+@@ -493,6 +493,7 @@
+    }
+ 
+    public void tick() {
++      xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.ServerUpdate(this));
+       long var1 = System.nanoTime();
+       ++this.tickCounter;
+       if(this.startProfiling) {

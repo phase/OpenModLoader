@@ -68,6 +68,10 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.getLogger().info("Opening gui: " + event.getGui());
         if (event.getGui() instanceof GuiLanguage) {
             event.setCanceled(true);
+        } else if (event.getGui() instanceof GuiMainMenu) {
+            for (int i = 0; i < 100; i++) {
+                OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(new TextComponentString("Hey there!"));
+            }
         }
     }
 

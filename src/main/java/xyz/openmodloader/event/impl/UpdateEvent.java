@@ -1,6 +1,7 @@
 package xyz.openmodloader.event.impl;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import xyz.openmodloader.event.Event;
 
@@ -93,6 +94,37 @@ public class UpdateEvent extends Event {
          */
         public float getPartialTicks() {
             return partialTicks;
+        }
+    }
+
+    /**
+     * Fired every client update.
+     */
+    public static class ClientUpdate extends UpdateEvent {
+
+    }
+
+    /**
+     * Fired every server update.
+     */
+    public static class ServerUpdate extends UpdateEvent {
+
+        /**
+         * The server instance;
+         */
+        private final MinecraftServer server;
+
+        public ServerUpdate(MinecraftServer server) {
+            this.server = server;
+        }
+
+        /**
+         * Gets the server instance
+         *
+         * @return The server instance
+         */
+        public MinecraftServer getServer() {
+            return server;
         }
     }
 }

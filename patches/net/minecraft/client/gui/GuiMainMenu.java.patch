@@ -32,8 +32,8 @@
           var8 = var8 + ("release".equalsIgnoreCase(this.mc.getVersionType())?"":"/" + this.mc.getVersionType());
        }
  
-+      for(String str : xyz.openmodloader.client.OpenModLoaderClient.getMainMenuStrings()){
-+         this.drawString(this.fontRendererObj, str, 2, this.height - 20 - (xyz.openmodloader.client.OpenModLoaderClient.getMainMenuStrings().indexOf(str) * 10), -1);
++      for(String str : xyz.openmodloader.client.OMLClientHandler.INSTANCE.getMainMenuStrings()){
++         this.drawString(this.fontRendererObj, str, 2, this.height - 20 - (xyz.openmodloader.client.OMLClientHandler.INSTANCE.getMainMenuStrings().indexOf(str) * 10), -1);
 +      }
        this.drawString(this.fontRendererObj, var8, 2, this.height - 10, -1);
        String var9 = "Copyright Mojang AB. Do not distribute!";

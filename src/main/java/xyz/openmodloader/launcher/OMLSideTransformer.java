@@ -24,7 +24,7 @@ public class OMLSideTransformer implements IClassTransformer {
         classReader.accept(classNode, 0);
 
         if (remove(classNode.visibleAnnotations)) {
-            throw new RuntimeException(String.format("Loading class %s on wrong side %s", name, OpenModLoader.INSTANCE.getSide()));
+            throw new RuntimeException(String.format("Loading class %s on wrong side %s", name, SIDE.toString()));
         }
 
         classNode.methods.removeIf(method -> remove(method.visibleAnnotations));
