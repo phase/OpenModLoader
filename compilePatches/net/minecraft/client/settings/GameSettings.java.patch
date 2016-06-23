@@ -1,6 +1,6 @@
 --- /net/minecraft/client/settings
 +++ /net/minecraft/client/settings
-@@ -464,7 +464,7 @@
+@@ -465,7 +465,7 @@
           }
  
           this.soundLevels.clear();

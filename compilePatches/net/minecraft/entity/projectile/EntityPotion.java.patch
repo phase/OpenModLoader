@@ -1,6 +1,6 @@
 --- /net/minecraft/entity/projectile
 +++ /net/minecraft/entity/projectile
-@@ -81,7 +81,7 @@
+@@ -80,7 +80,7 @@
        if(!this.worldObj.isRemote) {
           ItemStack var2 = this.getPotion();
           PotionType var3 = PotionUtils.getPotionFromItem(var2);
@@ -9,7 +9,7 @@
           if(var1.typeOfHit == RayTraceResult.a.BLOCK && var3 == PotionTypes.WATER && var4.isEmpty()) {
              BlockPos var18 = var1.getBlockPos().offset(var1.sideHit);
              this.extinguishFires(var18);
-@@ -110,7 +110,7 @@
+@@ -109,7 +109,7 @@
                    this.worldObj.spawnEntityInWorld(var5);
                 } else {
                    AxisAlignedBB var17 = this.getEntityBoundingBox().expand(4.0D, 2.0D, 4.0D);

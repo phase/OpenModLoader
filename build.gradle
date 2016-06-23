@@ -20,7 +20,7 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = targetCompatibility = '1.8'
 
 minecraft {
-    version = "1.10"
+    version = "1.10.2"
     mappings = "snapshot_20160604"
 	genCompilePatches = false
 }

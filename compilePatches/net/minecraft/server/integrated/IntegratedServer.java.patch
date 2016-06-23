@@ -20,7 +20,7 @@
  
 -   protected boolean startServer() throws IOException {
 +   public boolean startServer() throws IOException {
-       LOGGER.info("Starting integrated minecraft server version 1.10");
+       LOGGER.info("Starting integrated minecraft server version 1.10.2");
        this.setOnlineMode(true);
        this.setCanSpawnAnimals(true);
 @@ -122,7 +122,7 @@

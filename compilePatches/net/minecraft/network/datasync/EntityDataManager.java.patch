@@ -1,6 +1,6 @@
 --- /net/minecraft/network/datasync
 +++ /net/minecraft/network/datasync
-@@ -237,7 +237,7 @@
+@@ -251,7 +251,7 @@
     }
  
     protected <T> void setEntryValue(EntityDataManager.a<T> var1, EntityDataManager.a<?> var2) {

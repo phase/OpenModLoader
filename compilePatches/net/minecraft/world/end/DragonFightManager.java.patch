@@ -1,6 +1,6 @@
 --- /net/minecraft/world/end
 +++ /net/minecraft/world/end
-@@ -294,7 +294,7 @@
+@@ -290,7 +290,7 @@
           var1.add(var3);
        }
  
