@@ -77,7 +77,9 @@ public final class ModLoader {
                 if (files != null) {
                     for (File file : files) {
                         if (file.getName().equals("mod.json")) {
-                            loadMod(new FileInputStream(file));
+                            final FileInputStream stream = new FileInputStream(file);
+                            loadMod(stream);
+                            stream.close();
                         }
                     }
                 }
