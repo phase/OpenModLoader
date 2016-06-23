@@ -49,7 +49,7 @@ public class OMLTweaker implements ITweaker {
         classLoader.registerTransformer(OMLSideTransformer.class.getCanonicalName());
         classLoader.registerTransformer(OMLAccessTransformer.class.getCanonicalName());
         classLoader.addClassLoaderExclusion("com.google.common");
-        classLoader.addClassLoaderExclusion("xyz.openmodloader");
+        classLoader.addClassLoaderExclusion("xyz.openmodloader.modloader");
         ModLoader.loadMods();
     }
 
