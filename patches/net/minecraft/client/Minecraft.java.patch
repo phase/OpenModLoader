@@ -33,7 +33,15 @@
           this.dispatchKeypresses();
           if(this.currentScreen != null) {
              this.currentScreen.handleKeyboardInput();
-@@ -2454,7 +2459,8 @@
+@@ -1743,6 +1748,7 @@
+          int var1 = Mouse.getEventButton();
+          KeyBinding.setKeyBindState(var1 - 100, Mouse.getEventButtonState());
+          if(Mouse.getEventButtonState()) {
++            if (!xyz.openmodloader.event.impl.MouseClickEvent.handle(var1)) return;
+             if(this.thePlayer.isSpectator() && var1 == 2) {
+                this.ingameGUI.getSpectatorGui().onMiddleClick();
+             } else {
+@@ -2454,7 +2460,8 @@
                 if(var1 == this.gameSettings.keyBindFullscreen.getKeyCode()) {
                    this.toggleFullscreen();
                 } else if(var1 == this.gameSettings.keyBindScreenshot.getKeyCode()) {

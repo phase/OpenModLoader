@@ -17,7 +17,15 @@
        this.initGui();
     }
  
-@@ -425,6 +428,7 @@
+@@ -401,6 +404,7 @@
+       int var2 = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+       int var3 = Mouse.getEventButton();
+       if(Mouse.getEventButtonState()) {
++         if (!xyz.openmodloader.event.impl.MouseClickEvent.handle(var3)) return;
+          if(this.mc.gameSettings.touchscreen && this.touchValue++ > 0) {
+             return;
+          }
+@@ -425,6 +429,7 @@
     public void handleKeyboardInput() {
        char var1 = Keyboard.getEventCharacter();
        if(Keyboard.getEventKey() == 0 && var1 >= 32 || Keyboard.getEventKeyState()) {

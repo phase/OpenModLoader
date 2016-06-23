@@ -36,6 +36,7 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.EVENT_BUS.register(CommandEvent.class, this::onCommandRan);
 
         OpenModLoader.INSTANCE.EVENT_BUS.register(KeyPressEvent.class, this::onKeyPressed);
+        OpenModLoader.INSTANCE.EVENT_BUS.register(MouseClickEvent.class, this::onMouseClick);
     }
 
     private void onBlockPlace(BlockEvent.Place event) {
@@ -101,4 +102,9 @@ public class OMLTestMod implements IMod {
     private void onKeyPressed(KeyPressEvent event) {
         System.out.printf("Key pressed %c (%d)\n", event.getCharPressed(), event.getKeyPressed());
     }
+
+    private void onMouseClick(MouseClickEvent event) {
+        System.out.printf("Mouse clicked, %d\n", event.getButton());
+    }
+
 }
