@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import net.minecraft.launchwrapper.LaunchClassLoader;
 import xyz.openmodloader.OpenModLoader;
 
 public final class ModLoader {
@@ -56,16 +57,7 @@ public final class ModLoader {
                 File[] files = MOD_DIRECTORY.listFiles();
                 if (files != null) {
                     for (File mod : files) {
-                        if (mod.getName().endsWith(".jar")) {
-                            JarFile jar = new JarFile(mod);
-                            for (JarEntry entry : Collections.list(jar.entries())) {
-                                String fileName = entry.getName();
-                                if (fileName.equals("mod.json")) {
-                                    loadMod(jar.getInputStream(entry));
-                                }
-                            }
-                            jar.close();
-                        }
+                        ((LaunchClassLoader) ModLoader.class.getClassLoader()).addURL(mod.toURI().toURL());
                     }
                 }
             }
