@@ -1,6 +1,8 @@
 package xyz.openmodloader.test;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiLanguage;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
@@ -24,6 +26,7 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.EVENT_BUS.register(BlockEvent.HarvestDrops.class, this::onHarvestDrops);
 
         OpenModLoader.INSTANCE.EVENT_BUS.register(GuiEvent.Open.class, this::onGuiOpen);
+        OpenModLoader.INSTANCE.EVENT_BUS.register(GuiEvent.Draw.class, this::onGuiDraw);
 
         OpenModLoader.INSTANCE.EVENT_BUS.register(ItemEnchantedEvent.class, this::onItemEnchanted);
 
@@ -63,6 +66,12 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.LOGGER.info("Opening gui: " + event.getGui());
         if (event.getGui() instanceof GuiLanguage) {
             event.setCanceled(true);
+        }
+    }
+
+    private void onGuiDraw(GuiEvent.Draw event) {
+        if (!(event.getGui() instanceof GuiMainMenu)) {
+            Minecraft.getMinecraft().fontRendererObj.drawString("Open Mod Loader", 5, 5, 0xFFFF0000);
         }
     }
 

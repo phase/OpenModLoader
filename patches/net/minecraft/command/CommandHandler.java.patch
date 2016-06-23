@@ -1,6 +1,6 @@
 --- /net/minecraft/command
 +++ /net/minecraft/command
-@@ -81,6 +70,10 @@
+@@ -81,6 +81,8 @@
     }
  
     protected boolean tryExecute(ICommandSender var1, String[] var2, ICommand var3, String var4) {

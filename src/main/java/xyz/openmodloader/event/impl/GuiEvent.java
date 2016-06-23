@@ -124,6 +124,29 @@ public class GuiEvent extends Event {
         }
     }
 
+    /**
+     * An event that is fired when a GUI is being drawn.
+     */
+    public static class Draw extends GuiEvent {
+
+        private final float partialTicks;
+
+        /**
+         * Constructs a new event that is fired when a GUI is drawn.
+         *
+         * @param gui The GUI being drawn.
+         * @param partialTicks
+         */
+        public Draw(GuiScreen gui, float partialTicks) {
+            super(gui);
+            this.partialTicks = partialTicks;
+        }
+
+        public float getPartialTicks() {
+            return partialTicks;
+        }
+    }
+
     public GuiScreen getGui() {
         return gui;
     }
