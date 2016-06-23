@@ -33,6 +33,8 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.EVENT_BUS.register(SplashLoadEvent.class, this::onSplashLoad);
 
         OpenModLoader.INSTANCE.EVENT_BUS.register(ScreenshotEvent.class, this::onScreenshot);
+
+        OpenModLoader.INSTANCE.EVENT_BUS.register(KeyPressEvent.class, this::onKeyPressed);
     }
 
     private void onBlockPlace(BlockEvent.Place event) {
@@ -88,5 +90,9 @@ public class OMLTestMod implements IMod {
     private void onHarvestDrops(BlockEvent.HarvestDrops event){
         OpenModLoader.INSTANCE.LOGGER.info("Dropping items: " + event.getFinalDrops() + " from original items: " + event.getInitialDrops() + ", with fortune: " + event.getFortune() + ", with chance: " + event.getChance());
         event.getFinalDrops().add(new ItemStack(Blocks.DIRT));
+    }
+
+    private void onKeyPressed(KeyPressEvent event) {
+        System.out.printf("Key pressed %c (%d)\n", event.getCharPressed(), event.getKeyPressed());
     }
 }

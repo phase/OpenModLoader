@@ -29,7 +29,15 @@
           this.mcProfiler.endStartSection("gameRenderer");
           this.entityRenderer.updateCameraAndRender(this.timer.renderPartialTicks, var1);
           this.mcProfiler.endSection();
-@@ -2454,7 +2462,8 @@
+@@ -1511,6 +1519,7 @@
+             this.debugCrashKeyPressTime = getSystemTime();
+          }
+ 
++         if (!xyz.openmodloader.event.impl.KeyPressEvent.handle()) return;
+          this.dispatchKeypresses();
+          if(this.currentScreen != null) {
+             this.currentScreen.handleKeyboardInput();
+@@ -2454,7 +2463,8 @@
                 if(var1 == this.gameSettings.keyBindFullscreen.getKeyCode()) {
                    this.toggleFullscreen();
                 } else if(var1 == this.gameSettings.keyBindScreenshot.getKeyCode()) {
