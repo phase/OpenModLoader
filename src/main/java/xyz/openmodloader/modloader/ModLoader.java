@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.jar.Manifest;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.CharSet;
 
 import com.google.common.collect.Multimap;
 
@@ -113,9 +114,12 @@ public class ModLoader {
             OpenModLoader.INSTANCE.getLogger().error("Found invalid manifest in file " + file.getAbsolutePath().replace("!", "").replace(File.separator + "META-INF" + File.separator + "MANIFEST.MF", ""));
             return null;
         }
+        for (char c: container.getModID().toCharArray())
+            if (c != '-' && c != '_' && !CharSet.ASCII_ALPHA_LOWER.contains(c) && !CharSet.ASCII_NUMERIC.contains(c))
+                throw new RuntimeException("Illegal characters in ID '" + container.getModID() + "' for mod '" + container.getName() + "'.");
         OpenModLoader.INSTANCE.getLogger().info("Found mod " + container.getName() + " with id " + container.getModID());
-        if (container.getTransformer() != null) {
-            Launch.classLoader.registerTransformer(container.getTransformer());
+        for (String transformer: container.getTransformers()) {
+            Launch.classLoader.registerTransformer(transformer);
         }
         return container;
     }
@@ -126,11 +130,15 @@ public class ModLoader {
      */
     public static void registerMods() {
         for (ModContainer mod : MODS) {
-            MODS_MAP.put(mod.getInstance(), mod); // load the instances
+            IMod instance = mod.getInstance();
+            if (instance != null)
+                MODS_MAP.put(instance, mod); // load the instances
         }
         for (ModContainer mod : MODS) {
             try {
-                mod.getInstance().onEnable();
+                IMod instance = mod.getInstance();
+                if (instance != null)
+                    instance.onEnable();
             } catch (RuntimeException e) {
                 OpenModLoader.INSTANCE.getLogger().warn("An error occurred while enabling mod " + mod.getModID());
                 throw new RuntimeException(e);
