@@ -20,7 +20,7 @@ public class EnchantmentEvent extends Event {
      * Fired when the player enchants an item. Allows for the cost and enchantments
      * to be altered, along with the enchanted item itself and the fuel item.
      */
-    public static class ItemEnchanted extends EnchantmentEvent {
+    public static class Item extends EnchantmentEvent {
 
         /**
          * The player who is enchanting the item.
@@ -57,7 +57,7 @@ public class EnchantmentEvent extends Event {
          * @param levels       The experience level cost for the enchantment.
          * @param enchantments A list of enchantment data being applied to the item.
          */
-        public ItemEnchanted(EntityPlayer player, ItemStack stack, ItemStack fuel, int levels, List<EnchantmentData> enchantments) {
+        public Item(EntityPlayer player, ItemStack stack, ItemStack fuel, int levels, List<EnchantmentData> enchantments) {
             this.player = player;
             this.stack = stack;
             this.fuel = fuel;
@@ -137,7 +137,7 @@ public class EnchantmentEvent extends Event {
          * enchantments should be applied.
          */
         public static List<EnchantmentData> handle(EntityPlayer player, ItemStack stack, ItemStack fuel, int levels, List<EnchantmentData> enchantments) {
-            final ItemEnchanted event = new ItemEnchanted(player, stack, fuel, levels, enchantments);
+            final Item event = new Item(player, stack, fuel, levels, enchantments);
             return OpenModLoader.INSTANCE.getEventBus().post(event) ? event.getEnchantments() : null;
         }
     }
@@ -145,7 +145,7 @@ public class EnchantmentEvent extends Event {
     /**
      * Fired when an enchantment level is being looked up for an entity.
      */
-    public static class EnchantmentLevel extends EnchantmentEvent {
+    public static class Level extends EnchantmentEvent {
 
         /**
          * The entity for which the enchantment is being checked.
@@ -175,7 +175,7 @@ public class EnchantmentEvent extends Event {
          * @param heldItem     The item the entity is currently holding.
          * @param level        The current level of the enchantment.
          */
-        public EnchantmentLevel(EntityLivingBase entityLiving, Enchantment enchantment, ItemStack heldItem, int level) {
+        public Level(EntityLivingBase entityLiving, Enchantment enchantment, ItemStack heldItem, int level) {
             this.entityLiving = entityLiving;
             this.enchantment = enchantment;
             this.heldItem = heldItem;
@@ -238,7 +238,7 @@ public class EnchantmentEvent extends Event {
          * @return The new level of the enchantment.
          */
         public static int handle(EntityLivingBase entityLiving, Enchantment enchantment, ItemStack heldItem, int level) {
-            final EnchantmentLevel event = new EnchantmentLevel(entityLiving, enchantment, heldItem, level);
+            final Level event = new Level(entityLiving, enchantment, heldItem, level);
             OpenModLoader.INSTANCE.getEventBus().post(event);
             return event.getLevel();
         }

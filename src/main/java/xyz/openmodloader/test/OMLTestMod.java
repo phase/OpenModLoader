@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import org.lwjgl.input.Keyboard;
 import xyz.openmodloader.OpenModLoader;
-import xyz.openmodloader.client.OMLClientHandler;
 import xyz.openmodloader.event.impl.*;
 import xyz.openmodloader.event.strippable.Side;
 import xyz.openmodloader.modloader.IMod;
@@ -34,8 +33,8 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.Draw.class, this::onGuiDraw);
         OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.SplashLoad.class, this::onSplashLoad);
 
-        OpenModLoader.INSTANCE.getEventBus().register(EnchantmentEvent.ItemEnchanted.class, this::onItemEnchanted);
-        OpenModLoader.INSTANCE.getEventBus().register(EnchantmentEvent.EnchantmentLevel.class, this::onEnchantmentLevelCheck);
+        OpenModLoader.INSTANCE.getEventBus().register(EnchantmentEvent.Item.class, this::onItemEnchanted);
+        OpenModLoader.INSTANCE.getEventBus().register(EnchantmentEvent.Level.class, this::onEnchantmentLevelCheck);
 
         OpenModLoader.INSTANCE.getEventBus().register(ExplosionEvent.class, this::onExplosion);
 
@@ -93,11 +92,11 @@ public class OMLTestMod implements IMod {
         }
     }
 
-    private void onItemEnchanted(EnchantmentEvent.ItemEnchanted event) {
+    private void onItemEnchanted(EnchantmentEvent.Item event) {
         OpenModLoader.INSTANCE.getLogger().info(event.getItemStack().getDisplayName() + " " + event.getEnchantments().toString());
     }
 
-    private void onEnchantmentLevelCheck(EnchantmentEvent.EnchantmentLevel event) {
+    private void onEnchantmentLevelCheck(EnchantmentEvent.Level event) {
         if (event.getEnchantment() == Enchantments.FORTUNE && event.getEntityLiving().isSneaking()) {
             int oldLevel = event.getLevel();
             int newLevel = (oldLevel + 1) * 10;

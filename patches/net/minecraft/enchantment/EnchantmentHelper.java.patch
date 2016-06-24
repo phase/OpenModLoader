@@ -1,11 +1,29 @@
 --- /net/minecraft/enchantment
 +++ /net/minecraft/enchantment
+@@ -10,8 +10,7 @@
+ import java.util.Random;
+ import java.util.Map.Entry;
+ import javax.annotation.Nullable;
+-import net.minecraft.enchantment.Enchantment;
+-import net.minecraft.enchantment.EnchantmentData;
++
+ import net.minecraft.entity.Entity;
+ import net.minecraft.entity.EntityLivingBase;
+ import net.minecraft.entity.EnumCreatureAttribute;
+@@ -26,6 +25,7 @@
+ import net.minecraft.util.Util;
+ import net.minecraft.util.WeightedRandom;
+ import net.minecraft.util.math.MathHelper;
++import xyz.openmodloader.event.impl.EnchantmentEvent;
+ 
+ public class EnchantmentHelper {
+    private static final Random RANDOM = new Random();
 @@ -34,6 +34,11 @@
     private static final EnchantmentHelper.b ENCHANTMENT_ITERATOR_HURT = new EnchantmentHelper.b();
     private static final EnchantmentHelper.a ENCHANTMENT_ITERATOR_DAMAGE = new EnchantmentHelper.a();
  
 +   public static int getEnchantmentLevel(Enchantment enchantment, @Nullable ItemStack stack, EntityLivingBase entityLivingBase) {
-+      return xyz.openmodloader.event.impl.EnchantmentEvent.EnchantmentLevel.handle(entityLivingBase, enchantment, stack, getEnchantmentLevel(enchantment, stack));
++      return EnchantmentEvent.Level.handle(entityLivingBase, enchantment, stack, getEnchantmentLevel(enchantment, stack));
 +   }
 +
 +   @Deprecated
