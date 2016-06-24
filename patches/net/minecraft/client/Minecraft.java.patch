@@ -37,7 +37,7 @@
              this.debugCrashKeyPressTime = getSystemTime();
           }
  
-+         if (!xyz.openmodloader.event.impl.KeyPressEvent.handle()) return;
++         if (!xyz.openmodloader.event.impl.InputEvent.Keyboard.handle()) return;
           this.dispatchKeypresses();
           if(this.currentScreen != null) {
              this.currentScreen.handleKeyboardInput();
@@ -45,7 +45,7 @@
           int var1 = Mouse.getEventButton();
           KeyBinding.setKeyBindState(var1 - 100, Mouse.getEventButtonState());
           if(Mouse.getEventButtonState()) {
-+            if (!xyz.openmodloader.event.impl.MouseClickEvent.handle(var1)) return;
++            if (!xyz.openmodloader.event.impl.InputEvent.Mouse.handle(var1)) return;
              if(this.thePlayer.isSpectator() && var1 == 2) {
                 this.ingameGUI.getSpectatorGui().onMiddleClick();
              } else {

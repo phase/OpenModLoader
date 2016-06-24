@@ -1,5 +1,6 @@
 package xyz.openmodloader.client;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.ITextComponent;
 import xyz.openmodloader.ISidedHandler;
 import xyz.openmodloader.OpenModLoader;

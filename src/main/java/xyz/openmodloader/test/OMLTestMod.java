@@ -3,12 +3,16 @@ package xyz.openmodloader.test;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
+import org.lwjgl.input.Keyboard;
 import xyz.openmodloader.OpenModLoader;
+import xyz.openmodloader.client.OMLClientHandler;
 import xyz.openmodloader.event.impl.*;
+import xyz.openmodloader.event.strippable.Side;
 import xyz.openmodloader.modloader.IMod;
 
 import java.awt.*;
@@ -28,20 +32,32 @@ public class OMLTestMod implements IMod {
 
         OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.Open.class, this::onGuiOpen);
         OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.Draw.class, this::onGuiDraw);
+        OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.SplashLoad.class, this::onSplashLoad);
 
         OpenModLoader.INSTANCE.getEventBus().register(EnchantmentEvent.ItemEnchanted.class, this::onItemEnchanted);
         OpenModLoader.INSTANCE.getEventBus().register(EnchantmentEvent.EnchantmentLevel.class, this::onEnchantmentLevelCheck);
 
         OpenModLoader.INSTANCE.getEventBus().register(ExplosionEvent.class, this::onExplosion);
 
-        OpenModLoader.INSTANCE.getEventBus().register(SplashLoadEvent.class, this::onSplashLoad);
-
         OpenModLoader.INSTANCE.getEventBus().register(ScreenshotEvent.class, this::onScreenshot);
 
         OpenModLoader.INSTANCE.getEventBus().register(CommandEvent.class, this::onCommandRan);
 
-        OpenModLoader.INSTANCE.getEventBus().register(KeyPressEvent.class, this::onKeyPressed);
-        OpenModLoader.INSTANCE.getEventBus().register(MouseClickEvent.class, this::onMouseClick);
+        OpenModLoader.INSTANCE.getEventBus().register(InputEvent.Keyboard.class, this::onKeyPressed);
+        OpenModLoader.INSTANCE.getEventBus().register(InputEvent.Mouse.class, this::onMouseClick);
+
+        OpenModLoader.INSTANCE.getEventBus().register(MessageEvent.Chat.class, event -> {
+            if (event.getSide() == Side.CLIENT) {
+                String message = event.getMessage().getUnformattedText();
+                if (message.equals(I18n.format("tile.bed.occupied")) ||
+                        message.equals(I18n.format("tile.bed.noSleep")) ||
+                        message.equals(I18n.format("tile.bed.notSafe")) ||
+                        message.equals(I18n.format("tile.bed.notValid"))) {
+                    OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(event.getMessage());
+                    event.setCanceled(true);
+                }
+            }
+        });
     }
 
     private void onBlockPlace(BlockEvent.Place event) {
@@ -68,10 +84,6 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.getLogger().info("Opening gui: " + event.getGui());
         if (event.getGui() instanceof GuiLanguage) {
             event.setCanceled(true);
-        } else if (event.getGui() instanceof GuiMainMenu) {
-            for (int i = 0; i < 100; i++) {
-                OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(new TextComponentString("Hey there!"));
-            }
         }
     }
 
@@ -98,7 +110,7 @@ public class OMLTestMod implements IMod {
         event.setCanceled(true);
     }
 
-    private void onSplashLoad(SplashLoadEvent event) {
+    private void onSplashLoad(GuiEvent.SplashLoad event) {
         event.getSplashTexts().clear();
         event.getSplashTexts().add("OpenModLoader Test!");
     }
@@ -123,12 +135,15 @@ public class OMLTestMod implements IMod {
         event.setCanceled(true);
     }
 
-    private void onKeyPressed(KeyPressEvent event) {
-        System.out.printf("Key pressed %c (%d)\n", event.getCharPressed(), event.getKeyPressed());
+    private void onKeyPressed(InputEvent.Keyboard event) {
+        OpenModLoader.INSTANCE.getLogger().info(String.format("Key pressed %c (%d)", event.getCharacter(), event.getKey()));
     }
 
-    private void onMouseClick(MouseClickEvent event) {
-        System.out.printf("Mouse clicked, %d\n", event.getButton());
+    private void onMouseClick(InputEvent.Mouse event) {
+        OpenModLoader.INSTANCE.getLogger().info(String.format("Mouse clicked, %d", event.getButton()));
+        if (event.getButton() == Keyboard.KEY_S) {
+            event.setCanceled(true);
+        }
     }
 
 }
