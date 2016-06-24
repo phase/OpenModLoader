@@ -15,7 +15,7 @@ Warning: Setup for OpenModLoader is not yet fully automated. As the project furt
 1. Clone this repository using `git clone https://github.com/OpenModLoader/OpenModLoader` or another preferred method.
 2. Run `gradlew setupOML extractNatives eclipse` in the cloned repository folder.
 3. Open Eclipse and import the cloned directory as a project.
-4. Add `work/src` as a source folder.
+4. Add `minecraft/src/java` and `minecraft/src/resources` as source folders.
 5. Add `.gradle/minecraft/libs` to your build path.
 6. Add `.gradle/minecraft/natives` to the natives on LWJGL
 7. The project should now build without errors. If anything is missing you can download the libraries from Mojang directly.
