@@ -1,7 +1,6 @@
 package xyz.openmodloader.network;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.player.EntityPlayer;
 import xyz.openmodloader.event.strippable.Side;
 
 import java.util.HashMap;
@@ -14,9 +13,9 @@ public class PacketSpec {
 	private final String id;
 	final Map<String, DataType> types;
 	private Side receivingSide;
-	private BiConsumer<EntityPlayer, Packet> handler;
+	private BiConsumer<Context, Packet> handler;
 
-	private PacketSpec(Channel builder, String id) {
+	PacketSpec(Channel builder, String id) {
 		this.builder = builder;
 		this.id = id;
 		this.types = new HashMap<>();
@@ -37,10 +36,31 @@ public class PacketSpec {
 		return this;
 	}
 
-	public Channel handle(BiConsumer<EntityPlayer, Packet> handler) {
+	public PacketSpec receiveOn(Side receivingSide) {
+		this.receivingSide = receivingSide;
+		return this;
+	}
+
+	public Channel handle(BiConsumer<Context, Packet> handler) {
 		if (isImmutable()) throw new IllegalStateException("Cannot use PacketSpec.handle on an immutable clone");
 		if (this.handler != null) throw new IllegalStateException(String.format("Packet %s already has a handler, %s", id, this.handler));
+
 		this.handler = handler;
+		builder.addPacket(new PacketSpec(this));
+		return builder;
+	}
+
+	public Channel handle(BiConsumer<Context, Packet> clientHandler, BiConsumer<Context, Packet> serverHandler) {
+		if (isImmutable()) throw new IllegalStateException("Cannot use PacketSpec.handle on an immutable clone");
+		if (this.handler != null) throw new IllegalStateException(String.format("Packet %s already has a handler, %s", id, this.handler));
+
+		this.handler = (context, packet) -> {
+			if (context.getSide() == Side.CLIENT) {
+				clientHandler.accept(context, packet);
+			} else if (context.getSide() == Side.SERVER) {
+				serverHandler.accept(context, packet);
+			}
+		};
 		builder.addPacket(new PacketSpec(this));
 		return builder;
 	}
