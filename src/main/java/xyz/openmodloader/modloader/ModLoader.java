@@ -88,15 +88,17 @@ public class ModLoader {
                 }
             }
             MODS.addAll(DependencySorter.sort(unsortedMods));
-            for (ModContainer mod: MODS)
-                for (String dep: mod.getDependencies()) {
+            for (ModContainer mod : MODS) {
+                for (String dep : mod.getDependencies()) {
                     String[] depParts = dep.split("\\s*:\\s*");
                     ModContainer depContainer = ID_MAP.get(depParts[0]);
-                    if (depContainer == null)
+                    if (depContainer == null) {
                         throw new RuntimeException("Missing dependency '" + dep + "' for mod '" + mod.getName() + "'.");
-                    else if (depParts.length > 1 && !new Version(depContainer.getVersion()).atLeast(new Version(depParts[1])))
+                    } else if (depParts.length > 1 && !new Version(depContainer.getVersion()).atLeast(new Version(depParts[1]))) {
                         throw new RuntimeException("Outdated dependency '" + dep + "' for mod '" + mod.getName() + "'. Expected version '" + depParts[1] + "', but got version '" + depContainer.getVersion() + "'.");
+                    }
                 }
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -114,11 +116,13 @@ public class ModLoader {
             OpenModLoader.INSTANCE.getLogger().error("Found invalid manifest in file " + file.getAbsolutePath().replace("!", "").replace(File.separator + "META-INF" + File.separator + "MANIFEST.MF", ""));
             return null;
         }
-        for (char c: container.getModID().toCharArray())
-            if (c != '-' && c != '_' && !CharSet.ASCII_ALPHA_LOWER.contains(c) && !CharSet.ASCII_NUMERIC.contains(c))
+        for (char c : container.getModID().toCharArray()) {
+            if (c != '-' && c != '_' && !CharSet.ASCII_ALPHA_LOWER.contains(c) && !CharSet.ASCII_NUMERIC.contains(c)) {
                 throw new RuntimeException("Illegal characters in ID '" + container.getModID() + "' for mod '" + container.getName() + "'.");
+            }
+        }
         OpenModLoader.INSTANCE.getLogger().info("Found mod " + container.getName() + " with id " + container.getModID());
-        for (String transformer: container.getTransformers()) {
+        for (String transformer : container.getTransformers()) {
             Launch.classLoader.registerTransformer(transformer);
         }
         return container;
@@ -131,14 +135,16 @@ public class ModLoader {
     public static void registerMods() {
         for (ModContainer mod : MODS) {
             IMod instance = mod.getInstance();
-            if (instance != null)
+            if (instance != null) {
                 MODS_MAP.put(instance, mod); // load the instances
+            }
         }
         for (ModContainer mod : MODS) {
             try {
                 IMod instance = mod.getInstance();
-                if (instance != null)
+                if (instance != null) {
                     instance.onEnable();
+                }
             } catch (RuntimeException e) {
                 OpenModLoader.INSTANCE.getLogger().warn("An error occurred while enabling mod " + mod.getModID());
                 throw new RuntimeException(e);
@@ -159,7 +165,7 @@ public class ModLoader {
     /**
      * Get the mod container of a mod.
      *
-     * @param mod the mod id
+     * @param id the mod id
      * @return the mod container
      */
     public static ModContainer getContainer(String id) {

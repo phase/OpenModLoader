@@ -25,6 +25,7 @@ public class ModContainer {
     private transient Class<?> mainClass;
     private transient ResourceLocation logo;
     private transient IMod instance;
+    private transient Version version;
 
     @SerializedName("Mod-Class")
     private String classString;
@@ -33,13 +34,15 @@ public class ModContainer {
     @SerializedName("Name")
     private String name;
     @SerializedName("Major")
-    private String major;
+    private int major;
     @SerializedName("Minor")
-    private String minor;
+    private int minor;
     @SerializedName("Patch")
-    private String patch;
+    private int patch;
     @SerializedName("Description")
     private String description;
+    @SerializedName("Author")
+    private String author;
     @SerializedName("UpdateURL")
     private String updateURL;
     @SerializedName("Logo")
@@ -76,8 +79,9 @@ public class ModContainer {
     }
 
     public Class<?> getMainClass() {
-        if (classString == null)
+        if (classString == null) {
             return null;
+        }
         if (this.mainClass == null) {
             try {
                 this.mainClass = Class.forName(this.classString, true, Launch.classLoader);
@@ -107,8 +111,9 @@ public class ModContainer {
     }
 
     public IMod getInstance() {
-        if (classString == null)
+        if (classString == null) {
             return null;
+        }
         if (this.instance == null) {
             try {
                 this.instance = (IMod) this.getMainClass().newInstance();
@@ -119,6 +124,13 @@ public class ModContainer {
         return instance;
     }
 
+    public Version getVersion() {
+        if (version == null) {
+            this.version = new Version(this.major, this.minor, this.patch);
+        }
+        return version;
+    }
+
     public String getModID() {
         return modID;
     }
@@ -127,24 +139,12 @@ public class ModContainer {
         return name;
     }
 
-    public String getMajor() {
-        return major;
-    }
-
-    public String getMinor() {
-        return minor;
-    }
-
-    public String getPatch() {
-        return patch;
-    }
-
-    public String getVersion() {
-        return getMajor() + "." + getMinor() + "." + getPatch();
-    }
-
     public String getDescription() {
         return description;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 
     public String getUpdateURL() {
@@ -156,15 +156,17 @@ public class ModContainer {
     }
 
     public String[] getDependencies() {
-        if (dependencies == null || dependencies.matches("\\s*"))
+        if (dependencies == null || dependencies.matches("\\s*")) {
             return new String[0];
+        }
         return dependencies.split("\\s*,\\s*");
     }
 
     Set<String> getDependencySet() {
         Set<String> set = Sets.newHashSet();
-        for (String s: getDependencies())
+        for (String s : getDependencies()) {
             set.add(s.split("\\s:\\s")[0]);
+        }
         return set;
     }
 }
