@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
@@ -58,6 +60,9 @@ public class OMLTestMod implements IMod {
                 }
             }
         });
+
+        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Constructing.class, this::onEntityConstruct);
+        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Join.class, this::onEntityJoinWorld);
     }
 
     private void onBlockPlace(BlockEvent.Place event) {
@@ -146,4 +151,18 @@ public class OMLTestMod implements IMod {
         }
     }
 
+    private void onEntityConstruct(EntityEvent.Constructing event) {
+        if (event.getEntity() instanceof EntityPlayer) {
+            OpenModLoader.INSTANCE.getLogger().info("A player was constructed.");
+        }
+    }
+
+    private void onEntityJoinWorld(EntityEvent.Join event) {
+        if (event.getEntity() instanceof EntityPlayer) {
+            OpenModLoader.INSTANCE.getLogger().info(String.format("A player joined the world on side %s.", event.getWorld().isRemote ? "client" : "server"));
+        }
+        if (event.getEntity() instanceof EntityPig) {
+            event.setCanceled(true);
+        }
+    }
 }

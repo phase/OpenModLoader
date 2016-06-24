@@ -1,6 +1,14 @@
 --- /net/minecraft/entity
 +++ /net/minecraft/entity
-@@ -308,6 +308,7 @@
+@@ -194,6 +194,7 @@
+         this.dataManager.register(CUSTOM_NAME, "");
+         this.dataManager.register(SILENT, Boolean.valueOf(false));
+         this.dataManager.register(field_189655_aD, Boolean.valueOf(false));
++        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Constructing(this));
+         this.entityInit();
+     }
+ 
+@@ -308,6 +309,7 @@
      }
  
      public void onUpdate() {

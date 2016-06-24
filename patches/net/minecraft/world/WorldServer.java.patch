@@ -1,6 +1,14 @@
 --- /net/minecraft/world
 +++ /net/minecraft/world
-@@ -920,7 +920,8 @@
+@@ -851,6 +851,7 @@
+     }
+ 
+     private boolean canAddEntity(Entity var1) {
++        if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var1))) return false;
+         if(var1.isDead) {
+             LOGGER.warn("Tried to add entity {} but it was marked as removed already", new Object[]{EntityList.getEntityString(var1)});
+             return false;
+@@ -920,7 +921,8 @@
      }
  
      public Explosion newExplosion(@Nullable Entity var1, double var2, double var4, double var6, float var8, boolean var9, boolean var10) {
