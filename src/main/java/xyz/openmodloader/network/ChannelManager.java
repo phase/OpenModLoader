@@ -1,22 +1,43 @@
 package xyz.openmodloader.network;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 public class ChannelManager {
 
-	private static final Map<String, Channel> channels = new HashMap<>();
+	private static final BiMap<String, Channel> channels = HashBiMap.create();
+	private static final BiMap<String, Integer> ids = HashBiMap.create();
 
-	public static Channel create(String id) {
-		return new Channel(id);
+	public static Channel create(String name) {
+		return new Channel(name);
 	}
 
-	static void register(String id, Channel channel) {
-		channels.put(id, channel);
+	static void register(String name, Channel channel) {
+		channels.put(name, channel);
 	}
 
-	public static Channel get(String id) {
-		return channels.get(id);
+	public static Channel get(String name) {
+		return channels.get(name);
+	}
+
+	public static Channel get(int id) {
+		return channels.get(getName(id));
+	}
+
+	public static String getName(Channel channel) {
+		return channels.inverse().get(channel);
+	}
+
+	public static String getName(int id) {
+		return ids.inverse().get(id);
+	}
+
+	public static int getID(Channel channel) {
+		return ids.get(getName(channel));
+	}
+
+	public static int getID(String name) {
+		return ids.get(name);
 	}
 
 }

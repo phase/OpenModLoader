@@ -8,8 +8,8 @@ import java.util.Map;
 public class Packet {
 
 	private final String id;
-	private final Channel channel;
-	private final PacketSpec spec;
+	final Channel channel;
+	final PacketSpec spec;
 	final Map<String, Object> values = new HashMap<>();
 	final Map<String, DataType> types = new HashMap<>();
 
@@ -47,14 +47,6 @@ public class Packet {
 		types.forEach((id, type) -> {
 			values.put(id, type.read(buf));
 		});
-	}
-
-	public String getID() {
-		return id;
-	}
-
-	public String getChannelID() {
-		return channel.getID();
 	}
 
 }

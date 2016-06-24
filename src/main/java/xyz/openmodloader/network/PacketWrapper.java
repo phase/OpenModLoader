@@ -19,19 +19,16 @@ public class PacketWrapper implements net.minecraft.network.Packet<INetHandler> 
 
 	@Override
 	public void readPacketData(PacketBuffer buf) throws IOException {
-		String channelID = buf.readStringFromBuffer(buf.readInt());
-		String id = buf.readStringFromBuffer(buf.readInt());
-		Channel channel = ChannelManager.get(channelID);
-		packet = new Packet(channel, channel.getSpec(id));
+		Channel channel = ChannelManager.get(buf.readInt());
+		PacketSpec spec = channel.getSpec(buf.readInt());
+		packet = new Packet(channel, spec);
 		packet.read(buf);
 	}
 
 	@Override
 	public void writePacketData(PacketBuffer buf) throws IOException {
-		buf.writeInt(packet.getChannelID().length());
-		buf.writeString(packet.getChannelID());
-		buf.writeInt(packet.getID().length());
-		buf.writeString(packet.getID());
+		buf.writeInt(ChannelManager.getID(packet.channel));
+		buf.writeInt(packet.channel.getID(packet.spec));
 		packet.write(buf);
 	}
 
