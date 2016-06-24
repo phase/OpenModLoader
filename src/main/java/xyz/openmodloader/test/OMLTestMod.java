@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import org.lwjgl.input.Keyboard;
 import xyz.openmodloader.OpenModLoader;
+import xyz.openmodloader.client.gui.GuiModList;
 import xyz.openmodloader.event.impl.*;
 import xyz.openmodloader.event.strippable.Side;
 import xyz.openmodloader.modloader.IMod;
@@ -87,8 +88,8 @@ public class OMLTestMod implements IMod {
     }
 
     private void onGuiDraw(GuiEvent.Draw event) {
-        if (!(event.getGui() instanceof GuiMainMenu)) {
-            Minecraft.getMinecraft().fontRendererObj.drawString("Open Mod Loader", 5, 5, 0xFFFF0000);
+        if (!(event.getGui() instanceof GuiMainMenu) && !(event.getGui() instanceof GuiModList)) {
+            Minecraft.getMinecraft().fontRendererObj.drawString("Open Mod Loader", 5, 5, 0xFFFFFFFF);
         }
     }
 

@@ -53,7 +53,7 @@ public enum OMLClientHandler implements ISidedHandler {
         List<String> list = new ArrayList<>();
         list.add(ModLoader.MODS.size() + " mod" + ((ModLoader.MODS.size() == 1 ? "" : "s") + " enabled"));
         list.add("Version " + OpenModLoader.INSTANCE.getVersion());
-        list.add("Open Mod Loader");
+        list.add("OpenModLoader");
         return list;
     }
 }

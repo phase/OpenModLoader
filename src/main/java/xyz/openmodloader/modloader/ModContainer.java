@@ -85,9 +85,9 @@ public class ModContainer {
 
     @Strippable(side = Side.CLIENT)
     public ResourceLocation getLogo() {
-        if (this.logo == null) {
+        if (this.logo == null && this.logoString != null) {
             try {
-                BufferedImage image = ImageIO.read(ModContainer.class.getResourceAsStream("/" + this.logoString));
+                BufferedImage image = ImageIO.read(Launch.classLoader.getResourceAsStream("/" + this.logoString));
                 DynamicTexture texture = new DynamicTexture(image);
                 this.logo = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("mods/" + getModID(), texture);
             } catch (IOException e) {
