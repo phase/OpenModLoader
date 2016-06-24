@@ -48,7 +48,7 @@ public class GuiModList extends GuiScreen implements GuiYesNoCallback {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.selectionList.drawScreen(mouseX, mouseY, partialTicks);
         this.searchField.drawTextBox();
-        this.drawCenteredString(this.fontRendererObj, "Mod List", this.width / 2, 20, 16777215);
+        this.drawCenteredString(this.fontRendererObj, "Mod List", this.width / 2, 13, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

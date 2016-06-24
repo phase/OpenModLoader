@@ -26,19 +26,20 @@
          this.updateWeather();
      }
  
-@@ -2273,9 +2276,10 @@
+@@ -2273,9 +2276,12 @@
      }
  
      public void loadEntities(Collection<Entity> var1) {
--        this.loadedEntityList.addAll(var1);
++        if(false)
+         this.loadedEntityList.addAll(var1);
  
          for(Entity var3 : var1) {
-+            if (xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var3))) continue;
++            if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var3))) continue;
 +            this.loadedEntityList.add(var3);
              this.onEntityAdded(var3);
          }
  
-@@ -2534,6 +2538,7 @@
+@@ -2534,6 +2540,7 @@
          }
  
          if(!this.loadedEntityList.contains(var1)) {

@@ -2,6 +2,7 @@ package xyz.openmodloader.modloader;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Set;
@@ -87,7 +88,11 @@ public class ModContainer {
     public ResourceLocation getLogo() {
         if (this.logo == null && this.logoString != null) {
             try {
-                BufferedImage image = ImageIO.read(Launch.classLoader.getResourceAsStream("/" + this.logoString));
+                InputStream stream = ModContainer.class.getResourceAsStream("/" + this.logoString);
+                if (stream == null) {
+                    return null;
+                }
+                BufferedImage image = ImageIO.read(stream);
                 DynamicTexture texture = new DynamicTexture(image);
                 this.logo = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("mods/" + getModID(), texture);
             } catch (IOException e) {
