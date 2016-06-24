@@ -4,7 +4,7 @@
     }
  
     public void sendChatMsgImpl(ITextComponent var1, boolean var2) {
-+      var1 = xyz.openmodloader.event.impl.ChatReceivedEvent.onChatReceived(var1, xyz.openmodloader.event.strippable.Side.SERVER);
++      var1 = xyz.openmodloader.event.impl.MessageEvent.Chat.handle(var1, xyz.openmodloader.event.strippable.Side.SERVER);
 +      if (var1 == null) return;
        this.mcServer.addChatMessage(var1);
        int var3 = var2?1:0;

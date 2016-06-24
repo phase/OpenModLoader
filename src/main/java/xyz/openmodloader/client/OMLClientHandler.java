@@ -4,6 +4,7 @@ import net.minecraft.util.text.ITextComponent;
 import xyz.openmodloader.ISidedHandler;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.client.gui.GuiSnackbar;
+import xyz.openmodloader.event.impl.MessageEvent;
 import xyz.openmodloader.event.impl.UpdateEvent;
 import xyz.openmodloader.event.strippable.Side;
 import xyz.openmodloader.event.strippable.Strippable;
@@ -41,6 +42,10 @@ public enum OMLClientHandler implements ISidedHandler {
 
     @Override
     public void openSnackbar(ITextComponent component) {
+        component = MessageEvent.Snackbar.handle(component, Side.SERVER);
+        if (component == null) {
+            return;
+        }
         GuiSnackbar.SNACKBAR_LIST.add(new GuiSnackbar(component));
     }
 
