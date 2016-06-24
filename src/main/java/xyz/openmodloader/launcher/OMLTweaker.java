@@ -49,8 +49,14 @@ public class OMLTweaker implements ITweaker {
         classLoader.registerTransformer(OMLSideTransformer.class.getCanonicalName());
         classLoader.registerTransformer(OMLAccessTransformer.class.getCanonicalName());
         classLoader.addClassLoaderExclusion("com.google.common");
-        classLoader.addClassLoaderExclusion("xyz.openmodloader.modloader");
-        ModLoader.loadMods();
+        classLoader.addTransformerExclusion("xyz.openmodloader.modloader");
+        classLoader.addTransformerExclusion("xyz.openmodloader.launcher");
+        try {
+			Class.forName("xyz.openmodloader.modloader.ModLoader", true, classLoader).getMethod("loadMods").invoke(null);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException | ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
     }
 
     @Override
