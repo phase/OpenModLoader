@@ -13,8 +13,7 @@ import com.typesafe.config.ConfigRenderOptions;
 import com.typesafe.config.ConfigValueFactory;
 
 public class Config {
-
-    private static final File CFG_DIR = new File("./config");
+    private static final File CONFIG_DIR = new File("./config");
 
     private final int initialHash;
     private final File file;
@@ -23,17 +22,20 @@ public class Config {
     private com.typesafe.config.Config config;
 
     public Config(String file) {
-        this(new File(CFG_DIR, file));
+        this(new File(CONFIG_DIR, file));
     }
 
     public Config(File file) {
-        boolean b = false;
+        boolean flag = false;
         File parent = file.getParentFile();
-        while (parent != null && !b)
-            if (parent.equals(CFG_DIR))
-                b = true;
-        if (!b)
+        while (parent != null && !flag) {
+            if (parent.equals(CONFIG_DIR)) {
+                flag = true;
+            }
+        }
+        if (!flag) {
             throw new IllegalArgumentException("Config file has to be located within ./config or one of its subdirectories");
+        }
         this.file = file;
         this.config = ConfigFactory.parseFile(file);
         this.initialHash = System.identityHashCode(config);
@@ -52,8 +54,9 @@ public class Config {
     public boolean getBoolean(String path, boolean defaultValue, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromAnyRef(defaultValue, comment));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return config.getBoolean(path);
     }
@@ -61,8 +64,9 @@ public class Config {
     public int getInt(String path, int defaultValue, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromAnyRef(defaultValue, comment));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return config.getInt(path);
     }
@@ -70,8 +74,9 @@ public class Config {
     public long getLong(String path, long defaultValue, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromAnyRef(defaultValue, comment));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return config.getLong(path);
     }
@@ -79,8 +84,9 @@ public class Config {
     public double getDouble(String path, double defaultValue, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromAnyRef(defaultValue, comment));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return config.getDouble(path);
     }
@@ -88,8 +94,9 @@ public class Config {
     public String getString(String path, String defaultValue, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromAnyRef(defaultValue, comment));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return config.getString(path);
     }
@@ -97,8 +104,9 @@ public class Config {
     public Config getConfig(String path, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromMap(Collections.emptyMap(), comment));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return new Config(path, config.getConfig(path), this);
     }
@@ -106,8 +114,9 @@ public class Config {
     public List<Boolean> getBooleanList(String path, List<Boolean> defaultValue, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromAnyRef(defaultValue, comment));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return config.getBooleanList(path);
     }
@@ -115,8 +124,9 @@ public class Config {
     public List<Integer> getIntList(String path, List<Integer> defaultValue, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromAnyRef(defaultValue, comment));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return config.getIntList(path);
     }
@@ -124,8 +134,9 @@ public class Config {
     public List<Long> getLongList(String path, List<Long> defaultValue, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromAnyRef(defaultValue, comment));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return config.getLongList(path);
     }
@@ -133,8 +144,9 @@ public class Config {
     public List<Double> getDoubleList(String path, List<Double> defaultValue, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromAnyRef(defaultValue, comment));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return config.getDoubleList(path);
     }
@@ -142,8 +154,9 @@ public class Config {
     public List<String> getStringList(String path, List<String> defaultValue, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromAnyRef(defaultValue, comment));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return config.getStringList(path);
     }
@@ -151,8 +164,9 @@ public class Config {
     public List<Config> getConfigList(String path, String comment) {
         if (!config.hasPath(path)) {
             config = config.withValue(path, ConfigValueFactory.fromIterable(Collections.emptyList()));
-            if (parent != null)
+            if (parent != null) {
                 parent.update(this);
+            }
         }
         return Lists.transform(config.getConfigList(path), (c) -> new Config(path, c, this));
     }
@@ -170,8 +184,9 @@ public class Config {
     }
 
     public void save() {
-        if (file == null)
+        if (file == null) {
             throw new UnsupportedOperationException("Only root configs can be saved!");
+        }
         if (hasChanged()) {
             try {
                 FileUtils.writeStringToFile(file, config.root().render(ConfigRenderOptions.defaults().setJson(false).setOriginComments(true).setComments(false)));
@@ -183,7 +198,8 @@ public class Config {
 
     private void update(Config child) {
         this.config = this.config.withValue(child.path, child.config.root());
-        if (parent != null)
+        if (parent != null) {
             parent.update(this);
+        }
     }
 }

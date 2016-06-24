@@ -13,6 +13,7 @@ import net.minecraft.util.text.TextComponentString;
 import org.lwjgl.input.Keyboard;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.client.gui.GuiModList;
+import xyz.openmodloader.config.Config;
 import xyz.openmodloader.event.impl.*;
 import xyz.openmodloader.event.strippable.Side;
 import xyz.openmodloader.modloader.IMod;
@@ -63,6 +64,14 @@ public class OMLTestMod implements IMod {
 
         OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Constructing.class, this::onEntityConstruct);
         OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Join.class, this::onEntityJoinWorld);
+
+        Config config = new Config(new File("./config/test.cfg"));
+        Config category1 = config.getConfig("category1", "configures stuff");
+        category1.getBoolean("boolean1", true, "this is a boolean");
+        category1.getBoolean("boolean2", true, "this is another boolean");
+        Config category2 = category1.getConfig("category2", "configures more stuff");
+        category2.getString("string1", "string", "this is a string");
+        config.save();
     }
 
     private void onBlockPlace(BlockEvent.Place event) {
