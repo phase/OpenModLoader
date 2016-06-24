@@ -11,6 +11,7 @@ import java.util.jar.Manifest;
 
 import javax.imageio.ImageIO;
 
+import com.google.common.collect.Sets;
 import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.client.Minecraft;
@@ -45,10 +46,11 @@ public class ModContainer {
     private String logoString;
     @SerializedName("Transformer")
     private String transformer;
+    @SerializedName("Dependencies")
+    private String dependencies;
 
     /**
      * Uses a manifest to create a mod container.
-     * Best idea in the entire library.
      */
     public static ModContainer create(Manifest manifest) {
         Set<Object> attributeNames = manifest.getMainAttributes().keySet();
@@ -147,5 +149,18 @@ public class ModContainer {
 
     public String getTransformer() {
         return transformer;
+    }
+
+    public String[] getDependencies() {
+        if (dependencies == null || dependencies.matches("\\s*"))
+            return new String[0];
+        return dependencies.split("\\s*,\\s*");
+    }
+
+    Set<String> getDependencySet() {
+        Set<String> set = Sets.newHashSet();
+        for (String s: getDependencies())
+            set.add(s.split("\\s:\\s")[0]);
+        return set;
     }
 }
