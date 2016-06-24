@@ -1,6 +1,7 @@
 package xyz.openmodloader.launcher;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,11 +53,10 @@ public class OMLTweaker implements ITweaker {
         classLoader.addTransformerExclusion("xyz.openmodloader.modloader");
         classLoader.addTransformerExclusion("xyz.openmodloader.launcher");
         try {
-			Class.forName("xyz.openmodloader.modloader.ModLoader", true, classLoader).getMethod("loadMods").invoke(null);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-				| SecurityException | ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		}
+            Class.forName("xyz.openmodloader.modloader.ModLoader", true, classLoader).getMethod("loadMods").invoke(null);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
