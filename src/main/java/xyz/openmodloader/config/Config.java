@@ -33,7 +33,7 @@ public class Config {
             if (parent.equals(CFG_DIR))
                 b = true;
         if (!b)
-            throw new IllegalArgumentException("Config file has to be located within ./config");
+            throw new IllegalArgumentException("Config file has to be located within ./config or one of its subdirectories");
         this.file = file;
         this.config = ConfigFactory.parseFile(file);
         this.initialHash = System.identityHashCode(config);
