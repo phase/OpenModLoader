@@ -31,8 +31,9 @@ public class Packet {
 		return this;
 	}
 
-	public <T> T get(String id) {
+	public <T> T get(String id, DataType<T> type) {
 		if (!values.containsKey(id)) throw new IllegalArgumentException("No such key " + id);
+		if (!types.get(id).equals(type)) throw new IllegalArgumentException(String.format("Wrong type for key %s, %s is registered but got %s", id, types.get(id), type));
 		return (T)values.get(id);
 	}
 
