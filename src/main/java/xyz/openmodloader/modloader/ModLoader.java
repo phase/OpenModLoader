@@ -3,9 +3,7 @@ package xyz.openmodloader.modloader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.jar.Manifest;
 
 import org.apache.commons.io.FileUtils;
@@ -18,9 +16,14 @@ import xyz.openmodloader.launcher.OMLAccessTransformer;
 
 public class ModLoader {
     /**
-     * A map of all loaded mods. Key is the ID and value is the ModContainer.
+     * A list of all loaded mods.
      */
-    public static final Map<String, ModContainer> MODS = new HashMap<String, ModContainer>();
+    public static final List<ModContainer> MODS = new ArrayList<>();
+
+    /**
+     * A map of all loaded mods. Key is the mod class and value is the ModContainer.
+     */
+    private static final Map<IMod, ModContainer> MODS_MAP = new HashMap<>();
 
     /**
      * The running directory for the game.
@@ -87,7 +90,7 @@ public class ModLoader {
             return;
         }
         OpenModLoader.INSTANCE.getLogger().info("Found mod " + container.getName() + " with id " + container.getModID());
-        MODS.put(container.getModID(), container);
+        MODS.add(container);
         if (container.getTransformer() != null) {
             Launch.classLoader.registerTransformer(container.getTransformer());
         }
@@ -98,21 +101,25 @@ public class ModLoader {
      * issue in registering the mod, it will be disabled.
      */
     public static void registerMods() {
-        for (ModContainer mod : MODS.values()) {
+        for (ModContainer mod : MODS) {
             try {
-                currentContainer = mod;
-                mod.getInstance().onEnable();
+                IMod instance = mod.getInstance();
+                MODS_MAP.put(instance, mod);
+                instance.onEnable();
             } catch (RuntimeException e) {
                 OpenModLoader.INSTANCE.getLogger().warn("An error occurred while enabling mod " + mod.getModID());
                 throw new RuntimeException(e);
             }
         }
-        currentContainer = null;
     }
 
-    private static ModContainer currentContainer;
-
-    public static ModContainer getCurrentContainer() {
-        return currentContainer;
+    /**
+     * Get the mod container of a mod.
+     *
+     * @param mod the mod instance
+     * @return the mod container
+     */
+    public static ModContainer getContainer(IMod mod) {
+        return MODS_MAP.get(mod);
     }
 }
