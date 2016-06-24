@@ -34,11 +34,11 @@ public class ModContainer {
     @SerializedName("Name")
     private String name;
     @SerializedName("Major")
-    private int major;
+    private String major;
     @SerializedName("Minor")
-    private int minor;
+    private String minor;
     @SerializedName("Patch")
-    private int patch;
+    private String patch;
     @SerializedName("Description")
     private String description;
     @SerializedName("Author")
@@ -126,7 +126,7 @@ public class ModContainer {
 
     public Version getVersion() {
         if (version == null) {
-            this.version = new Version(this.major, this.minor, this.patch);
+            this.version = new Version(Integer.parseInt(this.major), Integer.parseInt(this.minor), Integer.parseInt(this.patch));
         }
         return version;
     }

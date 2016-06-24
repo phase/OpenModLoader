@@ -37,4 +37,9 @@ public class Version {
         }
         return major == b.major && minor == b.minor && patch >= b.patch;
     }
+
+    @Override
+    public String toString() {
+        return getMajor() + "." + getMinor() + "." + getPatch();
+    }
 }

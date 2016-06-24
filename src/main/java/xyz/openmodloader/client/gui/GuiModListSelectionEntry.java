@@ -30,7 +30,7 @@ public class GuiModListSelectionEntry implements GuiListExtended.a {
     public void drawEntry(int index, int x, int y, int width, int height, int mouseX, int mouseY, boolean mouseHovered) {
         this.mc.fontRendererObj.drawString(this.container.getName(), x + 32 + 3, y + 1, 16777215);
         this.mc.fontRendererObj.drawString(this.container.getModID(), x + 32 + 3, y + this.mc.fontRendererObj.FONT_HEIGHT + 3, 8421504);
-        this.mc.fontRendererObj.drawString(this.container.getVersion(), x + 32 + 3, y + this.mc.fontRendererObj.FONT_HEIGHT * 2 + 4, 8421504);
+        this.mc.fontRendererObj.drawString(this.container.getVersion().toString(), x + 32 + 3, y + this.mc.fontRendererObj.FONT_HEIGHT * 2 + 4, 8421504);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(this.logo != null ? this.logo : ICON_MISSING);
         GlStateManager.enableBlend();

@@ -8,7 +8,7 @@ import net.minecraft.client.resources.I18n;
 
 import javax.annotation.Nullable;
 
-public class GuiModList extends GuiScreen implements GuiYesNoCallback {
+public class GuiModList extends GuiScreen {
     private GuiScreen parent;
     private GuiButton infoButton;
     private GuiTextField searchField;
