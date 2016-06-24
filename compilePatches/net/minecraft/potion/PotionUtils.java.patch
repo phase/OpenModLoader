@@ -1,31 +1,31 @@
 --- /net/minecraft/potion
 +++ /net/minecraft/potion
 @@ -139,8 +139,8 @@
-    }
+     }
  
-    public static void addPotionTooltip(ItemStack var0, List<String> var1, float var2) {
--      List var3 = getEffectsFromStack(var0);
--      ArrayList var4 = Lists.newArrayList();
-+      List<PotionEffect> var3 = getEffectsFromStack(var0);
-+      ArrayList<Tuple<String, AttributeModifier>> var4 = Lists.newArrayList();
-       if(var3.isEmpty()) {
-          String var5 = I18n.translateToLocal("effect.none").trim();
-          var1.add(TextFormatting.GRAY + var5);
+     public static void addPotionTooltip(ItemStack var0, List<String> var1, float var2) {
+-        List var3 = getEffectsFromStack(var0);
+-        ArrayList var4 = Lists.newArrayList();
++        List<PotionEffect> var3 = getEffectsFromStack(var0);
++        ArrayList<Tuple<String, AttributeModifier>> var4 = Lists.newArrayList();
+         if(var3.isEmpty()) {
+             String var5 = I18n.translateToLocal("effect.none").trim();
+             var1.add(TextFormatting.GRAY + var5);
 @@ -148,7 +148,7 @@
-          for(PotionEffect var6 : var3) {
-             String var7 = I18n.translateToLocal(var6.getEffectName()).trim();
-             Potion var8 = var6.getPotion();
--            Map var9 = var8.getAttributeModifierMap();
-+            Map<IAttribute, AttributeModifier> var9 = var8.getAttributeModifierMap();
-             if(!var9.isEmpty()) {
-                for(Entry var11 : var9.entrySet()) {
-                   AttributeModifier var12 = (AttributeModifier)var11.getValue();
+             for(PotionEffect var6 : var3) {
+                 String var7 = I18n.translateToLocal(var6.getEffectName()).trim();
+                 Potion var8 = var6.getPotion();
+-                Map var9 = var8.getAttributeModifierMap();
++                Map<IAttribute, AttributeModifier> var9 = var8.getAttributeModifierMap();
+                 if(!var9.isEmpty()) {
+                     for(Entry var11 : var9.entrySet()) {
+                         AttributeModifier var12 = (AttributeModifier)var11.getValue();
 @@ -177,7 +177,7 @@
-          var1.add("");
-          var1.add(TextFormatting.DARK_PURPLE + I18n.translateToLocal("potion.whenDrank"));
+             var1.add("");
+             var1.add(TextFormatting.DARK_PURPLE + I18n.translateToLocal("potion.whenDrank"));
  
--         for(Tuple var16 : var4) {
-+         for(Tuple<String, AttributeModifier> var16 : var4) {
-             AttributeModifier var17 = (AttributeModifier)var16.getSecond();
-             double var18 = var17.getAmount();
-             double var19;
+-            for(Tuple var16 : var4) {
++            for(Tuple<String, AttributeModifier> var16 : var4) {
+                 AttributeModifier var17 = (AttributeModifier)var16.getSecond();
+                 double var18 = var17.getAmount();
+                 double var19;

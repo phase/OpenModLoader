@@ -2,10 +2,10 @@
 +++ /net/minecraft/server/management
 @@ -362,7 +362,7 @@
  
-    public EntityPlayerMP createPlayerForUser(GameProfile var1) {
-       UUID var2 = EntityPlayer.getUUID(var1);
--      ArrayList var3 = Lists.newArrayList();
-+      ArrayList<EntityPlayerMP> var3 = Lists.newArrayList();
+     public EntityPlayerMP createPlayerForUser(GameProfile var1) {
+         UUID var2 = EntityPlayer.getUUID(var1);
+-        ArrayList var3 = Lists.newArrayList();
++        ArrayList<EntityPlayerMP> var3 = Lists.newArrayList();
  
-       for(int var4 = 0; var4 < this.playerEntityList.size(); ++var4) {
-          EntityPlayerMP var5 = (EntityPlayerMP)this.playerEntityList.get(var4);
+         for(int var4 = 0; var4 < this.playerEntityList.size(); ++var4) {
+             EntityPlayerMP var5 = (EntityPlayerMP)this.playerEntityList.get(var4);

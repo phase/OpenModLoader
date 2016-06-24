@@ -1,11 +1,11 @@
 --- /net/minecraft/inventory
 +++ /net/minecraft/inventory
 @@ -34,7 +34,7 @@
-    protected Slot addSlotToContainer(Slot var1) {
-       var1.slotNumber = this.inventorySlots.size();
-       this.inventorySlots.add(var1);
--      this.inventoryItemStacks.add((Object)null);
-+      this.inventoryItemStacks.add(null);
-       return var1;
-    }
+     protected Slot addSlotToContainer(Slot var1) {
+         var1.slotNumber = this.inventorySlots.size();
+         this.inventorySlots.add(var1);
+-        this.inventoryItemStacks.add((Object)null);
++        this.inventoryItemStacks.add(null);
+         return var1;
+     }
  

@@ -1,11 +1,11 @@
 --- /net/minecraft/command
 +++ /net/minecraft/command
 @@ -81,6 +81,8 @@
-    }
+     }
  
-    protected boolean tryExecute(ICommandSender var1, String[] var2, ICommand var3, String var4) {
-+      String[] arguments = xyz.openmodloader.event.impl.CommandEvent.handle(var2, var3, var1);
-+      if(arguments == null) return false; else var2 = arguments;
-       try {
-          var3.execute(this.getServer(), var1, var2);
-          return true;
+     protected boolean tryExecute(ICommandSender var1, String[] var2, ICommand var3, String var4) {
++        String[] arguments = xyz.openmodloader.event.impl.CommandEvent.handle(var2, var3, var1);
++        if(arguments == null) return false; else var2 = arguments;
+         try {
+             var3.execute(this.getServer(), var1, var2);
+             return true;

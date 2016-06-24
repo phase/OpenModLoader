@@ -1,11 +1,11 @@
 --- /net/minecraft/world/gen/structure
 +++ /net/minecraft/world/gen/structure
 @@ -156,7 +156,7 @@
-       if(var13 != null) {
-          return var13;
-       } else {
--         List var20 = this.getCoordList();
-+         List<BlockPos> var20 = this.getCoordList();
-          if(var20 != null) {
-             BlockPos var21 = null;
+         if(var13 != null) {
+             return var13;
+         } else {
+-            List var20 = this.getCoordList();
++            List<BlockPos> var20 = this.getCoordList();
+             if(var20 != null) {
+                 BlockPos var21 = null;
  

@@ -1,13 +1,13 @@
 --- /net/minecraft/network
 +++ /net/minecraft/network
 @@ -81,8 +81,8 @@
-          this.players = var1;
-       }
+             this.players = var1;
+         }
  
--      public static class a implements JsonDeserializer<ServerStatusResponse.a>, JsonSerializer<ServerStatusResponse.a> {
--         public a() {
-+      public static class d implements JsonDeserializer<ServerStatusResponse.a>, JsonSerializer<ServerStatusResponse.a> {
-+         public d() {
-          }
+-        public static class a implements JsonDeserializer<ServerStatusResponse.a>, JsonSerializer<ServerStatusResponse.a> {
+-            public a() {
++        public static class d implements JsonDeserializer<ServerStatusResponse.a>, JsonSerializer<ServerStatusResponse.a> {
++            public d() {
+             }
  
-          public ServerStatusResponse.a deserialize(JsonElement var1, Type var2, JsonDeserializationContext var3) throws JsonParseException {
+             public ServerStatusResponse.a deserialize(JsonElement var1, Type var2, JsonDeserializationContext var3) throws JsonParseException {

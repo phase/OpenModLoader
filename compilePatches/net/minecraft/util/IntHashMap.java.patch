@@ -1,11 +1,11 @@
 --- /net/minecraft/util
 +++ /net/minecraft/util
 @@ -24,7 +24,7 @@
-    public V lookup(int var1) {
-       int var2 = computeHash(var1);
+     public V lookup(int var1) {
+         int var2 = computeHash(var1);
  
--      for(IntHashMap.a var3 = this.slots[getSlotIndex(var2, this.slots.length)]; var3 != null; var3 = var3.nextEntry) {
-+      for(IntHashMap.a<V> var3 = this.slots[getSlotIndex(var2, this.slots.length)]; var3 != null; var3 = var3.nextEntry) {
-          if(var3.hashEntry == var1) {
-             return var3.valueEntry;
-          }
+-        for(IntHashMap.a var3 = this.slots[getSlotIndex(var2, this.slots.length)]; var3 != null; var3 = var3.nextEntry) {
++        for(IntHashMap.a<V> var3 = this.slots[getSlotIndex(var2, this.slots.length)]; var3 != null; var3 = var3.nextEntry) {
+             if(var3.hashEntry == var1) {
+                 return var3.valueEntry;
+             }

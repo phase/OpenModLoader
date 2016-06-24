@@ -1,20 +1,20 @@
 --- /net/minecraft/pathfinding
 +++ /net/minecraft/pathfinding
 @@ -63,7 +63,7 @@
-       BlockPos var9 = new BlockPos(this.entity);
-       PathNodeType var10 = this.getPathNodeType(this.entity, var9.getX(), var1, var9.getZ());
-       if(this.entity.getPathPriority(var10) < 0.0F) {
--         HashSet var4 = Sets.newHashSet();
-+         HashSet<BlockPos> var4 = Sets.newHashSet();
-          var4.add(new BlockPos(this.entity.getEntityBoundingBox().minX, (double)var1, this.entity.getEntityBoundingBox().minZ));
-          var4.add(new BlockPos(this.entity.getEntityBoundingBox().minX, (double)var1, this.entity.getEntityBoundingBox().maxZ));
-          var4.add(new BlockPos(this.entity.getEntityBoundingBox().maxX, (double)var1, this.entity.getEntityBoundingBox().minZ));
+         BlockPos var9 = new BlockPos(this.entity);
+         PathNodeType var10 = this.getPathNodeType(this.entity, var9.getX(), var1, var9.getZ());
+         if(this.entity.getPathPriority(var10) < 0.0F) {
+-            HashSet var4 = Sets.newHashSet();
++            HashSet<BlockPos> var4 = Sets.newHashSet();
+             var4.add(new BlockPos(this.entity.getEntityBoundingBox().minX, (double)var1, this.entity.getEntityBoundingBox().minZ));
+             var4.add(new BlockPos(this.entity.getEntityBoundingBox().minX, (double)var1, this.entity.getEntityBoundingBox().maxZ));
+             var4.add(new BlockPos(this.entity.getEntityBoundingBox().maxX, (double)var1, this.entity.getEntityBoundingBox().minZ));
 @@ -229,7 +229,7 @@
-    }
+     }
  
-    public PathNodeType getPathNodeType(IBlockAccess var1, int var2, int var3, int var4, EntityLiving var5, int var6, int var7, int var8, boolean var9, boolean var10) {
--      EnumSet var11 = EnumSet.noneOf(PathNodeType.class);
-+      EnumSet<PathNodeType> var11 = EnumSet.noneOf(PathNodeType.class);
-       PathNodeType var12 = PathNodeType.BLOCKED;
-       double var13 = (double)var5.width / 2.0D;
-       BlockPos var15 = new BlockPos(var5);
+     public PathNodeType getPathNodeType(IBlockAccess var1, int var2, int var3, int var4, EntityLiving var5, int var6, int var7, int var8, boolean var9, boolean var10) {
+-        EnumSet var11 = EnumSet.noneOf(PathNodeType.class);
++        EnumSet<PathNodeType> var11 = EnumSet.noneOf(PathNodeType.class);
+         PathNodeType var12 = PathNodeType.BLOCKED;
+         double var13 = (double)var5.width / 2.0D;
+         BlockPos var15 = new BlockPos(var5);

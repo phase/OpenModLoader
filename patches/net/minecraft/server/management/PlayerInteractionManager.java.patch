@@ -1,26 +1,26 @@
 --- /net/minecraft/server/management
 +++ /net/minecraft/server/management
 @@ -114,6 +114,7 @@
-    }
+     }
  
-    public void onBlockClicked(BlockPos var1, EnumFacing var2) {
-+      if(false)
-       if(this.isCreative()) {
-          if(!this.theWorld.extinguishFire((EntityPlayer)null, var1, var2)) {
-             this.tryHarvestBlock(var1);
+     public void onBlockClicked(BlockPos var1, EnumFacing var2) {
++        if(false)
+         if(this.isCreative()) {
+             if(!this.theWorld.extinguishFire((EntityPlayer)null, var1, var2)) {
+                 this.tryHarvestBlock(var1);
 @@ -148,6 +149,7 @@
-          }
+             }
  
-          if(var3.getMaterial() != Material.AIR && var7 >= 1.0F) {
-+            if (!this.isCreative() || !this.theWorld.extinguishFire(null, var1, var2))
-             this.tryHarvestBlock(var1);
-          } else {
-             this.isDestroyingBlock = true;
+             if(var3.getMaterial() != Material.AIR && var7 >= 1.0F) {
++                if (!this.isCreative() || !this.theWorld.extinguishFire(null, var1, var2))
+                 this.tryHarvestBlock(var1);
+             } else {
+                 this.isDestroyingBlock = true;
 @@ -198,6 +200,7 @@
-    }
+     }
  
-    public boolean tryHarvestBlock(BlockPos var1) {
-+      if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.BlockEvent.Destroy(this.theWorld, this.theWorld.getBlockState(var1), var1))) return false;
-       if(this.gameType.isCreative() && this.thisPlayerMP.getHeldItemMainhand() != null && this.thisPlayerMP.getHeldItemMainhand().getItem() instanceof ItemSword) {
-          return false;
-       } else {
+     public boolean tryHarvestBlock(BlockPos var1) {
++        if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.BlockEvent.Destroy(this.theWorld, this.theWorld.getBlockState(var1), var1))) return false;
+         if(this.gameType.isCreative() && this.thisPlayerMP.getHeldItemMainhand() != null && this.thisPlayerMP.getHeldItemMainhand().getItem() instanceof ItemSword) {
+             return false;
+         } else {

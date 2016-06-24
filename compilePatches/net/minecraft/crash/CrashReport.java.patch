@@ -1,11 +1,11 @@
 --- /net/minecraft/crash
 +++ /net/minecraft/crash
 @@ -71,7 +71,7 @@
-       this.theReportCategory.setDetail("JVM Flags", new ICrashReportDetail<String>() {
-          public String call() {
-             RuntimeMXBean var1 = ManagementFactory.getRuntimeMXBean();
--            List var2 = var1.getInputArguments();
-+            List<String> var2 = var1.getInputArguments();
-             int var3 = 0;
-             StringBuilder var4 = new StringBuilder();
+         this.theReportCategory.setDetail("JVM Flags", new ICrashReportDetail<String>() {
+             public String call() {
+                 RuntimeMXBean var1 = ManagementFactory.getRuntimeMXBean();
+-                List var2 = var1.getInputArguments();
++                List<String> var2 = var1.getInputArguments();
+                 int var3 = 0;
+                 StringBuilder var4 = new StringBuilder();
  

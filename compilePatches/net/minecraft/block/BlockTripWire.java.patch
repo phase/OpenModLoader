@@ -1,11 +1,11 @@
 --- /net/minecraft/block
 +++ /net/minecraft/block
 @@ -137,7 +137,7 @@
-       IBlockState var3 = var1.getBlockState(var2);
-       boolean var4 = ((Boolean)var3.getValue(POWERED)).booleanValue();
-       boolean var5 = false;
--      List var6 = var1.getEntitiesWithinAABBExcludingEntity((Entity)null, var3.getBoundingBox(var1, var2).offset(var2));
-+      List<Entity> var6 = var1.getEntitiesWithinAABBExcludingEntity((Entity)null, var3.getBoundingBox(var1, var2).offset(var2));
-       if(!var6.isEmpty()) {
-          for(Entity var8 : var6) {
-             if(!var8.doesEntityNotTriggerPressurePlate()) {
+         IBlockState var3 = var1.getBlockState(var2);
+         boolean var4 = ((Boolean)var3.getValue(POWERED)).booleanValue();
+         boolean var5 = false;
+-        List var6 = var1.getEntitiesWithinAABBExcludingEntity((Entity)null, var3.getBoundingBox(var1, var2).offset(var2));
++        List<Entity> var6 = var1.getEntitiesWithinAABBExcludingEntity((Entity)null, var3.getBoundingBox(var1, var2).offset(var2));
+         if(!var6.isEmpty()) {
+             for(Entity var8 : var6) {
+                 if(!var8.doesEntityNotTriggerPressurePlate()) {

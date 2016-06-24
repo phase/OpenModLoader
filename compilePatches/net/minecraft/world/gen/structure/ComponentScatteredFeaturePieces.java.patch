@@ -2,13 +2,13 @@
 +++ /net/minecraft/world/gen/structure
 @@ -367,9 +367,9 @@
  
-                BlockPos var21 = var5.add(var10.calculateConnectedPos(var9, new BlockPos(3, -1 - var13 * 3, 5), var9, new BlockPos(3, 5, 7)));
-                var12.addBlocksToWorldChunk(var1, var21, var9);
--               Map var22 = var12.getDataBlocks(var21, var9);
-+               Map<BlockPos, String> var22 = var12.getDataBlocks(var21, var9);
+                     BlockPos var21 = var5.add(var10.calculateConnectedPos(var9, new BlockPos(3, -1 - var13 * 3, 5), var9, new BlockPos(3, 5, 7)));
+                     var12.addBlocksToWorldChunk(var1, var21, var9);
+-                    Map var22 = var12.getDataBlocks(var21, var9);
++                    Map<BlockPos, String> var22 = var12.getDataBlocks(var21, var9);
  
--               for(Entry var17 : var22.entrySet()) {
-+               for(Entry<BlockPos, String> var17 : var22.entrySet()) {
-                   if("chest".equals(var17.getValue())) {
-                      BlockPos var18 = (BlockPos)var17.getKey();
-                      var1.setBlockState(var18, Blocks.AIR.getDefaultState(), 3);
+-                    for(Entry var17 : var22.entrySet()) {
++                    for(Entry<BlockPos, String> var17 : var22.entrySet()) {
+                         if("chest".equals(var17.getValue())) {
+                             BlockPos var18 = (BlockPos)var17.getKey();
+                             var1.setBlockState(var18, Blocks.AIR.getDefaultState(), 3);

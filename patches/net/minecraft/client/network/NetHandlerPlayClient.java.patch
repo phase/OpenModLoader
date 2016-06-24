@@ -2,16 +2,16 @@
 +++ /net/minecraft/client/network
 @@ -664,10 +664,12 @@
  
-    public void handleChat(SPacketChat var1) {
-       PacketThreadUtil.checkThreadAndEnqueue(var1, this, this.gameController);
-+      ITextComponent component = xyz.openmodloader.event.impl.MessageEvent.Chat.handle(var1.getChatComponent(), xyz.openmodloader.event.strippable.Side.CLIENT);
-+      if (component == null) return;
-       if(var1.getType() == 2) {
--         this.gameController.ingameGUI.setRecordPlaying(var1.getChatComponent(), false);
-+         this.gameController.ingameGUI.setRecordPlaying(component, false);
-       } else {
--         this.gameController.ingameGUI.getChatGUI().printChatMessage(var1.getChatComponent());
-+         this.gameController.ingameGUI.getChatGUI().printChatMessage(component);
-       }
+     public void handleChat(SPacketChat var1) {
+         PacketThreadUtil.checkThreadAndEnqueue(var1, this, this.gameController);
++        ITextComponent component = xyz.openmodloader.event.impl.MessageEvent.Chat.handle(var1.getChatComponent(), xyz.openmodloader.event.strippable.Side.CLIENT);
++        if (component == null) return;
+         if(var1.getType() == 2) {
+-            this.gameController.ingameGUI.setRecordPlaying(var1.getChatComponent(), false);
++            this.gameController.ingameGUI.setRecordPlaying(component, false);
+         } else {
+-            this.gameController.ingameGUI.getChatGUI().printChatMessage(var1.getChatComponent());
++            this.gameController.ingameGUI.getChatGUI().printChatMessage(component);
+         }
  
-    }
+     }

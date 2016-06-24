@@ -1,20 +1,20 @@
 --- /net/minecraft/network
 +++ /net/minecraft/network
 @@ -265,7 +265,7 @@
-    }
+     }
  
-    protected EnumConnectionState registerPacket(EnumPacketDirection var1, Class<? extends Packet<?>> var2) {
--      Object var3 = (BiMap)this.directionMaps.get(var1);
-+      BiMap<Integer, Class<? extends Packet<?>>> var3 = (BiMap)this.directionMaps.get(var1);
-       if(var3 == null) {
-          var3 = HashBiMap.create();
-          this.directionMaps.put(var1, var3);
+     protected EnumConnectionState registerPacket(EnumPacketDirection var1, Class<? extends Packet<?>> var2) {
+-        Object var3 = (BiMap)this.directionMaps.get(var1);
++        BiMap<Integer, Class<? extends Packet<?>>> var3 = (BiMap)this.directionMaps.get(var1);
+         if(var3 == null) {
+             var3 = HashBiMap.create();
+             this.directionMaps.put(var1, var3);
 @@ -313,7 +313,7 @@
-          STATES_BY_ID[var4 - -1] = var3;
+             STATES_BY_ID[var4 - -1] = var3;
  
-          for(EnumPacketDirection var6 : var3.directionMaps.keySet()) {
--            for(Class var8 : ((BiMap)var3.directionMaps.get(var6)).values()) {
-+            for(Class var8 : (var3.directionMaps.get(var6)).values()) {
-                if(STATES_BY_CLASS.containsKey(var8) && STATES_BY_CLASS.get(var8) != var3) {
-                   throw new Error("Packet " + var8 + " is already assigned to protocol " + STATES_BY_CLASS.get(var8) + " - can\'t reassign to " + var3);
-                }
+             for(EnumPacketDirection var6 : var3.directionMaps.keySet()) {
+-                for(Class var8 : ((BiMap)var3.directionMaps.get(var6)).values()) {
++                for(Class var8 : (var3.directionMaps.get(var6)).values()) {
+                     if(STATES_BY_CLASS.containsKey(var8) && STATES_BY_CLASS.get(var8) != var3) {
+                         throw new Error("Packet " + var8 + " is already assigned to protocol " + STATES_BY_CLASS.get(var8) + " - can\'t reassign to " + var3);
+                     }

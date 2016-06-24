@@ -1,18 +1,18 @@
 --- /net/minecraft/client/gui
 +++ /net/minecraft/client/gui
 @@ -42,13 +42,13 @@
-       this.buttonList.add(new GuiButton(2, this.width / 2 + 2, this.height - 30, 150, 20, I18n.format("gui.done", new Object[0])));
-       boolean var6 = this.mc.getIntegratedServer() != null && this.mc.getIntegratedServer().getPlayerUsageSnooper() != null;
+         this.buttonList.add(new GuiButton(2, this.width / 2 + 2, this.height - 30, 150, 20, I18n.format("gui.done", new Object[0])));
+         boolean var6 = this.mc.getIntegratedServer() != null && this.mc.getIntegratedServer().getPlayerUsageSnooper() != null;
  
--      for(Entry var5 : (new TreeMap(this.mc.getPlayerUsageSnooper().getCurrentStats())).entrySet()) {
-+      for(Entry var5 : (new TreeMap<String, String>(this.mc.getPlayerUsageSnooper().getCurrentStats())).entrySet()) {
-          this.keys.add((var6?"C ":"") + (String)var5.getKey());
-          this.values.add(this.fontRendererObj.trimStringToWidth((String)var5.getValue(), this.width - 220));
-       }
+-        for(Entry var5 : (new TreeMap(this.mc.getPlayerUsageSnooper().getCurrentStats())).entrySet()) {
++        for(Entry var5 : (new TreeMap<String, String>(this.mc.getPlayerUsageSnooper().getCurrentStats())).entrySet()) {
+             this.keys.add((var6?"C ":"") + (String)var5.getKey());
+             this.values.add(this.fontRendererObj.trimStringToWidth((String)var5.getValue(), this.width - 220));
+         }
  
-       if(var6) {
--         for(Entry var9 : (new TreeMap(this.mc.getIntegratedServer().getPlayerUsageSnooper().getCurrentStats())).entrySet()) {
-+         for(Entry var9 : (new TreeMap<String, String>(this.mc.getIntegratedServer().getPlayerUsageSnooper().getCurrentStats())).entrySet()) {
-             this.keys.add("S " + (String)var9.getKey());
-             this.values.add(this.fontRendererObj.trimStringToWidth((String)var9.getValue(), this.width - 220));
-          }
+         if(var6) {
+-            for(Entry var9 : (new TreeMap(this.mc.getIntegratedServer().getPlayerUsageSnooper().getCurrentStats())).entrySet()) {
++            for(Entry var9 : (new TreeMap<String, String>(this.mc.getIntegratedServer().getPlayerUsageSnooper().getCurrentStats())).entrySet()) {
+                 this.keys.add("S " + (String)var9.getKey());
+                 this.values.add(this.fontRendererObj.trimStringToWidth((String)var9.getValue(), this.width - 220));
+             }

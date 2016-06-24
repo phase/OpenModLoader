@@ -1,49 +1,49 @@
 --- /net/minecraft/client/multiplayer
 +++ /net/minecraft/client/multiplayer
 @@ -106,6 +106,7 @@
-          }
-       }
+             }
+         }
  
-+      if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.BlockEvent.Destroy(this.mc.theWorld, this.mc.theWorld.getBlockState(var1), var1))) return false;
-       if(this.currentGameType.isCreative() && this.mc.thePlayer.getHeldItemMainhand() != null && this.mc.thePlayer.getHeldItemMainhand().getItem() instanceof ItemSword) {
-          return false;
-       } else {
++        if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.BlockEvent.Destroy(this.mc.theWorld, this.mc.theWorld.getBlockState(var1), var1))) return false;
+         if(this.currentGameType.isCreative() && this.mc.thePlayer.getHeldItemMainhand() != null && this.mc.thePlayer.getHeldItemMainhand().getItem() instanceof ItemSword) {
+             return false;
+         } else {
 @@ -161,6 +162,7 @@
-       if(!this.mc.theWorld.getWorldBorder().contains(var1)) {
-          return false;
-       } else {
-+         if(false)
-          if(this.currentGameType.isCreative()) {
+         if(!this.mc.theWorld.getWorldBorder().contains(var1)) {
+             return false;
+         } else {
++            if(false)
+             if(this.currentGameType.isCreative()) {
+                 this.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.a.START_DESTROY_BLOCK, var1, var2));
+                 clickBlockCreative(this.mc, this, var1, var2);
+@@ -173,11 +175,13 @@
+                 this.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.a.START_DESTROY_BLOCK, var1, var2));
+                 IBlockState var5 = this.mc.theWorld.getBlockState(var1);
+                 boolean var4 = var5.getMaterial() != Material.AIR;
++                if (!this.currentGameType.isCreative())
+                 if(var4 && this.curBlockDamageMP == 0.0F) {
+                     var5.getBlock().onBlockClicked(this.mc.theWorld, var1, this.mc.thePlayer);
+                 }
+ 
+                 if(var4 && var5.getPlayerRelativeBlockHardness(this.mc.thePlayer, this.mc.thePlayer.worldObj, var1) >= 1.0F) {
++                    if (this.currentGameType.isCreative()) {clickBlockCreative(this.mc, this, var1, var2); this.blockHitDelay = 5;} else
+                     this.onPlayerDestroyBlock(var1);
+                 } else {
+                     this.isHittingBlock = true;
+@@ -209,7 +213,7 @@
+         if(this.blockHitDelay > 0) {
+             --this.blockHitDelay;
+             return true;
+-        } else if(this.currentGameType.isCreative() && this.mc.theWorld.getWorldBorder().contains(var1)) {
++        } else if(false) {
+             this.blockHitDelay = 5;
              this.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.a.START_DESTROY_BLOCK, var1, var2));
              clickBlockCreative(this.mc, this, var1, var2);
-@@ -173,11 +175,13 @@
-             this.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.a.START_DESTROY_BLOCK, var1, var2));
-             IBlockState var5 = this.mc.theWorld.getBlockState(var1);
-             boolean var4 = var5.getMaterial() != Material.AIR;
-+            if (!this.currentGameType.isCreative())
-             if(var4 && this.curBlockDamageMP == 0.0F) {
-                var5.getBlock().onBlockClicked(this.mc.theWorld, var1, this.mc.thePlayer);
-             }
- 
-             if(var4 && var5.getPlayerRelativeBlockHardness(this.mc.thePlayer, this.mc.thePlayer.worldObj, var1) >= 1.0F) {
-+               if (this.currentGameType.isCreative()) {clickBlockCreative(this.mc, this, var1, var2); this.blockHitDelay = 5;} else
-                this.onPlayerDestroyBlock(var1);
-             } else {
-                this.isHittingBlock = true;
-@@ -209,7 +213,7 @@
-       if(this.blockHitDelay > 0) {
-          --this.blockHitDelay;
-          return true;
--      } else if(this.currentGameType.isCreative() && this.mc.theWorld.getWorldBorder().contains(var1)) {
-+      } else if(false) {
-          this.blockHitDelay = 5;
-          this.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.a.START_DESTROY_BLOCK, var1, var2));
-          clickBlockCreative(this.mc, this, var1, var2);
 @@ -231,6 +235,7 @@
-             if(this.curBlockDamageMP >= 1.0F) {
-                this.isHittingBlock = false;
-                this.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.a.STOP_DESTROY_BLOCK, var1, var2));
-+               if (this.currentGameType.isCreative()) {clickBlockCreative(this.mc, this, var1, var2);} else
-                this.onPlayerDestroyBlock(var1);
-                this.curBlockDamageMP = 0.0F;
-                this.stepSoundTickCounter = 0.0F;
+                 if(this.curBlockDamageMP >= 1.0F) {
+                     this.isHittingBlock = false;
+                     this.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.a.STOP_DESTROY_BLOCK, var1, var2));
++                    if (this.currentGameType.isCreative()) {clickBlockCreative(this.mc, this, var1, var2);} else
+                     this.onPlayerDestroyBlock(var1);
+                     this.curBlockDamageMP = 0.0F;
+                     this.stepSoundTickCounter = 0.0F;

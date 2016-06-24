@@ -1,21 +1,21 @@
 --- /net/minecraft/nbt
 +++ /net/minecraft/nbt
 @@ -195,7 +195,7 @@
-    }
+     }
  
-    private static <T extends Comparable<T>> IBlockState func_190007_a(IBlockState var0, IProperty<T> var1, String var2) {
--      return var0.withProperty(var1, (Comparable)var1.parseValue(var2).get());
-+      return var0.withProperty(var1, (T)var1.parseValue(var2).get());
-    }
+     private static <T extends Comparable<T>> IBlockState func_190007_a(IBlockState var0, IProperty<T> var1, String var2) {
+-        return var0.withProperty(var1, (Comparable)var1.parseValue(var2).get());
++        return var0.withProperty(var1, (T)var1.parseValue(var2).get());
+     }
  
-    public static NBTTagCompound func_190009_a(NBTTagCompound var0, IBlockState var1) {
+     public static NBTTagCompound func_190009_a(NBTTagCompound var0, IBlockState var1) {
 @@ -214,7 +214,7 @@
-       return var0;
-    }
+         return var0;
+     }
  
--   private static <T extends Comparable<T>> String func_190010_a(IProperty<T> var0, Comparable<?> var1) {
--      return var0.getName(var1);
-+   private static <T extends Comparable<T>> String func_190010_a(IProperty<T> var0, Comparable<T> var1) {
-+      return var0.getName((T) var1);
-    }
+-    private static <T extends Comparable<T>> String func_190010_a(IProperty<T> var0, Comparable<?> var1) {
+-        return var0.getName(var1);
++    private static <T extends Comparable<T>> String func_190010_a(IProperty<T> var0, Comparable<T> var1) {
++        return var0.getName((T) var1);
+     }
  }

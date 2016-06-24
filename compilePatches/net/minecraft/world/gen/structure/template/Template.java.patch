@@ -1,11 +1,11 @@
 --- /net/minecraft/world/gen/structure/template
 +++ /net/minecraft/world/gen/structure/template
 @@ -101,7 +101,7 @@
-    }
+     }
  
-    private void takeEntitiesFromWorld(World var1, BlockPos var2, BlockPos var3) {
--      List var4 = var1.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(var2, var3), new Predicate<Entity>() {
-+      List<Entity> var4 = var1.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(var2, var3), new Predicate<Entity>() {
-          public boolean apply(@Nullable Entity var1) {
-             return !(var1 instanceof EntityPlayer);
-          }
+     private void takeEntitiesFromWorld(World var1, BlockPos var2, BlockPos var3) {
+-        List var4 = var1.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(var2, var3), new Predicate<Entity>() {
++        List<Entity> var4 = var1.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(var2, var3), new Predicate<Entity>() {
+             public boolean apply(@Nullable Entity var1) {
+                 return !(var1 instanceof EntityPlayer);
+             }

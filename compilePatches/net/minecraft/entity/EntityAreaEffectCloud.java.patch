@@ -1,20 +1,20 @@
 --- /net/minecraft/entity
 +++ /net/minecraft/entity
 @@ -246,7 +246,7 @@
-                }
-             }
+                     }
+                 }
  
--            ArrayList var18 = Lists.newArrayList();
-+            ArrayList<PotionEffect> var18 = Lists.newArrayList();
+-                ArrayList var18 = Lists.newArrayList();
++                ArrayList<PotionEffect> var18 = Lists.newArrayList();
  
-             for(PotionEffect var24 : this.potion.getEffects()) {
-                var18.add(new PotionEffect(var24.getPotion(), var24.getDuration() / 4, var24.getAmplifier(), var24.getIsAmbient(), var24.doesShowParticles()));
+                 for(PotionEffect var24 : this.potion.getEffects()) {
+                     var18.add(new PotionEffect(var24.getPotion(), var24.getDuration() / 4, var24.getAmplifier(), var24.getIsAmbient(), var24.doesShowParticles()));
 @@ -256,7 +256,7 @@
-             if(var18.isEmpty()) {
-                this.reapplicationDelayMap.clear();
-             } else {
--               List var22 = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox());
-+               List<EntityLivingBase> var22 = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox());
-                if(!var22.isEmpty()) {
-                   for(EntityLivingBase var27 : var22) {
-                      if(!this.reapplicationDelayMap.containsKey(var27) && var27.canBeHitWithPotion()) {
+                 if(var18.isEmpty()) {
+                     this.reapplicationDelayMap.clear();
+                 } else {
+-                    List var22 = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox());
++                    List<EntityLivingBase> var22 = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox());
+                     if(!var22.isEmpty()) {
+                         for(EntityLivingBase var27 : var22) {
+                             if(!this.reapplicationDelayMap.containsKey(var27) && var27.canBeHitWithPotion()) {

@@ -1,11 +1,11 @@
 --- /net/minecraft/entity
 +++ /net/minecraft/entity
 @@ -208,7 +208,7 @@
-    }
+     }
  
-    public static List<String> getEntityNameList() {
--      Set var0 = NAME_TO_CLASS.keySet();
-+      Set<String> var0 = NAME_TO_CLASS.keySet();
-       ArrayList var1 = Lists.newArrayList();
+     public static List<String> getEntityNameList() {
+-        Set var0 = NAME_TO_CLASS.keySet();
++        Set<String> var0 = NAME_TO_CLASS.keySet();
+         ArrayList var1 = Lists.newArrayList();
  
-       for(String var3 : var0) {
+         for(String var3 : var0) {

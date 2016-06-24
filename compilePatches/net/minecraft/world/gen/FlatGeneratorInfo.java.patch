@@ -1,11 +1,11 @@
 --- /net/minecraft/world/gen
 +++ /net/minecraft/world/gen
 @@ -75,7 +75,7 @@
-             }
+                 }
  
-             var1.append(((String)var4.getKey()).toLowerCase());
--            Map var5 = (Map)var4.getValue();
-+            Map<String, String> var5 = (Map)var4.getValue();
-             if(!var5.isEmpty()) {
-                var1.append("(");
-                int var6 = 0;
+                 var1.append(((String)var4.getKey()).toLowerCase());
+-                Map var5 = (Map)var4.getValue();
++                Map<String, String> var5 = (Map)var4.getValue();
+                 if(!var5.isEmpty()) {
+                     var1.append("(");
+                     int var6 = 0;

@@ -1,11 +1,11 @@
 --- /net/minecraft/entity/ai
 +++ /net/minecraft/entity/ai
 @@ -25,7 +25,7 @@
-       } else if(this.villagerObj.getRNG().nextInt(400) != 0) {
-          return false;
-       } else {
--         List var1 = this.villagerObj.worldObj.getEntitiesWithinAABB(EntityVillager.class, this.villagerObj.getEntityBoundingBox().expand(6.0D, 3.0D, 6.0D));
-+         List<EntityVillager> var1 = this.villagerObj.worldObj.getEntitiesWithinAABB(EntityVillager.class, this.villagerObj.getEntityBoundingBox().expand(6.0D, 3.0D, 6.0D));
-          double var2 = Double.MAX_VALUE;
+         } else if(this.villagerObj.getRNG().nextInt(400) != 0) {
+             return false;
+         } else {
+-            List var1 = this.villagerObj.worldObj.getEntitiesWithinAABB(EntityVillager.class, this.villagerObj.getEntityBoundingBox().expand(6.0D, 3.0D, 6.0D));
++            List<EntityVillager> var1 = this.villagerObj.worldObj.getEntitiesWithinAABB(EntityVillager.class, this.villagerObj.getEntityBoundingBox().expand(6.0D, 3.0D, 6.0D));
+             double var2 = Double.MAX_VALUE;
  
-          for(EntityVillager var5 : var1) {
+             for(EntityVillager var5 : var1) {

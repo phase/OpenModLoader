@@ -1,26 +1,26 @@
 --- /net/minecraft/client/gui
 +++ /net/minecraft/client/gui
 @@ -340,7 +340,7 @@
-    }
+     }
  
-    protected void renderPotionEffects(ScaledResolution var1) {
--      Collection var2 = this.mc.thePlayer.getActivePotionEffects();
-+      Collection<PotionEffect> var2 = this.mc.thePlayer.getActivePotionEffects();
-       if(!var2.isEmpty()) {
-          this.mc.getTextureManager().bindTexture(GuiContainer.INVENTORY_BACKGROUND);
-          GlStateManager.enableBlend();
+     protected void renderPotionEffects(ScaledResolution var1) {
+-        Collection var2 = this.mc.thePlayer.getActivePotionEffects();
++        Collection<PotionEffect> var2 = this.mc.thePlayer.getActivePotionEffects();
+         if(!var2.isEmpty()) {
+             this.mc.getTextureManager().bindTexture(GuiContainer.INVENTORY_BACKGROUND);
+             GlStateManager.enableBlend();
 @@ -542,12 +542,12 @@
-    private void renderScoreboard(ScoreObjective var1, ScaledResolution var2) {
-       Scoreboard var3 = var1.getScoreboard();
-       Collection var4 = var3.getSortedScores(var1);
--      ArrayList var5 = Lists.newArrayList(Iterables.filter(var4, new Predicate<Score>() {
-+      ArrayList<Score> var5 = Lists.newArrayList(Iterables.filter(var4, new Predicate<Score>() {
-          public boolean apply(@Nullable Score var1) {
-             return var1.getPlayerName() != null && !var1.getPlayerName().startsWith("#");
-          }
-       }));
--      ArrayList var21;
-+      ArrayList<Score> var21;
-       if(var5.size() > 15) {
-          var21 = Lists.newArrayList(Iterables.skip(var5, var4.size() - 15));
-       } else {
+     private void renderScoreboard(ScoreObjective var1, ScaledResolution var2) {
+         Scoreboard var3 = var1.getScoreboard();
+         Collection var4 = var3.getSortedScores(var1);
+-        ArrayList var5 = Lists.newArrayList(Iterables.filter(var4, new Predicate<Score>() {
++        ArrayList<Score> var5 = Lists.newArrayList(Iterables.filter(var4, new Predicate<Score>() {
+             public boolean apply(@Nullable Score var1) {
+                 return var1.getPlayerName() != null && !var1.getPlayerName().startsWith("#");
+             }
+         }));
+-        ArrayList var21;
++        ArrayList<Score> var21;
+         if(var5.size() > 15) {
+             var21 = Lists.newArrayList(Iterables.skip(var5, var4.size() - 15));
+         } else {

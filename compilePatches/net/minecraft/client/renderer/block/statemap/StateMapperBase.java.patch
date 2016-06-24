@@ -1,13 +1,13 @@
 --- /net/minecraft/client/renderer/block/statemap
 +++ /net/minecraft/client/renderer/block/statemap
 @@ -36,8 +36,8 @@
-       return var2.toString();
-    }
+         return var2.toString();
+     }
  
--   private <T extends Comparable<T>> String getPropertyName(IProperty<T> var1, Comparable<?> var2) {
--      return var1.getName(var2);
-+   private <T extends Comparable<T>> String getPropertyName(IProperty<T> var1, Comparable<T> var2) {
-+      return var1.getName((T) var2);
-    }
+-    private <T extends Comparable<T>> String getPropertyName(IProperty<T> var1, Comparable<?> var2) {
+-        return var1.getName(var2);
++    private <T extends Comparable<T>> String getPropertyName(IProperty<T> var1, Comparable<T> var2) {
++        return var1.getName((T) var2);
+     }
  
-    public Map<IBlockState, ModelResourceLocation> putStateModelLocations(Block var1) {
+     public Map<IBlockState, ModelResourceLocation> putStateModelLocations(Block var1) {

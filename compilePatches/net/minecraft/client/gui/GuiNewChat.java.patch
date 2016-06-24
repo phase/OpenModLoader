@@ -1,11 +1,11 @@
 --- /net/minecraft/client/gui
 +++ /net/minecraft/client/gui
 @@ -125,7 +125,7 @@
-       }
+         }
  
-       int var5 = MathHelper.floor_float((float)this.getChatWidth() / this.getChatScale());
--      List var6 = GuiUtilRenderComponents.splitText(var1, var5, this.mc.fontRendererObj, false, false);
-+      List<ITextComponent> var6 = GuiUtilRenderComponents.splitText(var1, var5, this.mc.fontRendererObj, false, false);
-       boolean var7 = this.getChatOpen();
+         int var5 = MathHelper.floor_float((float)this.getChatWidth() / this.getChatScale());
+-        List var6 = GuiUtilRenderComponents.splitText(var1, var5, this.mc.fontRendererObj, false, false);
++        List<ITextComponent> var6 = GuiUtilRenderComponents.splitText(var1, var5, this.mc.fontRendererObj, false, false);
+         boolean var7 = this.getChatOpen();
  
-       for(ITextComponent var9 : var6) {
+         for(ITextComponent var9 : var6) {

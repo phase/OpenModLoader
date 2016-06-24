@@ -1,11 +1,11 @@
 --- /net/minecraft/client/entity
 +++ /net/minecraft/client/entity
 @@ -826,7 +826,7 @@
-                         Vec3d var27 = var20.subtract(var25);
-                         Vec3d var28 = var19.add(var25);
-                         Vec3d var29 = var20.add(var25);
--                        List var30 = this.worldObj.getCollisionBoxes(this, var23);
-+                        List<AxisAlignedBB> var30 = this.worldObj.getCollisionBoxes(this, var23);
-                         if(!var30.isEmpty()) {
-                            ;
-                         }
+                                 Vec3d var27 = var20.subtract(var25);
+                                 Vec3d var28 = var19.add(var25);
+                                 Vec3d var29 = var20.add(var25);
+-                                List var30 = this.worldObj.getCollisionBoxes(this, var23);
++                                List<AxisAlignedBB> var30 = this.worldObj.getCollisionBoxes(this, var23);
+                                 if(!var30.isEmpty()) {
+                                     ;
+                                 }

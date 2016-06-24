@@ -1,10 +1,10 @@
 --- /net/minecraft/client
 +++ /net/minecraft/client
 @@ -5,6 +5,6 @@
-    }
+     }
  
-    public static String getClientModName() {
--      return "vanilla";
-+      return "OpenModLoader";
-    }
+     public static String getClientModName() {
+-        return "vanilla";
++        return "OpenModLoader";
+     }
  }

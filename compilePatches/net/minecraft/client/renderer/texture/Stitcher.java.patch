@@ -1,11 +1,11 @@
 --- /net/minecraft/client/renderer/texture
 +++ /net/minecraft/client/renderer/texture
 @@ -60,7 +60,7 @@
-    }
+     }
  
-    public List<TextureAtlasSprite> getStichSlots() {
--      ArrayList var1 = Lists.newArrayList();
-+      ArrayList<Stitcher.b> var1 = Lists.newArrayList();
+     public List<TextureAtlasSprite> getStichSlots() {
+-        ArrayList var1 = Lists.newArrayList();
++        ArrayList<Stitcher.b> var1 = Lists.newArrayList();
  
-       for(Stitcher.b var3 : this.stitchSlots) {
-          var3.getAllStitchSlots(var1);
+         for(Stitcher.b var3 : this.stitchSlots) {
+             var3.getAllStitchSlots(var1);

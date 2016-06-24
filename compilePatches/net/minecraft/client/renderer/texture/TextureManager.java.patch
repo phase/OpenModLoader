@@ -1,23 +1,23 @@
 --- /net/minecraft/client/renderer/texture
 +++ /net/minecraft/client/renderer/texture
 @@ -52,7 +52,7 @@
-       }
-    }
+         }
+     }
  
--   public boolean loadTexture(ResourceLocation var1, final ITextureObject var2) {
-+   public boolean loadTexture(ResourceLocation var1, ITextureObject var2) {
-       boolean var3 = true;
+-    public boolean loadTexture(ResourceLocation var1, final ITextureObject var2) {
++    public boolean loadTexture(ResourceLocation var1, ITextureObject var2) {
+         boolean var3 = true;
  
-       try {
+         try {
 @@ -66,9 +66,10 @@
-          CrashReport var5 = CrashReport.makeCrashReport(var9, "Registering texture");
-          CrashReportCategory var6 = var5.makeCategory("Resource location being registered");
-          var6.addCrashSection("Resource location", var1);
-+         final ITextureObject finalVar = var2;
-          var6.setDetail("Texture object class", new ICrashReportDetail<String>() {
-             public String call() throws Exception {
--               return var2.getClass().getName();
-+               return finalVar.getClass().getName();
-             }
-          });
-          throw new ReportedException(var5);
+             CrashReport var5 = CrashReport.makeCrashReport(var9, "Registering texture");
+             CrashReportCategory var6 = var5.makeCategory("Resource location being registered");
+             var6.addCrashSection("Resource location", var1);
++            final ITextureObject finalVar = var2;
+             var6.setDetail("Texture object class", new ICrashReportDetail<String>() {
+                 public String call() throws Exception {
+-                    return var2.getClass().getName();
++                    return finalVar.getClass().getName();
+                 }
+             });
+             throw new ReportedException(var5);

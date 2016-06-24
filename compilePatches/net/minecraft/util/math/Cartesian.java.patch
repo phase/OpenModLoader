@@ -1,11 +1,11 @@
 --- /net/minecraft/util/math
 +++ /net/minecraft/util/math
 @@ -45,7 +45,7 @@
-       }
+         }
  
-       public List<T> apply(@Nullable Object[] var1) {
--         return Arrays.asList((Object[])var1);
-+         return Arrays.asList((T[])var1);
-       }
-    }
+         public List<T> apply(@Nullable Object[] var1) {
+-            return Arrays.asList((Object[])var1);
++            return Arrays.asList((T[])var1);
+         }
+     }
  

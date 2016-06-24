@@ -1,10 +1,10 @@
 --- /net/minecraft/entity
 +++ /net/minecraft/entity
 @@ -308,6 +308,7 @@
-    }
+     }
  
-    public void onUpdate() {
-+      xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.EntityUpdate(this));
-       if(!this.worldObj.isRemote) {
-          this.setFlag(6, this.isGlowing());
-       }
+     public void onUpdate() {
++        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.EntityUpdate(this));
+         if(!this.worldObj.isRemote) {
+             this.setFlag(6, this.isGlowing());
+         }

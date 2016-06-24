@@ -9,15 +9,15 @@
  import java.io.IOException;
  import java.io.InputStream;
 @@ -25,10 +26,10 @@
-    }
+     }
  
-    public Set<String> getResourceDomains() {
--      HashSet var1 = Sets.newHashSet();
-+      HashSet<String> var1 = Sets.newHashSet();
-       File var2 = new File(this.resourcePackFile, "assets/");
-       if(var2.isDirectory()) {
--         for(File var6 : var2.listFiles(DirectoryFileFilter.DIRECTORY)) {
-+         for(File var6 : var2.listFiles((FileFilter) DirectoryFileFilter.DIRECTORY)) {
-             String var7 = getRelativeName(var2, var6);
-             if(var7.equals(var7.toLowerCase())) {
-                var1.add(var7.substring(0, var7.length() - 1));
+     public Set<String> getResourceDomains() {
+-        HashSet var1 = Sets.newHashSet();
++        HashSet<String> var1 = Sets.newHashSet();
+         File var2 = new File(this.resourcePackFile, "assets/");
+         if(var2.isDirectory()) {
+-            for(File var6 : var2.listFiles(DirectoryFileFilter.DIRECTORY)) {
++            for(File var6 : var2.listFiles((FileFilter) DirectoryFileFilter.DIRECTORY)) {
+                 String var7 = getRelativeName(var2, var6);
+                 if(var7.equals(var7.toLowerCase())) {
+                     var1.add(var7.substring(0, var7.length() - 1));

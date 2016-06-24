@@ -2,44 +2,44 @@
 +++ /net/minecraft/client
 @@ -352,22 +352,19 @@
  
-       while(true) {
-          try {
--            if(!this.running) {
--               break;
--            }
+         while(true) {
+             try {
+-                if(!this.running) {
+-                    break;
+-                }
 -
--            if(!this.hasCrashed || this.crashReporter == null) {
--               try {
--                  this.runGameLoop();
--               } catch (OutOfMemoryError var10) {
--                  this.freeMemory();
--                  this.displayGuiScreen(new GuiMemoryErrorScreen());
--                  System.gc();
-+            while(this.running){
-+               if(!this.hasCrashed || this.crashReporter == null) {
-+                  try {
-+                     this.runGameLoop();
-+                  } catch (OutOfMemoryError var10) {
-+                     this.freeMemory();
-+                     this.displayGuiScreen(new GuiMemoryErrorScreen());
-+                     System.gc();
-+                  }
-+               } else {
-+                  this.displayCrashReport(this.crashReporter);
-                }
--               continue;
-             }
+-                if(!this.hasCrashed || this.crashReporter == null) {
+-                    try {
+-                        this.runGameLoop();
+-                    } catch (OutOfMemoryError var10) {
+-                        this.freeMemory();
+-                        this.displayGuiScreen(new GuiMemoryErrorScreen());
+-                        System.gc();
++                while(this.running){
++                    if(!this.hasCrashed || this.crashReporter == null) {
++                        try {
++                            this.runGameLoop();
++                        } catch (OutOfMemoryError var10) {
++                            this.freeMemory();
++                            this.displayGuiScreen(new GuiMemoryErrorScreen());
++                            System.gc();
++                        }
++                    } else {
++                        this.displayCrashReport(this.crashReporter);
+                     }
+-                    continue;
+                 }
 -
--            this.displayCrashReport(this.crashReporter);
-          } catch (MinecraftError var12) {
-             break;
-          } catch (ReportedException var13) {
+-                this.displayCrashReport(this.crashReporter);
+             } catch (MinecraftError var12) {
+                 break;
+             } catch (ReportedException var13) {
 @@ -685,7 +682,7 @@
-    }
+     }
  
-    private void updateDisplayMode() throws LWJGLException {
--      HashSet var1 = Sets.newHashSet();
-+      HashSet<DisplayMode> var1 = Sets.newHashSet();
-       Collections.addAll(var1, Display.getAvailableDisplayModes());
-       DisplayMode var2 = Display.getDesktopDisplayMode();
-       if(!var1.contains(var2) && Util.getOSType() == Util.a.OSX) {
+     private void updateDisplayMode() throws LWJGLException {
+-        HashSet var1 = Sets.newHashSet();
++        HashSet<DisplayMode> var1 = Sets.newHashSet();
+         Collections.addAll(var1, Display.getAvailableDisplayModes());
+         DisplayMode var2 = Display.getDesktopDisplayMode();
+         if(!var1.contains(var2) && Util.getOSType() == Util.a.OSX) {

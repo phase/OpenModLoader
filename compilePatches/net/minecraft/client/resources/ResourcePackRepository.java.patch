@@ -2,10 +2,10 @@
 +++ /net/minecraft/client/resources
 @@ -265,7 +265,7 @@
  
-    private void deleteOldServerResourcesPacks() {
-       try {
--         ArrayList var1 = Lists.newArrayList(FileUtils.listFiles(this.dirServerResourcepacks, TrueFileFilter.TRUE, (IOFileFilter)null));
-+         ArrayList<File> var1 = Lists.newArrayList(FileUtils.listFiles(this.dirServerResourcepacks, TrueFileFilter.TRUE, (IOFileFilter)null));
-          Collections.sort(var1, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
-          int var2 = 0;
+     private void deleteOldServerResourcesPacks() {
+         try {
+-            ArrayList var1 = Lists.newArrayList(FileUtils.listFiles(this.dirServerResourcepacks, TrueFileFilter.TRUE, (IOFileFilter)null));
++            ArrayList<File> var1 = Lists.newArrayList(FileUtils.listFiles(this.dirServerResourcepacks, TrueFileFilter.TRUE, (IOFileFilter)null));
+             Collections.sort(var1, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
+             int var2 = 0;
  

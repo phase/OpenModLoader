@@ -1,11 +1,11 @@
 --- /net/minecraft/stats
 +++ /net/minecraft/stats
 @@ -128,7 +128,7 @@
-    }
+     }
  
-    private static void initCraftableStats() {
--      HashSet var0 = Sets.newHashSet();
-+      HashSet<Item> var0 = Sets.newHashSet();
+     private static void initCraftableStats() {
+-        HashSet var0 = Sets.newHashSet();
++        HashSet<Item> var0 = Sets.newHashSet();
  
-       for(IRecipe var2 : CraftingManager.getInstance().getRecipeList()) {
-          if(var2.getRecipeOutput() != null) {
+         for(IRecipe var2 : CraftingManager.getInstance().getRecipeList()) {
+             if(var2.getRecipeOutput() != null) {

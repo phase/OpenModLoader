@@ -1,37 +1,37 @@
 --- /net/minecraft/command
 +++ /net/minecraft/command
 @@ -83,9 +83,9 @@
-                      }
+                             }
  
-                      ArrayList var15 = Lists.newArrayList();
--                     ArrayList var16 = Lists.newArrayList();
-+                     ArrayList<CommandClone.a> var16 = Lists.newArrayList();
-                      ArrayList var17 = Lists.newArrayList();
--                     LinkedList var18 = Lists.newLinkedList();
-+                     LinkedList<BlockPos> var18 = Lists.newLinkedList();
-                      BlockPos var19 = new BlockPos(var8.minX - var7.minX, var8.minY - var7.minY, var8.minZ - var7.minZ);
+                             ArrayList var15 = Lists.newArrayList();
+-                            ArrayList var16 = Lists.newArrayList();
++                            ArrayList<CommandClone.a> var16 = Lists.newArrayList();
+                             ArrayList var17 = Lists.newArrayList();
+-                            LinkedList var18 = Lists.newLinkedList();
++                            LinkedList<BlockPos> var18 = Lists.newLinkedList();
+                             BlockPos var19 = new BlockPos(var8.minX - var7.minX, var8.minY - var7.minY, var8.minZ - var7.minZ);
  
-                      for(int var20 = var7.minZ; var20 <= var7.maxZ; ++var20) {
+                             for(int var20 = var7.minZ; var20 <= var7.maxZ; ++var20) {
 @@ -127,11 +127,11 @@
-                         }
-                      }
+                                 }
+                             }
  
--                     ArrayList var31 = Lists.newArrayList();
-+                     ArrayList<CommandClone.a> var31 = Lists.newArrayList();
-                      var31.addAll(var15);
-                      var31.addAll(var16);
-                      var31.addAll(var17);
--                     List var34 = Lists.reverse(var31);
-+                     List<CommandClone.a> var34 = Lists.reverse(var31);
+-                            ArrayList var31 = Lists.newArrayList();
++                            ArrayList<CommandClone.a> var31 = Lists.newArrayList();
+                             var31.addAll(var15);
+                             var31.addAll(var16);
+                             var31.addAll(var17);
+-                            List var34 = Lists.reverse(var31);
++                            List<CommandClone.a> var34 = Lists.reverse(var31);
  
-                      for(CommandClone.a var41 : var34) {
-                         TileEntity var46 = var13.getTileEntity(var41.pos);
+                             for(CommandClone.a var41 : var34) {
+                                 TileEntity var46 = var13.getTileEntity(var41.pos);
 @@ -167,7 +167,7 @@
-                         var13.notifyNeighborsRespectDebug(var44.pos, var44.blockState.getBlock());
-                      }
+                                 var13.notifyNeighborsRespectDebug(var44.pos, var44.blockState.getBlock());
+                             }
  
--                     List var40 = var13.getPendingBlockUpdates(var7, false);
-+                     List<NextTickListEntry> var40 = var13.getPendingBlockUpdates(var7, false);
-                      if(var40 != null) {
-                         for(NextTickListEntry var48 : var40) {
-                            if(var7.isVecInside(var48.position)) {
+-                            List var40 = var13.getPendingBlockUpdates(var7, false);
++                            List<NextTickListEntry> var40 = var13.getPendingBlockUpdates(var7, false);
+                             if(var40 != null) {
+                                 for(NextTickListEntry var48 : var40) {
+                                     if(var7.isVecInside(var48.position)) {

@@ -1,11 +1,11 @@
 --- /net/minecraft/client/settings
 +++ /net/minecraft/client/settings
 @@ -465,7 +465,7 @@
-          }
+             }
  
-          this.soundLevels.clear();
--         List var1 = IOUtils.readLines(new FileInputStream(this.optionsFile));
-+         List<String> var1 = IOUtils.readLines(new FileInputStream(this.optionsFile));
-          NBTTagCompound var2 = new NBTTagCompound();
+             this.soundLevels.clear();
+-            List var1 = IOUtils.readLines(new FileInputStream(this.optionsFile));
++            List<String> var1 = IOUtils.readLines(new FileInputStream(this.optionsFile));
+             NBTTagCompound var2 = new NBTTagCompound();
  
-          for(String var4 : var1) {
+             for(String var4 : var1) {

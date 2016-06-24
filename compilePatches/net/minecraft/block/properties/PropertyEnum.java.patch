@@ -1,11 +1,11 @@
 --- /net/minecraft/block/properties
 +++ /net/minecraft/block/properties
 @@ -26,7 +26,7 @@
-             throw new IllegalArgumentException("Multiple values have the same name \'" + var6 + "\'");
-          }
+                 throw new IllegalArgumentException("Multiple values have the same name \'" + var6 + "\'");
+             }
  
--         this.nameToValue.put(var6, var5);
-+         this.nameToValue.put(var6, (T)var5);
-       }
+-            this.nameToValue.put(var6, var5);
++            this.nameToValue.put(var6, (T)var5);
+         }
  
-    }
+     }

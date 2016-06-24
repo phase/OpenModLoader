@@ -1,61 +1,61 @@
 --- /net/minecraft/client
 +++ /net/minecraft/client
 @@ -389,6 +389,7 @@
-    }
+     }
  
-    private void startGame() throws LWJGLException {
-+      xyz.openmodloader.OpenModLoader.INSTANCE.minecraftConstruction(xyz.openmodloader.client.OMLClientHandler.INSTANCE);
-       this.gameSettings = new GameSettings(this, this.mcDataDir);
-       this.defaultResourcePacks.add(this.mcDefaultResourcePack);
-       this.startTimerHackThread();
+     private void startGame() throws LWJGLException {
++        xyz.openmodloader.OpenModLoader.INSTANCE.minecraftConstruction(xyz.openmodloader.client.OMLClientHandler.INSTANCE);
+         this.gameSettings = new GameSettings(this, this.mcDataDir);
+         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
+         this.startTimerHackThread();
 @@ -787,6 +788,8 @@
-    }
+     }
  
-    public void displayGuiScreen(@Nullable GuiScreen var1) {
-+      xyz.openmodloader.event.impl.GuiEvent.Open event = new xyz.openmodloader.event.impl.GuiEvent.Open(var1);
-+      if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(event)) return; else var1 = event.getGui();
-       if(this.currentScreen != null) {
-          this.currentScreen.onGuiClosed();
-       }
+     public void displayGuiScreen(@Nullable GuiScreen var1) {
++        xyz.openmodloader.event.impl.GuiEvent.Open event = new xyz.openmodloader.event.impl.GuiEvent.Open(var1);
++        if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(event)) return; else var1 = event.getGui();
+         if(this.currentScreen != null) {
+             this.currentScreen.onGuiClosed();
+         }
 @@ -907,6 +910,7 @@
-          this.mcProfiler.endStartSection("gameRenderer");
-          this.entityRenderer.updateCameraAndRender(this.timer.renderPartialTicks, var1);
-          this.mcProfiler.endSection();
-+         xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.RenderUpdate(this.timer.renderPartialTicks));
-       }
+             this.mcProfiler.endStartSection("gameRenderer");
+             this.entityRenderer.updateCameraAndRender(this.timer.renderPartialTicks, var1);
+             this.mcProfiler.endSection();
++            xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.RenderUpdate(this.timer.renderPartialTicks));
+         }
  
-       this.mcProfiler.endSection();
+         this.mcProfiler.endSection();
 @@ -1350,6 +1354,7 @@
-          --this.rightClickDelayTimer;
-       }
+             --this.rightClickDelayTimer;
+         }
  
-+      xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.ClientUpdate());
-       this.mcProfiler.startSection("gui");
-       if(!this.isGamePaused) {
-          this.ingameGUI.updateTick();
++        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.ClientUpdate());
+         this.mcProfiler.startSection("gui");
+         if(!this.isGamePaused) {
+             this.ingameGUI.updateTick();
 @@ -1511,6 +1516,7 @@
-             this.debugCrashKeyPressTime = getSystemTime();
-          }
- 
-+         if (!xyz.openmodloader.event.impl.InputEvent.Keyboard.handle()) return;
-          this.dispatchKeypresses();
-          if(this.currentScreen != null) {
-             this.currentScreen.handleKeyboardInput();
-@@ -1743,6 +1749,7 @@
-          int var1 = Mouse.getEventButton();
-          KeyBinding.setKeyBindState(var1 - 100, Mouse.getEventButtonState());
-          if(Mouse.getEventButtonState()) {
-+            if (!xyz.openmodloader.event.impl.InputEvent.Mouse.handle(var1)) return;
-             if(this.thePlayer.isSpectator() && var1 == 2) {
-                this.ingameGUI.getSpectatorGui().onMiddleClick();
-             } else {
-@@ -2454,7 +2461,8 @@
-                if(var1 == this.gameSettings.keyBindFullscreen.getKeyCode()) {
-                   this.toggleFullscreen();
-                } else if(var1 == this.gameSettings.keyBindScreenshot.getKeyCode()) {
--                  this.ingameGUI.getChatGUI().printChatMessage(ScreenShotHelper.saveScreenshot(this.mcDataDir, this.displayWidth, this.displayHeight, this.framebufferMc));
-+                  ITextComponent component = ScreenShotHelper.saveScreenshot(this.mcDataDir, this.displayWidth, this.displayHeight, this.framebufferMc);
-+                  if (component != null) this.ingameGUI.getChatGUI().printChatMessage(component);
-                }
+                 this.debugCrashKeyPressTime = getSystemTime();
              }
+ 
++            if (!xyz.openmodloader.event.impl.InputEvent.Keyboard.handle()) return;
+             this.dispatchKeypresses();
+             if(this.currentScreen != null) {
+                 this.currentScreen.handleKeyboardInput();
+@@ -1743,6 +1749,7 @@
+             int var1 = Mouse.getEventButton();
+             KeyBinding.setKeyBindState(var1 - 100, Mouse.getEventButtonState());
+             if(Mouse.getEventButtonState()) {
++                if (!xyz.openmodloader.event.impl.InputEvent.Mouse.handle(var1)) return;
+                 if(this.thePlayer.isSpectator() && var1 == 2) {
+                     this.ingameGUI.getSpectatorGui().onMiddleClick();
+                 } else {
+@@ -2454,7 +2461,8 @@
+                     if(var1 == this.gameSettings.keyBindFullscreen.getKeyCode()) {
+                         this.toggleFullscreen();
+                     } else if(var1 == this.gameSettings.keyBindScreenshot.getKeyCode()) {
+-                        this.ingameGUI.getChatGUI().printChatMessage(ScreenShotHelper.saveScreenshot(this.mcDataDir, this.displayWidth, this.displayHeight, this.framebufferMc));
++                        ITextComponent component = ScreenShotHelper.saveScreenshot(this.mcDataDir, this.displayWidth, this.displayHeight, this.framebufferMc);
++                        if (component != null) this.ingameGUI.getChatGUI().printChatMessage(component);
+                     }
+                 }
  

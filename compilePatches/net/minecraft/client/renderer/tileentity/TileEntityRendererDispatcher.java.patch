@@ -1,11 +1,11 @@
 --- /net/minecraft/client/renderer/tileentity
 +++ /net/minecraft/client/renderer/tileentity
 @@ -82,7 +82,7 @@
-    public <T extends TileEntity> TileEntitySpecialRenderer<T> getSpecialRendererByClass(Class<? extends TileEntity> var1) {
-       TileEntitySpecialRenderer var2 = (TileEntitySpecialRenderer)this.mapSpecialRenderers.get(var1);
-       if(var2 == null && var1 != TileEntity.class) {
--         var2 = this.getSpecialRendererByClass(var1.getSuperclass());
-+         var2 = this.getSpecialRendererByClass((Class<? extends TileEntity>) var1.getSuperclass());
-          this.mapSpecialRenderers.put(var1, var2);
-       }
+     public <T extends TileEntity> TileEntitySpecialRenderer<T> getSpecialRendererByClass(Class<? extends TileEntity> var1) {
+         TileEntitySpecialRenderer var2 = (TileEntitySpecialRenderer)this.mapSpecialRenderers.get(var1);
+         if(var2 == null && var1 != TileEntity.class) {
+-            var2 = this.getSpecialRendererByClass(var1.getSuperclass());
++            var2 = this.getSpecialRendererByClass((Class<? extends TileEntity>) var1.getSuperclass());
+             this.mapSpecialRenderers.put(var1, var2);
+         }
  

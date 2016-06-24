@@ -1,11 +1,11 @@
 --- /net/minecraft/command
 +++ /net/minecraft/command
 @@ -145,7 +145,7 @@
-    }
+     }
  
-    protected List<String> getObjectiveNames(MinecraftServer var1) {
--      Collection var2 = var1.worldServerForDimension(0).getScoreboard().getScoreObjectives();
-+      Collection<ScoreObjective> var2 = var1.worldServerForDimension(0).getScoreboard().getScoreObjectives();
-       ArrayList var3 = Lists.newArrayList();
+     protected List<String> getObjectiveNames(MinecraftServer var1) {
+-        Collection var2 = var1.worldServerForDimension(0).getScoreboard().getScoreObjectives();
++        Collection<ScoreObjective> var2 = var1.worldServerForDimension(0).getScoreboard().getScoreObjectives();
+         ArrayList var3 = Lists.newArrayList();
  
-       for(ScoreObjective var5 : var2) {
+         for(ScoreObjective var5 : var2) {

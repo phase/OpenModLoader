@@ -1,11 +1,11 @@
 --- /net/minecraft/world/gen/structure
 +++ /net/minecraft/world/gen/structure
 @@ -198,7 +198,7 @@
-       if(var1 > 8) {
-          return false;
-       } else {
--         ArrayList var6 = Lists.newArrayList();
-+         ArrayList<StructureComponent> var6 = Lists.newArrayList();
-          if(var0.generate(var1, var2, var3, var6, var5)) {
-             boolean var7 = false;
-             int var8 = var5.nextInt();
+         if(var1 > 8) {
+             return false;
+         } else {
+-            ArrayList var6 = Lists.newArrayList();
++            ArrayList<StructureComponent> var6 = Lists.newArrayList();
+             if(var0.generate(var1, var2, var3, var6, var5)) {
+                 boolean var7 = false;
+                 int var8 = var5.nextInt();

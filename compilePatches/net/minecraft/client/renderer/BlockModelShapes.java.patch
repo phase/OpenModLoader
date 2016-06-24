@@ -1,11 +1,11 @@
 --- /net/minecraft/client/renderer
 +++ /net/minecraft/client/renderer
 @@ -122,7 +122,7 @@
-    public void reloadModels() {
-       this.bakedModelStore.clear();
+     public void reloadModels() {
+         this.bakedModelStore.clear();
  
--      for(Entry var2 : this.blockStateMapper.putAllStateModelLocations().entrySet()) {
-+      for(Entry<IBlockState, ModelResourceLocation> var2 : this.blockStateMapper.putAllStateModelLocations().entrySet()) {
-          this.bakedModelStore.put(var2.getKey(), this.modelManager.getModel((ModelResourceLocation)var2.getValue()));
-       }
+-        for(Entry var2 : this.blockStateMapper.putAllStateModelLocations().entrySet()) {
++        for(Entry<IBlockState, ModelResourceLocation> var2 : this.blockStateMapper.putAllStateModelLocations().entrySet()) {
+             this.bakedModelStore.put(var2.getKey(), this.modelManager.getModel((ModelResourceLocation)var2.getValue()));
+         }
  

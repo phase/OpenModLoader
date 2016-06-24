@@ -1,11 +1,11 @@
 --- /net/minecraft/item
 +++ /net/minecraft/item
 @@ -43,6 +43,8 @@
-       if(var1.stackSize != 0 && var2.canPlayerEdit(var4, var6, var1) && var3.canBlockBePlaced(this.block, var4, false, var6, (Entity)null, var1)) {
-          int var12 = this.getMetadata(var1.getMetadata());
-          IBlockState var13 = this.block.onBlockPlaced(var3, var4, var6, var7, var8, var9, var12, var2);
-+         var13 = xyz.openmodloader.event.impl.BlockEvent.Place.handle(var3, var13, var4);
-+         if (var13 == null) return EnumActionResult.FAIL;
-          if(var3.setBlockState(var4, var13, 11)) {
-             var13 = var3.getBlockState(var4);
-             if(var13.getBlock() == this.block) {
+         if(var1.stackSize != 0 && var2.canPlayerEdit(var4, var6, var1) && var3.canBlockBePlaced(this.block, var4, false, var6, (Entity)null, var1)) {
+             int var12 = this.getMetadata(var1.getMetadata());
+             IBlockState var13 = this.block.onBlockPlaced(var3, var4, var6, var7, var8, var9, var12, var2);
++            var13 = xyz.openmodloader.event.impl.BlockEvent.Place.handle(var3, var13, var4);
++            if (var13 == null) return EnumActionResult.FAIL;
+             if(var3.setBlockState(var4, var13, 11)) {
+                 var13 = var3.getBlockState(var4);
+                 if(var13.getBlock() == this.block) {

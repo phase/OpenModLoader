@@ -1,29 +1,29 @@
 --- /net/minecraft/entity
 +++ /net/minecraft/entity
 @@ -524,7 +524,7 @@
-          }
+             }
  
-          this.setEntityBoundingBox(this.getEntityBoundingBox().offset(0.0D, var3, 0.0D));
--         var22 = this.onGround || var15 != var3 && var15 < 0.0D;
-+         boolean var22b = this.onGround || var15 != var3 && var15 < 0.0D;
-          int var56 = 0;
+             this.setEntityBoundingBox(this.getEntityBoundingBox().offset(0.0D, var3, 0.0D));
+-            var22 = this.onGround || var15 != var3 && var15 < 0.0D;
++            boolean var22b = this.onGround || var15 != var3 && var15 < 0.0D;
+             int var56 = 0;
  
-          for(int var24 = var54.size(); var56 < var24; ++var56) {
+             for(int var24 = var54.size(); var56 < var24; ++var56) {
 @@ -539,7 +539,7 @@
-          }
+             }
  
-          this.setEntityBoundingBox(this.getEntityBoundingBox().offset(0.0D, 0.0D, var5));
--         if(this.stepHeight > 0.0F && var22 && (var13 != var1 || var17 != var5)) {
-+         if(this.stepHeight > 0.0F && var22b && (var13 != var1 || var17 != var5)) {
-             double var58 = var1;
-             double var25 = var3;
-             double var27 = var5;
+             this.setEntityBoundingBox(this.getEntityBoundingBox().offset(0.0D, 0.0D, var5));
+-            if(this.stepHeight > 0.0F && var22 && (var13 != var1 || var17 != var5)) {
++            if(this.stepHeight > 0.0F && var22b && (var13 != var1 || var17 != var5)) {
+                 double var58 = var1;
+                 double var25 = var3;
+                 double var27 = var5;
 @@ -2232,7 +2232,7 @@
-    private <T extends Entity> void getRecursivePassengersByType(Class<T> var1, Set<T> var2) {
-       for(Entity var4 : this.getPassengers()) {
-          if(var1.isAssignableFrom(var4.getClass())) {
--            var2.add(var4);
-+            var2.add((T)var4);
-          }
+     private <T extends Entity> void getRecursivePassengersByType(Class<T> var1, Set<T> var2) {
+         for(Entity var4 : this.getPassengers()) {
+             if(var1.isAssignableFrom(var4.getClass())) {
+-                var2.add(var4);
++                var2.add((T)var4);
+             }
  
-          var4.getRecursivePassengersByType(var1, var2);
+             var4.getRecursivePassengersByType(var1, var2);

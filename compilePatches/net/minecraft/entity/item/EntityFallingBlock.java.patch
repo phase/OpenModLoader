@@ -1,11 +1,11 @@
 --- /net/minecraft/entity/item
 +++ /net/minecraft/entity/item
 @@ -161,7 +161,7 @@
-       if(this.hurtEntities) {
-          int var4 = MathHelper.ceiling_float_int(var1 - 1.0F);
-          if(var4 > 0) {
--            ArrayList var5 = Lists.newArrayList(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()));
-+            ArrayList<Entity> var5 = Lists.newArrayList(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()));
-             boolean var6 = var3 == Blocks.ANVIL;
-             DamageSource var7 = var6?DamageSource.anvil:DamageSource.fallingBlock;
+         if(this.hurtEntities) {
+             int var4 = MathHelper.ceiling_float_int(var1 - 1.0F);
+             if(var4 > 0) {
+-                ArrayList var5 = Lists.newArrayList(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()));
++                ArrayList<Entity> var5 = Lists.newArrayList(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()));
+                 boolean var6 = var3 == Blocks.ANVIL;
+                 DamageSource var7 = var6?DamageSource.anvil:DamageSource.fallingBlock;
  

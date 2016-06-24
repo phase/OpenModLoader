@@ -1,20 +1,20 @@
 --- /net/minecraft/client/gui
 +++ /net/minecraft/client/gui
 @@ -38,7 +38,7 @@
-          this.selectedResourcePacks = Lists.newArrayList();
-          ResourcePackRepository var1 = this.mc.getResourcePackRepository();
-          var1.updateRepositoryEntriesAll();
--         ArrayList var2 = Lists.newArrayList(var1.getRepositoryEntriesAll());
-+         ArrayList<ResourcePackRepository.a> var2 = Lists.newArrayList(var1.getRepositoryEntriesAll());
-          var2.removeAll(var1.getRepositoryEntries());
+             this.selectedResourcePacks = Lists.newArrayList();
+             ResourcePackRepository var1 = this.mc.getResourcePackRepository();
+             var1.updateRepositoryEntriesAll();
+-            ArrayList var2 = Lists.newArrayList(var1.getRepositoryEntriesAll());
++            ArrayList<ResourcePackRepository.a> var2 = Lists.newArrayList(var1.getRepositoryEntriesAll());
+             var2.removeAll(var1.getRepositoryEntries());
  
-          for(ResourcePackRepository.a var4 : var2) {
+             for(ResourcePackRepository.a var4 : var2) {
 @@ -94,7 +94,7 @@
-             OpenGlHelper.openFile(var2);
-          } else if(var1.id == 1) {
-             if(this.changed) {
--               ArrayList var5 = Lists.newArrayList();
-+               ArrayList<ResourcePackRepository.a> var5 = Lists.newArrayList();
+                 OpenGlHelper.openFile(var2);
+             } else if(var1.id == 1) {
+                 if(this.changed) {
+-                    ArrayList var5 = Lists.newArrayList();
++                    ArrayList<ResourcePackRepository.a> var5 = Lists.newArrayList();
  
-                for(ResourcePackListEntry var4 : this.selectedResourcePacks) {
-                   if(var4 instanceof ResourcePackListEntryFound) {
+                     for(ResourcePackListEntry var4 : this.selectedResourcePacks) {
+                         if(var4 instanceof ResourcePackListEntryFound) {

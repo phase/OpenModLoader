@@ -1,11 +1,11 @@
 --- /net/minecraft/entity/boss
 +++ /net/minecraft/entity/boss
 @@ -331,7 +331,7 @@
-       }
+         }
  
-       if(this.rand.nextInt(10) == 0) {
--         List var1 = this.worldObj.getEntitiesWithinAABB(EntityEnderCrystal.class, this.getEntityBoundingBox().expandXyz(32.0D));
-+         List<EntityEnderCrystal> var1 = this.worldObj.getEntitiesWithinAABB(EntityEnderCrystal.class, this.getEntityBoundingBox().expandXyz(32.0D));
-          EntityEnderCrystal var2 = null;
-          double var3 = Double.MAX_VALUE;
+         if(this.rand.nextInt(10) == 0) {
+-            List var1 = this.worldObj.getEntitiesWithinAABB(EntityEnderCrystal.class, this.getEntityBoundingBox().expandXyz(32.0D));
++            List<EntityEnderCrystal> var1 = this.worldObj.getEntitiesWithinAABB(EntityEnderCrystal.class, this.getEntityBoundingBox().expandXyz(32.0D));
+             EntityEnderCrystal var2 = null;
+             double var3 = Double.MAX_VALUE;
  

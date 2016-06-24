@@ -1,32 +1,32 @@
 --- /net/minecraft/item
 +++ /net/minecraft/item
 @@ -68,7 +68,7 @@
-    public void onPlayerStoppedUsing(ItemStack var1, World var2, EntityLivingBase var3, int var4) {
-       if(var3 instanceof EntityPlayer) {
-          EntityPlayer var5 = (EntityPlayer)var3;
--         boolean var6 = var5.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, var1) > 0;
-+         boolean var6 = var5.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, var1, var3) > 0;
-          ItemStack var7 = this.findAmmo(var5);
-          if(var7 != null || var6) {
-             if(var7 == null) {
+     public void onPlayerStoppedUsing(ItemStack var1, World var2, EntityLivingBase var3, int var4) {
+         if(var3 instanceof EntityPlayer) {
+             EntityPlayer var5 = (EntityPlayer)var3;
+-            boolean var6 = var5.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, var1) > 0;
++            boolean var6 = var5.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, var1, var3) > 0;
+             ItemStack var7 = this.findAmmo(var5);
+             if(var7 != null || var6) {
+                 if(var7 == null) {
 @@ -87,17 +87,17 @@
-                      var12.setIsCritical(true);
-                   }
+                             var12.setIsCritical(true);
+                         }
  
--                  int var13 = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, var1);
-+                  int var13 = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, var1, var3);
-                   if(var13 > 0) {
-                      var12.setDamage(var12.getDamage() + (double)var13 * 0.5D + 0.5D);
-                   }
+-                        int var13 = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, var1);
++                        int var13 = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, var1, var3);
+                         if(var13 > 0) {
+                             var12.setDamage(var12.getDamage() + (double)var13 * 0.5D + 0.5D);
+                         }
  
--                  int var14 = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, var1);
-+                  int var14 = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, var1, var3);
-                   if(var14 > 0) {
-                      var12.setKnockbackStrength(var14);
-                   }
+-                        int var14 = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, var1);
++                        int var14 = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, var1, var3);
+                         if(var14 > 0) {
+                             var12.setKnockbackStrength(var14);
+                         }
  
--                  if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, var1) > 0) {
-+                  if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, var1, var3) > 0) {
-                      var12.setFire(100);
-                   }
+-                        if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, var1) > 0) {
++                        if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, var1, var3) > 0) {
+                             var12.setFire(100);
+                         }
  

@@ -1,52 +1,52 @@
 --- /net/minecraft/server/integrated
 +++ /net/minecraft/server/integrated
 @@ -58,11 +58,11 @@
-       this.theWorldSettings = this.isDemo()?DemoWorldServer.DEMO_WORLD_SETTINGS:var4;
-    }
+         this.theWorldSettings = this.isDemo()?DemoWorldServer.DEMO_WORLD_SETTINGS:var4;
+     }
  
--   protected ServerCommandManager createNewCommandManager() {
-+   public ServerCommandManager createNewCommandManager() {
-       return new IntegratedServerCommandManager(this);
-    }
+-    protected ServerCommandManager createNewCommandManager() {
++    public ServerCommandManager createNewCommandManager() {
+         return new IntegratedServerCommandManager(this);
+     }
  
--   protected void loadAllWorlds(String var1, String var2, long var3, WorldType var5, String var6) {
-+   public void loadAllWorlds(String var1, String var2, long var3, WorldType var5, String var6) {
-       this.convertMapIfNeeded(var1);
-       this.worldServers = new WorldServer[3];
-       this.timeOfLastDimensionTick = new long[this.worldServers.length][100];
+-    protected void loadAllWorlds(String var1, String var2, long var3, WorldType var5, String var6) {
++    public void loadAllWorlds(String var1, String var2, long var3, WorldType var5, String var6) {
+         this.convertMapIfNeeded(var1);
+         this.worldServers = new WorldServer[3];
+         this.timeOfLastDimensionTick = new long[this.worldServers.length][100];
 @@ -108,7 +108,7 @@
-       this.initialWorldChunkLoad();
-    }
+         this.initialWorldChunkLoad();
+     }
  
--   protected boolean startServer() throws IOException {
-+   public boolean startServer() throws IOException {
-       LOGGER.info("Starting integrated minecraft server version 1.10.2");
-       this.setOnlineMode(true);
-       this.setCanSpawnAnimals(true);
+-    protected boolean startServer() throws IOException {
++    public boolean startServer() throws IOException {
+         LOGGER.info("Starting integrated minecraft server version 1.10.2");
+         this.setOnlineMode(true);
+         this.setCanSpawnAnimals(true);
 @@ -122,7 +122,7 @@
-       return true;
-    }
+         return true;
+     }
  
--   protected void tick() {
-+   public void tick() {
-       boolean var1 = this.isGamePaused;
-       this.isGamePaused = Minecraft.getMinecraft().getConnection() != null && Minecraft.getMinecraft().isGamePaused();
-       if(!var1 && this.isGamePaused) {
+-    protected void tick() {
++    public void tick() {
+         boolean var1 = this.isGamePaused;
+         this.isGamePaused = Minecraft.getMinecraft().getConnection() != null && Minecraft.getMinecraft().isGamePaused();
+         if(!var1 && this.isGamePaused) {
 @@ -188,7 +188,7 @@
-       return true;
-    }
+         return true;
+     }
  
--   protected void saveAllWorlds(boolean var1) {
-+   public void saveAllWorlds(boolean var1) {
-       super.saveAllWorlds(var1);
-    }
+-    protected void saveAllWorlds(boolean var1) {
++    public void saveAllWorlds(boolean var1) {
+         super.saveAllWorlds(var1);
+     }
  
 @@ -204,7 +204,7 @@
-       return false;
-    }
+         return false;
+     }
  
--   protected void finalTick(CrashReport var1) {
-+   public void finalTick(CrashReport var1) {
-       this.mc.crashed(var1);
-    }
+-    protected void finalTick(CrashReport var1) {
++    public void finalTick(CrashReport var1) {
+         this.mc.crashed(var1);
+     }
  

@@ -2,10 +2,10 @@
 +++ /net/minecraft/block
 @@ -54,7 +54,7 @@
  
-    protected int computeRedstoneStrength(World var1, BlockPos var2) {
-       AxisAlignedBB var3 = PRESSURE_AABB.offset(var2);
--      List var4;
-+      List<Entity> var4;
-       switch(this.sensitivity) {
-       case EVERYTHING:
-          var4 = var1.getEntitiesWithinAABBExcludingEntity((Entity)null, var3);
+     protected int computeRedstoneStrength(World var1, BlockPos var2) {
+         AxisAlignedBB var3 = PRESSURE_AABB.offset(var2);
+-        List var4;
++        List<Entity> var4;
+         switch(this.sensitivity) {
+         case EVERYTHING:
+             var4 = var1.getEntitiesWithinAABBExcludingEntity((Entity)null, var3);

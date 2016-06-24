@@ -1,13 +1,13 @@
 --- /net/minecraft/client/renderer/block/statemap
 +++ /net/minecraft/client/renderer/block/statemap
 @@ -45,8 +45,8 @@
-       return new ModelResourceLocation(var3, this.getPropertyString(var2));
-    }
+         return new ModelResourceLocation(var3, this.getPropertyString(var2));
+     }
  
--   private <T extends Comparable<T>> String removeName(IProperty<T> var1, Map<IProperty<?>, Comparable<?>> var2) {
--      return var1.getName((Comparable)var2.remove(this.name));
-+   private <T extends Comparable<T>> String removeName(IProperty<T> var1, Map<IProperty<?>, Comparable<T>> var2) {
-+      return var1.getName((T)var2.remove(this.name));
-    }
+-    private <T extends Comparable<T>> String removeName(IProperty<T> var1, Map<IProperty<?>, Comparable<?>> var2) {
+-        return var1.getName((Comparable)var2.remove(this.name));
++    private <T extends Comparable<T>> String removeName(IProperty<T> var1, Map<IProperty<?>, Comparable<T>> var2) {
++        return var1.getName((T)var2.remove(this.name));
+     }
  
-    public static class a {
+     public static class a {

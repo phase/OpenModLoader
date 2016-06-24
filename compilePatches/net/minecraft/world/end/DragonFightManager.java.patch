@@ -1,11 +1,11 @@
 --- /net/minecraft/world/end
 +++ /net/minecraft/world/end
 @@ -290,7 +290,7 @@
-          var1.add(var3);
-       }
+             var1.add(var3);
+         }
  
--      HashSet var5 = Sets.newHashSet(this.bossInfo.getPlayers());
-+      HashSet<EntityPlayerMP> var5 = Sets.newHashSet(this.bossInfo.getPlayers());
-       var5.removeAll(var1);
+-        HashSet var5 = Sets.newHashSet(this.bossInfo.getPlayers());
++        HashSet<EntityPlayerMP> var5 = Sets.newHashSet(this.bossInfo.getPlayers());
+         var5.removeAll(var1);
  
-       for(EntityPlayerMP var4 : var5) {
+         for(EntityPlayerMP var4 : var5) {

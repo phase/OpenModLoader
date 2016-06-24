@@ -1,11 +1,11 @@
 --- /net/minecraft/server/management
 +++ /net/minecraft/server/management
 @@ -815,6 +815,8 @@
-    }
+     }
  
-    public void sendChatMsgImpl(ITextComponent var1, boolean var2) {
-+      var1 = xyz.openmodloader.event.impl.MessageEvent.Chat.handle(var1, xyz.openmodloader.event.strippable.Side.SERVER);
-+      if (var1 == null) return;
-       this.mcServer.addChatMessage(var1);
-       int var3 = var2?1:0;
-       this.sendPacketToAllPlayers(new SPacketChat(var1, (byte)var3));
+     public void sendChatMsgImpl(ITextComponent var1, boolean var2) {
++        var1 = xyz.openmodloader.event.impl.MessageEvent.Chat.handle(var1, xyz.openmodloader.event.strippable.Side.SERVER);
++        if (var1 == null) return;
+         this.mcServer.addChatMessage(var1);
+         int var3 = var2?1:0;
+         this.sendPacketToAllPlayers(new SPacketChat(var1, (byte)var3));

@@ -1,11 +1,11 @@
 --- /net/minecraft/client/particle
 +++ /net/minecraft/client/particle
 @@ -243,7 +243,7 @@
-    public void moveEntity(double var1, double var3, double var5) {
-       double var9 = var3;
-       if(this.field_190017_n) {
--         List var13 = this.worldObj.getCollisionBoxes((Entity)null, this.getEntityBoundingBox().addCoord(var1, var3, var5));
-+         List<AxisAlignedBB> var13 = this.worldObj.getCollisionBoxes((Entity)null, this.getEntityBoundingBox().addCoord(var1, var3, var5));
+     public void moveEntity(double var1, double var3, double var5) {
+         double var9 = var3;
+         if(this.field_190017_n) {
+-            List var13 = this.worldObj.getCollisionBoxes((Entity)null, this.getEntityBoundingBox().addCoord(var1, var3, var5));
++            List<AxisAlignedBB> var13 = this.worldObj.getCollisionBoxes((Entity)null, this.getEntityBoundingBox().addCoord(var1, var3, var5));
  
-          for(AxisAlignedBB var15 : var13) {
-             var3 = var15.calculateYOffset(this.getEntityBoundingBox(), var3);
+             for(AxisAlignedBB var15 : var13) {
+                 var3 = var15.calculateYOffset(this.getEntityBoundingBox(), var3);

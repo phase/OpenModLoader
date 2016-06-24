@@ -1,17 +1,17 @@
 --- /net/minecraft/util
 +++ /net/minecraft/util
 @@ -41,10 +41,14 @@
-             var7 = new File(var5, var1);
-          }
+                 var7 = new File(var5, var1);
+             }
  
-+         xyz.openmodloader.event.impl.ScreenshotEvent event = new xyz.openmodloader.event.impl.ScreenshotEvent(var6, var7);
-+         if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(event)) return event.getResultMessage(); else var7 = event.getScreenshotFile();
-+         if (!var7.getParentFile().exists()) var7.getParentFile().mkdirs();
-          ImageIO.write(var6, "png", var7);
-          TextComponentString var8 = new TextComponentString(var7.getName());
-          var8.getStyle().setClickEvent(new ClickEvent(ClickEvent.a.OPEN_FILE, var7.getAbsolutePath()));
-          var8.getStyle().setUnderlined(Boolean.valueOf(true));
-+         if (event.getResultMessage() != null) return event.getResultMessage();
-          return new TextComponentTranslation("screenshot.success", new Object[]{var8});
-       } catch (Exception var9) {
-          LOGGER.warn("Couldn\'t save screenshot", var9);
++            xyz.openmodloader.event.impl.ScreenshotEvent event = new xyz.openmodloader.event.impl.ScreenshotEvent(var6, var7);
++            if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(event)) return event.getResultMessage(); else var7 = event.getScreenshotFile();
++            if (!var7.getParentFile().exists()) var7.getParentFile().mkdirs();
+             ImageIO.write(var6, "png", var7);
+             TextComponentString var8 = new TextComponentString(var7.getName());
+             var8.getStyle().setClickEvent(new ClickEvent(ClickEvent.a.OPEN_FILE, var7.getAbsolutePath()));
+             var8.getStyle().setUnderlined(Boolean.valueOf(true));
++            if (event.getResultMessage() != null) return event.getResultMessage();
+             return new TextComponentTranslation("screenshot.success", new Object[]{var8});
+         } catch (Exception var9) {
+             LOGGER.warn("Couldn\'t save screenshot", var9);

@@ -1,11 +1,11 @@
 --- /net/minecraft/client/renderer
 +++ /net/minecraft/client/renderer
 @@ -44,7 +44,7 @@
-       int var1 = this.guiLeft - 124;
-       int var2 = this.guiTop;
-       boolean var3 = true;
--      Collection var4 = this.mc.thePlayer.getActivePotionEffects();
-+      Collection<PotionEffect> var4 = this.mc.thePlayer.getActivePotionEffects();
-       if(!var4.isEmpty()) {
-          GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-          GlStateManager.disableLighting();
+         int var1 = this.guiLeft - 124;
+         int var2 = this.guiTop;
+         boolean var3 = true;
+-        Collection var4 = this.mc.thePlayer.getActivePotionEffects();
++        Collection<PotionEffect> var4 = this.mc.thePlayer.getActivePotionEffects();
+         if(!var4.isEmpty()) {
+             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+             GlStateManager.disableLighting();

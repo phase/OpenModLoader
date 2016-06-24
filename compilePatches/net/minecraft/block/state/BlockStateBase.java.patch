@@ -1,22 +1,22 @@
 --- /net/minecraft/block/state
 +++ /net/minecraft/block/state
 @@ -24,8 +24,8 @@
-          }
-       }
+             }
+         }
  
--      private <T extends Comparable<T>> String getPropertyName(IProperty<T> var1, Comparable<?> var2) {
--         return var1.getName(var2);
-+      private <T extends Comparable<T>> String getPropertyName(IProperty<T> var1, Comparable<T> var2) {
-+         return var1.getName((T)var2);
-       }
-    };
+-        private <T extends Comparable<T>> String getPropertyName(IProperty<T> var1, Comparable<?> var2) {
+-            return var1.getName(var2);
++        private <T extends Comparable<T>> String getPropertyName(IProperty<T> var1, Comparable<T> var2) {
++            return var1.getName((T)var2);
+         }
+     };
  
 @@ -33,7 +33,7 @@
-    }
+     }
  
-    public <T extends Comparable<T>> IBlockState cycleProperty(IProperty<T> var1) {
--      return this.withProperty(var1, (Comparable)cyclePropertyValue(var1.getAllowedValues(), this.getValue(var1)));
-+      return this.withProperty(var1, cyclePropertyValue(var1.getAllowedValues(), this.getValue(var1)));
-    }
+     public <T extends Comparable<T>> IBlockState cycleProperty(IProperty<T> var1) {
+-        return this.withProperty(var1, (Comparable)cyclePropertyValue(var1.getAllowedValues(), this.getValue(var1)));
++        return this.withProperty(var1, cyclePropertyValue(var1.getAllowedValues(), this.getValue(var1)));
+     }
  
-    protected static <T> T cyclePropertyValue(Collection<T> var0, T var1) {
+     protected static <T> T cyclePropertyValue(Collection<T> var0, T var1) {

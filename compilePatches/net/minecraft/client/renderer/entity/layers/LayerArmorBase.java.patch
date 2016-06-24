@@ -1,11 +1,11 @@
 --- /net/minecraft/client/renderer/entity/layers
 +++ /net/minecraft/client/renderer/entity/layers
 @@ -46,7 +46,7 @@
-       if(var10 != null && var10.getItem() instanceof ItemArmor) {
-          ItemArmor var11 = (ItemArmor)var10.getItem();
-          if(var11.getEquipmentSlot() == var9) {
--            ModelBase var12 = this.getModelFromSlot(var9);
-+            T var12 = this.getModelFromSlot(var9);
-             var12.setModelAttributes(this.renderer.getMainModel());
-             var12.setLivingAnimations(var1, var2, var3, var4);
-             this.setModelSlotVisible(var12, var9);
+         if(var10 != null && var10.getItem() instanceof ItemArmor) {
+             ItemArmor var11 = (ItemArmor)var10.getItem();
+             if(var11.getEquipmentSlot() == var9) {
+-                ModelBase var12 = this.getModelFromSlot(var9);
++                T var12 = this.getModelFromSlot(var9);
+                 var12.setModelAttributes(this.renderer.getMainModel());
+                 var12.setLivingAnimations(var1, var2, var3, var4);
+                 this.setModelSlotVisible(var12, var9);

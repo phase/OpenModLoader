@@ -1,11 +1,11 @@
 --- /net/minecraft/entity/ai
 +++ /net/minecraft/entity/ai
 @@ -19,7 +19,7 @@
-       if(this.childAnimal.getGrowingAge() >= 0) {
-          return false;
-       } else {
--         List var1 = this.childAnimal.worldObj.getEntitiesWithinAABB(this.childAnimal.getClass(), this.childAnimal.getEntityBoundingBox().expand(8.0D, 4.0D, 8.0D));
-+         List<EntityAnimal> var1 = this.childAnimal.worldObj.getEntitiesWithinAABB(this.childAnimal.getClass(), this.childAnimal.getEntityBoundingBox().expand(8.0D, 4.0D, 8.0D));
-          EntityAnimal var2 = null;
-          double var3 = Double.MAX_VALUE;
+         if(this.childAnimal.getGrowingAge() >= 0) {
+             return false;
+         } else {
+-            List var1 = this.childAnimal.worldObj.getEntitiesWithinAABB(this.childAnimal.getClass(), this.childAnimal.getEntityBoundingBox().expand(8.0D, 4.0D, 8.0D));
++            List<EntityAnimal> var1 = this.childAnimal.worldObj.getEntitiesWithinAABB(this.childAnimal.getClass(), this.childAnimal.getEntityBoundingBox().expand(8.0D, 4.0D, 8.0D));
+             EntityAnimal var2 = null;
+             double var3 = Double.MAX_VALUE;
  

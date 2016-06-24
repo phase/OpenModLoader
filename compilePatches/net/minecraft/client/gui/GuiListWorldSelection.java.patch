@@ -9,11 +9,11 @@
  import net.minecraft.world.storage.WorldSummary;
  import org.apache.logging.log4j.LogManager;
 @@ -30,7 +31,7 @@
-    public void refreshList() {
-       ISaveFormat var1 = this.mc.getSaveLoader();
+     public void refreshList() {
+         ISaveFormat var1 = this.mc.getSaveLoader();
  
--      List var2;
-+      List<WorldSummary> var2;
-       try {
-          var2 = var1.getSaveList();
-       } catch (AnvilConverterException var5) {
+-        List var2;
++        List<WorldSummary> var2;
+         try {
+             var2 = var1.getSaveList();
+         } catch (AnvilConverterException var5) {

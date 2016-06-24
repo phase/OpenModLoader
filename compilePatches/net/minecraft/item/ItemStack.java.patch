@@ -1,11 +1,11 @@
 --- /net/minecraft/item
 +++ /net/minecraft/item
 @@ -504,7 +504,7 @@
-       }
+         }
  
-       for(EntityEquipmentSlot var34 : EntityEquipmentSlot.values()) {
--         Multimap var10 = this.getAttributeModifiers(var34);
-+         Multimap<String, AttributeModifier> var10 = this.getAttributeModifiers(var34);
-          if(!var10.isEmpty() && (var20 & 2) == 0) {
-             var3.add("");
-             var3.add(I18n.translateToLocal("item.modifiers." + var34.getName()));
+         for(EntityEquipmentSlot var34 : EntityEquipmentSlot.values()) {
+-            Multimap var10 = this.getAttributeModifiers(var34);
++            Multimap<String, AttributeModifier> var10 = this.getAttributeModifiers(var34);
+             if(!var10.isEmpty() && (var20 & 2) == 0) {
+                 var3.add("");
+                 var3.add(I18n.translateToLocal("item.modifiers." + var34.getName()));

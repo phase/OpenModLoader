@@ -1,14 +1,14 @@
 --- /net/minecraft/util
 +++ /net/minecraft/util
 @@ -11,9 +11,9 @@
-    }
+     }
  
-    public static <K, V> Map<K, V> populateMap(Iterable<K> var0, Iterable<V> var1, Map<K, V> var2) {
--      Iterator var3 = var1.iterator();
-+      Iterator<V> var3 = var1.iterator();
+     public static <K, V> Map<K, V> populateMap(Iterable<K> var0, Iterable<V> var1, Map<K, V> var2) {
+-        Iterator var3 = var1.iterator();
++        Iterator<V> var3 = var1.iterator();
  
--      for(Object var5 : var0) {
-+      for(K var5 : var0) {
-          var2.put(var5, var3.next());
-       }
+-        for(Object var5 : var0) {
++        for(K var5 : var0) {
+             var2.put(var5, var3.next());
+         }
  

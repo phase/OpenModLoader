@@ -2,28 +2,28 @@
 +++ /net/minecraft/client/gui
 @@ -51,7 +51,7 @@
  
-    public void renderPlayerlist(int var1, Scoreboard var2, @Nullable ScoreObjective var3) {
-       NetHandlerPlayClient var4 = this.mc.thePlayer.connection;
--      List var5 = ENTRY_ORDERING.sortedCopy(var4.getPlayerInfoMap());
-+      List<NetworkPlayerInfo> var5 = ENTRY_ORDERING.sortedCopy(var4.getPlayerInfoMap());
-       int var6 = 0;
-       int var7 = 0;
+     public void renderPlayerlist(int var1, Scoreboard var2, @Nullable ScoreObjective var3) {
+         NetHandlerPlayClient var4 = this.mc.thePlayer.connection;
+-        List var5 = ENTRY_ORDERING.sortedCopy(var4.getPlayerInfoMap());
++        List<NetworkPlayerInfo> var5 = ENTRY_ORDERING.sortedCopy(var4.getPlayerInfoMap());
+         int var6 = 0;
+         int var7 = 0;
  
 @@ -89,7 +89,7 @@
-       int var14 = var1 / 2 - (var13 * var36 + (var36 - 1) * 5) / 2;
-       int var15 = 10;
-       int var16 = var13 * var36 + (var36 - 1) * 5;
--      List var17 = null;
-+      List<String> var17 = null;
-       if(this.header != null) {
-          var17 = this.mc.fontRendererObj.listFormattedStringToWidth(this.header.getFormattedText(), var1 - 50);
+         int var14 = var1 / 2 - (var13 * var36 + (var36 - 1) * 5) / 2;
+         int var15 = 10;
+         int var16 = var13 * var36 + (var36 - 1) * 5;
+-        List var17 = null;
++        List<String> var17 = null;
+         if(this.header != null) {
+             var17 = this.mc.fontRendererObj.listFormattedStringToWidth(this.header.getFormattedText(), var1 - 50);
  
 @@ -98,7 +98,7 @@
-          }
-       }
+             }
+         }
  
--      List var38 = null;
-+      List<String> var38 = null;
-       if(this.footer != null) {
-          var38 = this.mc.fontRendererObj.listFormattedStringToWidth(this.footer.getFormattedText(), var1 - 50);
+-        List var38 = null;
++        List<String> var38 = null;
+         if(this.footer != null) {
+             var38 = this.mc.fontRendererObj.listFormattedStringToWidth(this.footer.getFormattedText(), var1 - 50);
  

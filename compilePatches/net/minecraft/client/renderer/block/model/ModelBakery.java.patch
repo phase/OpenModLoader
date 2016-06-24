@@ -9,47 +9,47 @@
  import net.minecraft.client.renderer.block.model.BakedQuad;
  import net.minecraft.client.renderer.block.model.BlockPart;
 @@ -111,7 +112,7 @@
-          for(final ResourceLocation var5 : var1.getBlockstateLocations(var3)) {
-             try {
-                ModelBlockDefinition var6 = this.getModelBlockDefinition(var5);
--               Map var7 = var1.getVariants(var3);
-+               Map<IBlockState, ModelResourceLocation> var7 = var1.getVariants(var3);
-                if(var6.hasMultipartData()) {
-                   HashSet var8 = Sets.newHashSet(var7.values());
-                   var6.getMultipartData().setStateContainer(var3.getBlockState());
+             for(final ResourceLocation var5 : var1.getBlockstateLocations(var3)) {
+                 try {
+                     ModelBlockDefinition var6 = this.getModelBlockDefinition(var5);
+-                    Map var7 = var1.getVariants(var3);
++                    Map<IBlockState, ModelResourceLocation> var7 = var1.getVariants(var3);
+                     if(var6.hasMultipartData()) {
+                         HashSet var8 = Sets.newHashSet(var7.values());
+                         var6.getMultipartData().setStateContainer(var3.getBlockState());
 @@ -381,7 +382,7 @@
-          }
-       }
+             }
+         }
  
--      for(Entry var11 : this.multipartVariantMap.entrySet()) {
-+      for(Entry<ModelBlockDefinition, Collection<ModelResourceLocation>> var11 : this.multipartVariantMap.entrySet()) {
-          ModelBlockDefinition var12 = (ModelBlockDefinition)var11.getKey();
-          Multipart var4 = var12.getMultipartData();
-          String var5 = ((ResourceLocation)Block.REGISTRY.getNameForObject(var4.getStateContainer().getBlock())).toString();
+-        for(Entry var11 : this.multipartVariantMap.entrySet()) {
++        for(Entry<ModelBlockDefinition, Collection<ModelResourceLocation>> var11 : this.multipartVariantMap.entrySet()) {
+             ModelBlockDefinition var12 = (ModelBlockDefinition)var11.getKey();
+             Multipart var4 = var12.getMultipartData();
+             String var5 = ((ResourceLocation)Block.REGISTRY.getNameForObject(var4.getStateContainer().getBlock())).toString();
 @@ -396,7 +397,7 @@
  
-          IBakedModel var13 = var6.makeMultipartModel();
+             IBakedModel var13 = var6.makeMultipartModel();
  
--         for(ModelResourceLocation var15 : (Collection)var11.getValue()) {
-+         for(ModelResourceLocation var15 : var11.getValue()) {
-             if(!var12.hasVariant(var15.getVariant())) {
-                this.bakedRegistry.putObject(var15, var13);
-             }
+-            for(ModelResourceLocation var15 : (Collection)var11.getValue()) {
++            for(ModelResourceLocation var15 : var11.getValue()) {
+                 if(!var12.hasVariant(var15.getVariant())) {
+                     this.bakedRegistry.putObject(var15, var13);
+                 }
 @@ -468,7 +469,7 @@
  
-    private Set<ResourceLocation> getVariantsTextureLocations() {
-       HashSet var1 = Sets.newHashSet();
--      ArrayList var2 = Lists.newArrayList(this.variants.keySet());
-+      ArrayList<ModelResourceLocation> var2 = Lists.newArrayList(this.variants.keySet());
-       Collections.sort(var2, new Comparator<ModelResourceLocation>() {
-          public int compare(ModelResourceLocation var1, ModelResourceLocation var2) {
-             return var1.toString().compareTo(var2.toString());
+     private Set<ResourceLocation> getVariantsTextureLocations() {
+         HashSet var1 = Sets.newHashSet();
+-        ArrayList var2 = Lists.newArrayList(this.variants.keySet());
++        ArrayList<ModelResourceLocation> var2 = Lists.newArrayList(this.variants.keySet());
+         Collections.sort(var2, new Comparator<ModelResourceLocation>() {
+             public int compare(ModelResourceLocation var1, ModelResourceLocation var2) {
+                 return var1.toString().compareTo(var2.toString());
 @@ -617,7 +618,7 @@
-    }
+     }
  
-    private void loadSprites() {
--      final Set var1 = this.getVariantsTextureLocations();
-+      final Set<ResourceLocation> var1 = this.getVariantsTextureLocations();
-       var1.addAll(this.getItemsTextureLocations());
-       var1.remove(TextureMap.LOCATION_MISSING_TEXTURE);
-       ITextureMapPopulator var2 = new ITextureMapPopulator() {
+     private void loadSprites() {
+-        final Set var1 = this.getVariantsTextureLocations();
++        final Set<ResourceLocation> var1 = this.getVariantsTextureLocations();
+         var1.addAll(this.getItemsTextureLocations());
+         var1.remove(TextureMap.LOCATION_MISSING_TEXTURE);
+         ITextureMapPopulator var2 = new ITextureMapPopulator() {

@@ -1,11 +1,11 @@
 --- /net/minecraft/block/state
 +++ /net/minecraft/block/state
 @@ -298,7 +298,7 @@
-       }
+         }
  
-       public float getPlayerRelativeBlockHardness(EntityPlayer var1, World var2, BlockPos var3) {
--         return this.block.getPlayerRelativeBlockHardness(this, var1, var2, var3);
-+         return xyz.openmodloader.event.impl.BlockEvent.DigSpeed.handle(var1.isCreative() ? 1.0F : this.block.getPlayerRelativeBlockHardness(this, var1, var2, var3), var2, var2.getBlockState(var3), var3);
-       }
+         public float getPlayerRelativeBlockHardness(EntityPlayer var1, World var2, BlockPos var3) {
+-            return this.block.getPlayerRelativeBlockHardness(this, var1, var2, var3);
++            return xyz.openmodloader.event.impl.BlockEvent.DigSpeed.handle(var1.isCreative() ? 1.0F : this.block.getPlayerRelativeBlockHardness(this, var1, var2, var3), var2, var2.getBlockState(var3), var3);
+         }
  
-       public int getStrongPower(IBlockAccess var1, BlockPos var2, EnumFacing var3) {
+         public int getStrongPower(IBlockAccess var1, BlockPos var2, EnumFacing var3) {

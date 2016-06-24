@@ -1,11 +1,11 @@
 --- /net/minecraft/world/gen/layer
 +++ /net/minecraft/world/gen/layer
 @@ -68,7 +68,7 @@
-       GenLayer var36 = GenLayerZoom.magnify(1000L, var9, 2);
-       GenLayerBiomeEdge var37 = new GenLayerBiomeEdge(1000L, var36);
-       GenLayer var10 = GenLayerZoom.magnify(1000L, var31, 2);
--      GenLayerHills var38 = new GenLayerHills(1000L, var37, var10);
-+      GenLayer var38 = new GenLayerHills(1000L, var37, var10);
-       GenLayer var32 = GenLayerZoom.magnify(1000L, var31, 2);
-       var32 = GenLayerZoom.magnify(1000L, var32, var7);
-       GenLayerRiver var34 = new GenLayerRiver(1L, var32);
+         GenLayer var36 = GenLayerZoom.magnify(1000L, var9, 2);
+         GenLayerBiomeEdge var37 = new GenLayerBiomeEdge(1000L, var36);
+         GenLayer var10 = GenLayerZoom.magnify(1000L, var31, 2);
+-        GenLayerHills var38 = new GenLayerHills(1000L, var37, var10);
++        GenLayer var38 = new GenLayerHills(1000L, var37, var10);
+         GenLayer var32 = GenLayerZoom.magnify(1000L, var31, 2);
+         var32 = GenLayerZoom.magnify(1000L, var32, var7);
+         GenLayerRiver var34 = new GenLayerRiver(1L, var32);

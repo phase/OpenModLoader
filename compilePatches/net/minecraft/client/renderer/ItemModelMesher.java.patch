@@ -1,11 +1,11 @@
 --- /net/minecraft/client/renderer
 +++ /net/minecraft/client/renderer
 @@ -76,7 +76,7 @@
-    public void rebuildCache() {
-       this.simpleShapesCache.clear();
+     public void rebuildCache() {
+         this.simpleShapesCache.clear();
  
--      for(Entry var2 : this.simpleShapes.entrySet()) {
-+      for(Entry<Integer, ModelResourceLocation> var2 : this.simpleShapes.entrySet()) {
-          this.simpleShapesCache.put(var2.getKey(), this.modelManager.getModel((ModelResourceLocation)var2.getValue()));
-       }
+-        for(Entry var2 : this.simpleShapes.entrySet()) {
++        for(Entry<Integer, ModelResourceLocation> var2 : this.simpleShapes.entrySet()) {
+             this.simpleShapesCache.put(var2.getKey(), this.modelManager.getModel((ModelResourceLocation)var2.getValue()));
+         }
  

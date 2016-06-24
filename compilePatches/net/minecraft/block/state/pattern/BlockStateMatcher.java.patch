@@ -1,11 +1,11 @@
 --- /net/minecraft/block/state/pattern
 +++ /net/minecraft/block/state/pattern
 @@ -41,7 +41,7 @@
-       }
-    }
+         }
+     }
  
--   protected <T extends Comparable<T>> boolean matches(IBlockState var1, IProperty<T> var2, Predicate<?> var3) {
-+   protected <T extends Comparable<T>> boolean matches(IBlockState var1, IProperty<T> var2, Predicate<T> var3) {
-       return var3.apply(var1.getValue(var2));
-    }
+-    protected <T extends Comparable<T>> boolean matches(IBlockState var1, IProperty<T> var2, Predicate<?> var3) {
++    protected <T extends Comparable<T>> boolean matches(IBlockState var1, IProperty<T> var2, Predicate<T> var3) {
+         return var3.apply(var1.getValue(var2));
+     }
  

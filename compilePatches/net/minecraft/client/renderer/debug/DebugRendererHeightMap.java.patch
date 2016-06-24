@@ -1,11 +1,11 @@
 --- /net/minecraft/client/renderer/debug
 +++ /net/minecraft/client/renderer/debug
 @@ -30,7 +30,7 @@
-       GlStateManager.tryBlendFuncSeparate(GlStateManager.r.SRC_ALPHA, GlStateManager.l.ONE_MINUS_SRC_ALPHA, GlStateManager.r.ONE, GlStateManager.l.ZERO);
-       GlStateManager.disableTexture2D();
-       BlockPos var12 = new BlockPos(var4.posX, 0.0D, var4.posZ);
--      Iterable var13 = BlockPos.a.getAllInBox(var12.add(-40, 0, -40), var12.add(40, 0, 40));
-+      Iterable<BlockPos> var13 = BlockPos.a.getAllInBox(var12.add(-40, 0, -40), var12.add(40, 0, 40));
-       Tessellator var14 = Tessellator.getInstance();
-       VertexBuffer var15 = var14.getBuffer();
-       var15.begin(5, DefaultVertexFormats.POSITION_COLOR);
+         GlStateManager.tryBlendFuncSeparate(GlStateManager.r.SRC_ALPHA, GlStateManager.l.ONE_MINUS_SRC_ALPHA, GlStateManager.r.ONE, GlStateManager.l.ZERO);
+         GlStateManager.disableTexture2D();
+         BlockPos var12 = new BlockPos(var4.posX, 0.0D, var4.posZ);
+-        Iterable var13 = BlockPos.a.getAllInBox(var12.add(-40, 0, -40), var12.add(40, 0, 40));
++        Iterable<BlockPos> var13 = BlockPos.a.getAllInBox(var12.add(-40, 0, -40), var12.add(40, 0, 40));
+         Tessellator var14 = Tessellator.getInstance();
+         VertexBuffer var15 = var14.getBuffer();
+         var15.begin(5, DefaultVertexFormats.POSITION_COLOR);

@@ -1,13 +1,13 @@
 --- /net/minecraft/entity
 +++ /net/minecraft/entity
 @@ -256,8 +256,8 @@
-    }
+     }
  
-    public void sendLeashedEntitiesInChunk(EntityPlayerMP var1, Chunk var2) {
--      ArrayList var3 = Lists.newArrayList();
--      ArrayList var4 = Lists.newArrayList();
-+      ArrayList<Entity> var3 = Lists.newArrayList();
-+      ArrayList<Entity> var4 = Lists.newArrayList();
+     public void sendLeashedEntitiesInChunk(EntityPlayerMP var1, Chunk var2) {
+-        ArrayList var3 = Lists.newArrayList();
+-        ArrayList var4 = Lists.newArrayList();
++        ArrayList<Entity> var3 = Lists.newArrayList();
++        ArrayList<Entity> var4 = Lists.newArrayList();
  
-       for(EntityTrackerEntry var6 : this.trackedEntities) {
-          Entity var7 = var6.getTrackedEntity();
+         for(EntityTrackerEntry var6 : this.trackedEntities) {
+             Entity var7 = var6.getTrackedEntity();

@@ -1,11 +1,11 @@
 --- /net/minecraft/world/storage/loot/conditions
 +++ /net/minecraft/world/storage/loot/conditions
 @@ -73,7 +73,7 @@
-       }
+         }
  
-       public EntityHasScore deserialize(JsonObject var1, JsonDeserializationContext var2) {
--         Set var3 = JsonUtils.getJsonObject(var1, "scores").entrySet();
-+         Set<Entry<String, JsonElement>> var3 = JsonUtils.getJsonObject(var1, "scores").entrySet();
-          LinkedHashMap var4 = Maps.newLinkedHashMap();
+         public EntityHasScore deserialize(JsonObject var1, JsonDeserializationContext var2) {
+-            Set var3 = JsonUtils.getJsonObject(var1, "scores").entrySet();
++            Set<Entry<String, JsonElement>> var3 = JsonUtils.getJsonObject(var1, "scores").entrySet();
+             LinkedHashMap var4 = Maps.newLinkedHashMap();
  
-          for(Entry var6 : var3) {
+             for(Entry var6 : var3) {

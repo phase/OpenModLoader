@@ -1,28 +1,28 @@
 --- /net/minecraft/client/renderer
 +++ /net/minecraft/client/renderer
 @@ -523,13 +523,13 @@
-          }
+             }
  
-          this.theWorld.theProfiler.endStartSection("entities");
--         ArrayList var31 = Lists.newArrayList();
--         ArrayList var32 = Lists.newArrayList();
-+         ArrayList<Entity> var31 = Lists.newArrayList();
-+         ArrayList<Entity> var32 = Lists.newArrayList();
-          BlockPos.b var20 = BlockPos.b.retain();
+             this.theWorld.theProfiler.endStartSection("entities");
+-            ArrayList var31 = Lists.newArrayList();
+-            ArrayList var32 = Lists.newArrayList();
++            ArrayList<Entity> var31 = Lists.newArrayList();
++            ArrayList<Entity> var32 = Lists.newArrayList();
+             BlockPos.b var20 = BlockPos.b.retain();
  
-          for(RenderGlobal.a var22 : this.renderInfos) {
-             Chunk var23 = this.theWorld.getChunkFromBlockCoords(var22.renderChunk.getPosition());
--            ClassInheritanceMultiMap var24 = var23.getEntityLists()[var22.renderChunk.getPosition().getY() / 16];
-+            ClassInheritanceMultiMap<Entity> var24 = var23.getEntityLists()[var22.renderChunk.getPosition().getY() / 16];
-             if(!var24.isEmpty()) {
-                for(Entity var26 : var24) {
-                   boolean var27 = this.renderManager.shouldRender(var26, var2, var4, var6, var8) || var26.isRidingOrBeingRiddenBy(this.mc.thePlayer);
+             for(RenderGlobal.a var22 : this.renderInfos) {
+                 Chunk var23 = this.theWorld.getChunkFromBlockCoords(var22.renderChunk.getPosition());
+-                ClassInheritanceMultiMap var24 = var23.getEntityLists()[var22.renderChunk.getPosition().getY() / 16];
++                ClassInheritanceMultiMap<Entity> var24 = var23.getEntityLists()[var22.renderChunk.getPosition().getY() / 16];
+                 if(!var24.isEmpty()) {
+                     for(Entity var26 : var24) {
+                         boolean var27 = this.renderManager.shouldRender(var26, var2, var4, var6, var8) || var26.isRidingOrBeingRiddenBy(this.mc.thePlayer);
 @@ -594,7 +594,7 @@
-          RenderHelper.enableStandardItemLighting();
+             RenderHelper.enableStandardItemLighting();
  
-          for(RenderGlobal.a var39 : this.renderInfos) {
--            List var42 = var39.renderChunk.getCompiledChunk().getTileEntities();
-+            List<TileEntity> var42 = var39.renderChunk.getCompiledChunk().getTileEntities();
-             if(!var42.isEmpty()) {
-                for(TileEntity var47 : var42) {
-                   TileEntityRendererDispatcher.instance.renderTileEntity(var47, var3, -1);
+             for(RenderGlobal.a var39 : this.renderInfos) {
+-                List var42 = var39.renderChunk.getCompiledChunk().getTileEntities();
++                List<TileEntity> var42 = var39.renderChunk.getCompiledChunk().getTileEntities();
+                 if(!var42.isEmpty()) {
+                     for(TileEntity var47 : var42) {
+                         TileEntityRendererDispatcher.instance.renderTileEntity(var47, var3, -1);

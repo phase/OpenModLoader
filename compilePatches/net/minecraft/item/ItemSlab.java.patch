@@ -1,12 +1,12 @@
 --- /net/minecraft/item
 +++ /net/minecraft/item
 @@ -100,7 +100,7 @@
-       return false;
-    }
+         return false;
+     }
  
--   protected <T extends Comparable<T>> IBlockState makeState(IProperty<T> var1, Comparable<?> var2) {
--      return this.doubleSlab.getDefaultState().withProperty(var1, var2);
-+   protected <T extends Comparable<T>> IBlockState makeState(IProperty<T> var1, Comparable<T> var2) {
-+      return this.doubleSlab.getDefaultState().withProperty(var1,(T) var2);
-    }
+-    protected <T extends Comparable<T>> IBlockState makeState(IProperty<T> var1, Comparable<?> var2) {
+-        return this.doubleSlab.getDefaultState().withProperty(var1, var2);
++    protected <T extends Comparable<T>> IBlockState makeState(IProperty<T> var1, Comparable<T> var2) {
++        return this.doubleSlab.getDefaultState().withProperty(var1,(T) var2);
+     }
  }

@@ -1,11 +1,11 @@
 --- /net/minecraft/command
 +++ /net/minecraft/command
 @@ -80,7 +80,7 @@
-                }
-             }
+                     }
+                 }
  
--            ArrayList var26 = Lists.newArrayList();
-+            ArrayList<BlockPos> var26 = Lists.newArrayList();
-             var10 = 0;
+-                ArrayList var26 = Lists.newArrayList();
++                ArrayList<BlockPos> var26 = Lists.newArrayList();
+                 var10 = 0;
  
-             for(int var15 = var8.getZ(); var15 <= var9.getZ(); ++var15) {
+                 for(int var15 = var8.getZ(); var15 <= var9.getZ(); ++var15) {

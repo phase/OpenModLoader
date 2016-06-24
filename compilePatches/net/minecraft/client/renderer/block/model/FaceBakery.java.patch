@@ -1,29 +1,29 @@
 --- /net/minecraft/client/renderer/block/model
 +++ /net/minecraft/client/renderer/block/model
 @@ -19,22 +19,22 @@
-    private static final float SCALE_ROTATION_22_5 = 1.0F / (float)Math.cos(0.39269909262657166D) - 1.0F;
-    private static final float SCALE_ROTATION_GENERAL = 1.0F / (float)Math.cos(0.7853981852531433D) - 1.0F;
-    private static final FaceBakery.a[] UV_ROTATIONS = new FaceBakery.a[ModelRotation.values().length * EnumFacing.values().length];
--   private static final FaceBakery.a UV_ROTATION_0 = new FaceBakery.a(null) {
-+   private static final FaceBakery.a UV_ROTATION_0 = new FaceBakery.a() {
-       BlockFaceUV makeRotatedUV(float var1, float var2, float var3, float var4) {
-          return new BlockFaceUV(new float[]{var1, var2, var3, var4}, 0);
-       }
-    };
--   private static final FaceBakery.a UV_ROTATION_270 = new FaceBakery.a(null) {
-+   private static final FaceBakery.a UV_ROTATION_270 = new FaceBakery.a() {
-       BlockFaceUV makeRotatedUV(float var1, float var2, float var3, float var4) {
-          return new BlockFaceUV(new float[]{var4, 16.0F - var1, var2, 16.0F - var3}, 270);
-       }
-    };
--   private static final FaceBakery.a UV_ROTATION_INVERSE = new FaceBakery.a(null) {
-+   private static final FaceBakery.a UV_ROTATION_INVERSE = new FaceBakery.a() {
-       BlockFaceUV makeRotatedUV(float var1, float var2, float var3, float var4) {
-          return new BlockFaceUV(new float[]{16.0F - var1, 16.0F - var2, 16.0F - var3, 16.0F - var4}, 0);
-       }
-    };
--   private static final FaceBakery.a UV_ROTATION_90 = new FaceBakery.a(null) {
-+   private static final FaceBakery.a UV_ROTATION_90 = new FaceBakery.a() {
-       BlockFaceUV makeRotatedUV(float var1, float var2, float var3, float var4) {
-          return new BlockFaceUV(new float[]{16.0F - var2, var3, 16.0F - var4, var1}, 90);
-       }
+     private static final float SCALE_ROTATION_22_5 = 1.0F / (float)Math.cos(0.39269909262657166D) - 1.0F;
+     private static final float SCALE_ROTATION_GENERAL = 1.0F / (float)Math.cos(0.7853981852531433D) - 1.0F;
+     private static final FaceBakery.a[] UV_ROTATIONS = new FaceBakery.a[ModelRotation.values().length * EnumFacing.values().length];
+-    private static final FaceBakery.a UV_ROTATION_0 = new FaceBakery.a(null) {
++    private static final FaceBakery.a UV_ROTATION_0 = new FaceBakery.a() {
+         BlockFaceUV makeRotatedUV(float var1, float var2, float var3, float var4) {
+             return new BlockFaceUV(new float[]{var1, var2, var3, var4}, 0);
+         }
+     };
+-    private static final FaceBakery.a UV_ROTATION_270 = new FaceBakery.a(null) {
++    private static final FaceBakery.a UV_ROTATION_270 = new FaceBakery.a() {
+         BlockFaceUV makeRotatedUV(float var1, float var2, float var3, float var4) {
+             return new BlockFaceUV(new float[]{var4, 16.0F - var1, var2, 16.0F - var3}, 270);
+         }
+     };
+-    private static final FaceBakery.a UV_ROTATION_INVERSE = new FaceBakery.a(null) {
++    private static final FaceBakery.a UV_ROTATION_INVERSE = new FaceBakery.a() {
+         BlockFaceUV makeRotatedUV(float var1, float var2, float var3, float var4) {
+             return new BlockFaceUV(new float[]{16.0F - var1, 16.0F - var2, 16.0F - var3, 16.0F - var4}, 0);
+         }
+     };
+-    private static final FaceBakery.a UV_ROTATION_90 = new FaceBakery.a(null) {
++    private static final FaceBakery.a UV_ROTATION_90 = new FaceBakery.a() {
+         BlockFaceUV makeRotatedUV(float var1, float var2, float var3, float var4) {
+             return new BlockFaceUV(new float[]{16.0F - var2, var3, 16.0F - var4, var1}, 90);
+         }

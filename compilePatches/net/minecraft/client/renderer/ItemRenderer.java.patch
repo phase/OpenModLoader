@@ -1,19 +1,19 @@
 --- /net/minecraft/client/renderer
 +++ /net/minecraft/client/renderer
 @@ -218,14 +218,14 @@
-       float var11 = MathHelper.sin(var6 * 3.1415927F);
-       GlStateManager.rotate(var5 * var11 * 70.0F, 0.0F, 1.0F, 0.0F);
-       GlStateManager.rotate(var5 * var10 * -20.0F, 0.0F, 0.0F, 1.0F);
--      EntityPlayerSP var12 = this.mc.thePlayer;
-+      AbstractClientPlayer var12 = this.mc.thePlayer;
-       this.mc.getTextureManager().bindTexture(var12.getLocationSkin());
-       GlStateManager.translate(var5 * -1.0F, 3.6F, 3.5F);
-       GlStateManager.rotate(var5 * 120.0F, 0.0F, 0.0F, 1.0F);
-       GlStateManager.rotate(200.0F, 1.0F, 0.0F, 0.0F);
-       GlStateManager.rotate(var5 * -135.0F, 0.0F, 1.0F, 0.0F);
-       GlStateManager.translate(var5 * 5.6F, 0.0F, 0.0F);
--      RenderPlayer var13 = (RenderPlayer)this.renderManager.getEntityRenderObject(var12);
-+      RenderPlayer var13 = (RenderPlayer) this.renderManager.getEntityRenderObject(var12);
-       GlStateManager.disableCull();
-       if(var4) {
-          var13.renderRightArm(var12);
+         float var11 = MathHelper.sin(var6 * 3.1415927F);
+         GlStateManager.rotate(var5 * var11 * 70.0F, 0.0F, 1.0F, 0.0F);
+         GlStateManager.rotate(var5 * var10 * -20.0F, 0.0F, 0.0F, 1.0F);
+-        EntityPlayerSP var12 = this.mc.thePlayer;
++        AbstractClientPlayer var12 = this.mc.thePlayer;
+         this.mc.getTextureManager().bindTexture(var12.getLocationSkin());
+         GlStateManager.translate(var5 * -1.0F, 3.6F, 3.5F);
+         GlStateManager.rotate(var5 * 120.0F, 0.0F, 0.0F, 1.0F);
+         GlStateManager.rotate(200.0F, 1.0F, 0.0F, 0.0F);
+         GlStateManager.rotate(var5 * -135.0F, 0.0F, 1.0F, 0.0F);
+         GlStateManager.translate(var5 * 5.6F, 0.0F, 0.0F);
+-        RenderPlayer var13 = (RenderPlayer)this.renderManager.getEntityRenderObject(var12);
++        RenderPlayer var13 = (RenderPlayer) this.renderManager.getEntityRenderObject(var12);
+         GlStateManager.disableCull();
+         if(var4) {
+             var13.renderRightArm(var12);

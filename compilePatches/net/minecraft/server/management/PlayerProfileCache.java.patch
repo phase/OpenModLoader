@@ -2,10 +2,10 @@
 +++ /net/minecraft/server/management
 @@ -181,7 +181,7 @@
  
-       try {
-          var1 = Files.newReader(this.usercacheFile, Charsets.UTF_8);
--         List var2 = (List)this.gson.fromJson(var1, TYPE);
-+         List<PlayerProfileCache.a> var2 = (List)this.gson.fromJson(var1, TYPE);
-          this.usernameToProfileEntryMap.clear();
-          this.uuidToProfileEntryMap.clear();
-          this.gameProfiles.clear();
+         try {
+             var1 = Files.newReader(this.usercacheFile, Charsets.UTF_8);
+-            List var2 = (List)this.gson.fromJson(var1, TYPE);
++            List<PlayerProfileCache.a> var2 = (List)this.gson.fromJson(var1, TYPE);
+             this.usernameToProfileEntryMap.clear();
+             this.uuidToProfileEntryMap.clear();
+             this.gameProfiles.clear();

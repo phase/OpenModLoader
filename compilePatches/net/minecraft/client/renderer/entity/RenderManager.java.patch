@@ -1,25 +1,25 @@
 --- /net/minecraft/client/renderer/entity
 +++ /net/minecraft/client/renderer/entity
 @@ -273,7 +273,7 @@
-    public <T extends Entity> Render<T> getEntityClassRenderObject(Class<? extends Entity> var1) {
-       Render var2 = (Render)this.entityRenderMap.get(var1);
-       if(var2 == null && var1 != Entity.class) {
--         var2 = this.getEntityClassRenderObject(var1.getSuperclass());
-+         var2 = this.getEntityClassRenderObject((Class<? extends Entity>) var1.getSuperclass());
-          this.entityRenderMap.put(var1, var2);
-       }
+     public <T extends Entity> Render<T> getEntityClassRenderObject(Class<? extends Entity> var1) {
+         Render var2 = (Render)this.entityRenderMap.get(var1);
+         if(var2 == null && var1 != Entity.class) {
+-            var2 = this.getEntityClassRenderObject(var1.getSuperclass());
++            var2 = this.getEntityClassRenderObject((Class<? extends Entity>) var1.getSuperclass());
+             this.entityRenderMap.put(var1, var2);
+         }
  
 @@ -281,11 +281,11 @@
-    }
+     }
  
-    @Nullable
--   public <T extends Entity> Render<T> getEntityRenderObject(Entity var1) {
-+   public <T extends Entity> Render<T> getEntityRenderObject(T var1) {
-       if(var1 instanceof AbstractClientPlayer) {
-          String var2 = ((AbstractClientPlayer)var1).getSkinType();
-          RenderPlayer var3 = (RenderPlayer)this.skinMap.get(var2);
--         return var3 != null?var3:this.playerRenderer;
-+         return (Render<T>) (var3 != null?var3:this.playerRenderer);
-       } else {
-          return this.<T>getEntityClassRenderObject(var1.getClass());
-       }
+     @Nullable
+-    public <T extends Entity> Render<T> getEntityRenderObject(Entity var1) {
++    public <T extends Entity> Render<T> getEntityRenderObject(T var1) {
+         if(var1 instanceof AbstractClientPlayer) {
+             String var2 = ((AbstractClientPlayer)var1).getSkinType();
+             RenderPlayer var3 = (RenderPlayer)this.skinMap.get(var2);
+-            return var3 != null?var3:this.playerRenderer;
++            return (Render<T>) (var3 != null?var3:this.playerRenderer);
+         } else {
+             return this.<T>getEntityClassRenderObject(var1.getClass());
+         }

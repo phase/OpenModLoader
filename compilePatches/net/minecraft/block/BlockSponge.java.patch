@@ -2,10 +2,10 @@
 +++ /net/minecraft/block
 @@ -58,7 +58,7 @@
  
-    private boolean absorb(World var1, BlockPos var2) {
-       LinkedList var3 = Lists.newLinkedList();
--      ArrayList var4 = Lists.newArrayList();
-+      ArrayList<BlockPos> var4 = Lists.newArrayList();
-       var3.add(new Tuple(var2, Integer.valueOf(0)));
-       int var5 = 0;
+     private boolean absorb(World var1, BlockPos var2) {
+         LinkedList var3 = Lists.newLinkedList();
+-        ArrayList var4 = Lists.newArrayList();
++        ArrayList<BlockPos> var4 = Lists.newArrayList();
+         var3.add(new Tuple(var2, Integer.valueOf(0)));
+         int var5 = 0;
  

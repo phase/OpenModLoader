@@ -2,10 +2,10 @@
 +++ /net/minecraft/block/state/pattern
 @@ -43,7 +43,7 @@
  
-                for(char var9 : var5.toCharArray()) {
-                   if(!this.symbolMap.containsKey(Character.valueOf(var9))) {
--                     this.symbolMap.put(Character.valueOf(var9), (Object)null);
-+                     this.symbolMap.put(Character.valueOf(var9), null);
-                   }
-                }
-             }
+                     for(char var9 : var5.toCharArray()) {
+                         if(!this.symbolMap.containsKey(Character.valueOf(var9))) {
+-                            this.symbolMap.put(Character.valueOf(var9), (Object)null);
++                            this.symbolMap.put(Character.valueOf(var9), null);
+                         }
+                     }
+                 }

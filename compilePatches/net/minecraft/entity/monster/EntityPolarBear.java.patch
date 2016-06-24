@@ -2,10 +2,10 @@
 +++ /net/minecraft/entity/monster
 @@ -176,7 +176,7 @@
  
-    class a extends EntityAINearestAttackableTarget<EntityPlayer> {
-       public a() {
--         super(EntityPolarBear.this, EntityPlayer.class, 20, true, true, (Predicate<? super T>)null);
-+         super(EntityPolarBear.this, EntityPlayer.class, 20, true, true, null);
-       }
+     class a extends EntityAINearestAttackableTarget<EntityPlayer> {
+         public a() {
+-            super(EntityPolarBear.this, EntityPlayer.class, 20, true, true, (Predicate<? super T>)null);
++            super(EntityPolarBear.this, EntityPlayer.class, 20, true, true, null);
+         }
  
-       public boolean shouldExecute() {
+         public boolean shouldExecute() {
