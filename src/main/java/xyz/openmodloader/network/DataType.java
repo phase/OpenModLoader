@@ -1,6 +1,7 @@
 package xyz.openmodloader.network;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 
 import java.util.function.BiConsumer;
@@ -27,6 +28,7 @@ public class DataType<T> {
 		buf.writeString(val);
 	}, buf -> buf.readStringFromBuffer(buf.readInt()));
 	public static final DataType<ItemStack> ITEMSTACK = new DataType<>(ItemStack.class, PacketBuffer::writeItemStackToBuffer, PacketBuffer::readItemStackFromBuffer);
+	public static final DataType<NBTTagCompound> NBT = new DataType<>(NBTTagCompound.class, PacketBuffer::writeNBTTagCompoundToBuffer, PacketBuffer::readNBTTagCompoundFromBuffer);
 
 	private final Class<T> clazz;
 	private final BiConsumer<PacketBuffer, T> writer;
