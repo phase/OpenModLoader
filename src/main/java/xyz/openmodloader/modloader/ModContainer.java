@@ -44,8 +44,8 @@ public class ModContainer {
     private String updateURL;
     @SerializedName("Logo")
     private String logoString;
-    @SerializedName("Transformer")
-    private String transformer;
+    @SerializedName("Transformers")
+    private String transformers;
     @SerializedName("Dependencies")
     private String dependencies;
 
@@ -76,6 +76,8 @@ public class ModContainer {
     }
 
     public Class<?> getMainClass() {
+        if (classString == null)
+            return null;
         if (this.mainClass == null) {
             try {
                 this.mainClass = Class.forName(this.classString, true, Launch.classLoader);
@@ -105,6 +107,8 @@ public class ModContainer {
     }
 
     public IMod getInstance() {
+        if (classString == null)
+            return null;
         if (this.instance == null) {
             try {
                 this.instance = (IMod) this.getMainClass().newInstance();
@@ -147,8 +151,8 @@ public class ModContainer {
         return updateURL;
     }
 
-    public String getTransformer() {
-        return transformer;
+    public String[] getTransformers() {
+        return transformers == null ? new String[0] : transformers.split("\\s*,\\s*");
     }
 
     public String[] getDependencies() {
