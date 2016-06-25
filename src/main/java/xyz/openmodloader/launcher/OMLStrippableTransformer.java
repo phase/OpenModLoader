@@ -31,7 +31,6 @@ public class OMLStrippableTransformer implements IClassTransformer {
 
         if (classNode.visibleAnnotations != null) {
             for (AnnotationNode an: classNode.visibleAnnotations) {
-                System.out.println(an.desc);
                 Type anType = Type.getType(an.desc);
                 if (anType.equals(Type.getType(Strippable.Interface.class))) {
                     handleStrippableInterface(classNode, an);
@@ -57,7 +56,6 @@ public class OMLStrippableTransformer implements IClassTransformer {
 
     private void handleStrippableInterface(ClassNode classNode, AnnotationNode an) {
         List<Object> values = an.values;
-        System.out.println(values);
         String side = Side.UNIVERSAL.name();
         String envo = Environment.UNIVERSAL.name();
         List<String> mods = Collections.emptyList();
@@ -113,7 +111,6 @@ public class OMLStrippableTransformer implements IClassTransformer {
                         if (key instanceof String && ((String) key).equals("side")) {
                             if (value instanceof String[]) {
                                 String side = ((String[]) value)[1];
-                                System.out.println(side);
                                 if (!side.equals("UNIVERSAL") && !side.equals(SIDE.toString())) {
                                     return true;
                                 }
