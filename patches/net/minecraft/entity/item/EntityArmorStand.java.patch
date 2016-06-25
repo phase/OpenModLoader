@@ -1,0 +1,13 @@
+--- /net/minecraft/entity/item
++++ /net/minecraft/entity/item
+@@ -134,8 +134,9 @@
+             this.handItems[var1.getIndex()] = var2;
+             break;
+         case ARMOR:
++            xyz.openmodloader.event.impl.ArmorEvent event = xyz.openmodloader.event.impl.ArmorEvent.handle(this, var2, var1);
++            if (event != null) this.armorItems[event.getSlot().getIndex()] = event.getArmor(); else return;
+             this.playEquipSound(var2);
+-            this.armorItems[var1.getIndex()] = var2;
+         }
+ 
+     }

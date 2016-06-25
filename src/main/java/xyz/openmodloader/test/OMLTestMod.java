@@ -66,6 +66,9 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Constructing.class, this::onEntityConstruct);
         OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Join.class, this::onEntityJoinWorld);
 
+        OpenModLoader.INSTANCE.getEventBus().register(ArmorEvent.Equip.class, this::onArmorEquip);
+        OpenModLoader.INSTANCE.getEventBus().register(ArmorEvent.Unequip.class, this::onArmorUnequip);
+
         Config config = new Config(new File("./config/test.cfg"));
         Config category1 = config.getConfig("category1", "configures stuff");
         category1.getBoolean("boolean1", true, "this is a boolean");
@@ -174,5 +177,15 @@ public class OMLTestMod implements IMod {
         if (event.getEntity() instanceof EntityPig) {
             event.setCanceled(true);
         }
+    }
+
+    private void onArmorEquip(ArmorEvent.Equip event){
+        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " equipped " + event.getArmor().getItem().getUnlocalizedName() + " to the " + event.getSlot().getName() + " slot");
+        event.setCanceled(true);
+    }
+
+    private void onArmorUnequip(ArmorEvent.Unequip event){
+        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " unequipped " + event.getArmor().getItem().getUnlocalizedName() + " to the " + event.getSlot().getName() + " slot");
+        event.setCanceled(true);
     }
 }

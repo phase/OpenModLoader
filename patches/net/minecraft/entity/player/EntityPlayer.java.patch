@@ -1,0 +1,14 @@
+--- /net/minecraft/entity/player
++++ /net/minecraft/entity/player
+@@ -1627,8 +1627,9 @@
+             this.playEquipSound(var2);
+             this.inventory.offHandInventory[0] = var2;
+         } else if(var1.getSlotType() == EntityEquipmentSlot.a.ARMOR) {
+-            this.playEquipSound(var2);
+-            this.inventory.armorInventory[var1.getIndex()] = var2;
++            xyz.openmodloader.event.impl.ArmorEvent event = xyz.openmodloader.event.impl.ArmorEvent.handle(this, var2, var1);
++            if (event != null) { this.inventory.armorInventory[event.getSlot().getIndex()] = event.getArmor(); this.playEquipSound(var2); } else {inventory.addItemStackToInventory(var2); return;}
++
+         }
+ 
+     }

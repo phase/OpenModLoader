@@ -1,0 +1,25 @@
+--- /net/minecraft/inventory
++++ /net/minecraft/inventory
+@@ -49,6 +49,13 @@
+                     }
+                 }
+ 
++                @Override
++                public void putStack(@Nullable ItemStack var1) {
++                    xyz.openmodloader.event.impl.ArmorEvent event = xyz.openmodloader.event.impl.ArmorEvent.handle(thePlayer, var1, var9);
++                    if (event != null)  var1 = event.getArmor(); else {thePlayer.inventory.addItemStackToInventory(var1); return;}
++                    super.putStack(var1);
++                }
++
+                 @Nullable
+                 public String getSlotTexture() {
+                     return ItemArmor.EMPTY_SLOT_NAMES[var9.getIndex()];
+@@ -123,6 +130,8 @@
+                     return null;
+                 }
+             } else if(var6.getSlotType() == EntityEquipmentSlot.a.ARMOR && !((Slot)this.inventorySlots.get(8 - var6.getIndex())).getHasStack()) {
++                xyz.openmodloader.event.impl.ArmorEvent event = xyz.openmodloader.event.impl.ArmorEvent.handle(this.thePlayer, var5, var6);
++                if (event != null)  var5 = event.getArmor(); else return null;
+                 int var7 = 8 - var6.getIndex();
+                 if(!this.mergeItemStack(var5, var7, var7 + 1, false)) {
+                     return null;
