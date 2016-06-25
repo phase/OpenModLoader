@@ -51,7 +51,10 @@ public class ModLoader {
      */
     public static void loadMods() {
         try {
-            List<ModContainer> unsortedMods = new ArrayList<>();
+            ModContainer oml = new OMLModContainer();
+            MODS.add(oml);
+            ID_MAP.put(oml.getModID(), oml);
+            List<ManifestModContainer> unsortedMods = new ArrayList<>();
             if (MOD_DIRECTORY.exists()) {
                 File[] files = MOD_DIRECTORY.listFiles();
                 if (files != null) {
@@ -71,8 +74,10 @@ public class ModLoader {
                     for (File file : files) {
                         if (file.getName().equals("MANIFEST.MF")) {
                             FileInputStream stream = new FileInputStream(file);
-                            ModContainer mod = loadMod(file, new Manifest(stream));
+                            ManifestModContainer mod = loadMod(file, new Manifest(stream));
                             if (mod != null) {
+                                if (ID_MAP.containsKey(mod.getModID()))
+                                    throw new RuntimeException("Mod ID '" + mod.getModID() + "' has already been registered");
                                 unsortedMods.add(mod);
                                 ID_MAP.put(mod.getModID(), mod);
                             }
@@ -87,9 +92,6 @@ public class ModLoader {
                     }
                 }
             }
-            ModContainer oml = new OMLModContainer();
-            MODS.add(oml);
-            ID_MAP.put(oml.getModID(), oml);
             MODS.addAll(DependencySorter.sort(unsortedMods));
             for (ModContainer mod : MODS) {
                 for (String dep : mod.getDependencies()) {
@@ -113,12 +115,14 @@ public class ModLoader {
      *
      * @param manifest the manifest instance
      */
-    private static ModContainer loadMod(File file, Manifest manifest) {
-        ModContainer container = ModContainer.create(manifest);
+    private static ManifestModContainer loadMod(File file, Manifest manifest) {
+        ManifestModContainer container = ManifestModContainer.create(manifest);
         if (container == null) {
             OpenModLoader.INSTANCE.getLogger().error("Found invalid manifest in file " + file.getAbsolutePath().replace("!", "").replace(File.separator + "META-INF" + File.separator + "MANIFEST.MF", ""));
             return null;
         }
+        if (container.getModID().isEmpty())
+            throw new RuntimeException("Empty mod ID for mod '" + container.getName() + "'!");
         for (char c : container.getModID().toCharArray()) {
             if (c != '-' && c != '_' && !CharSet.ASCII_ALPHA_LOWER.contains(c) && !CharSet.ASCII_NUMERIC.contains(c)) {
                 throw new RuntimeException("Illegal characters in ID '" + container.getModID() + "' for mod '" + container.getName() + "'.");

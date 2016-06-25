@@ -9,8 +9,9 @@ import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 import xyz.openmodloader.modloader.ModContainer;
+
+import org.lwjgl.opengl.GL11;
 
 public class GuiModInfo extends GuiScreen {
     private static final ResourceLocation ICON_MISSING = new ResourceLocation("textures/misc/unknown_server.png");

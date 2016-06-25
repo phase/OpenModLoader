@@ -7,9 +7,9 @@ import com.google.common.collect.Lists;
 
 class DependencySorter {
 
-    public static List<ModContainer> sort(Iterable<ModContainer> unsorted) {
-        LinkedList<ModContainer> sorted = Lists.newLinkedList();
-        for (ModContainer mod: unsorted) {
+    public static List<ManifestModContainer> sort(Iterable<ManifestModContainer> unsorted) {
+        LinkedList<ManifestModContainer> sorted = Lists.newLinkedList();
+        for (ManifestModContainer mod: unsorted) {
             if (sorted.isEmpty() || mod.getDependencySet().isEmpty())
                 sorted.addFirst(mod);
             else {

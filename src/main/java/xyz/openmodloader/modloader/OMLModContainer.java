@@ -1,5 +1,11 @@
 package xyz.openmodloader.modloader;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
@@ -7,12 +13,10 @@ import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.strippable.Side;
 import xyz.openmodloader.event.strippable.Strippable;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+class OMLModContainer implements ModContainer {
 
-public class OMLModContainer extends ModContainer {
+    private ResourceLocation logo;
+
     @Override
     public Version getVersion() {
         return OpenModLoader.INSTANCE.getVersion();
@@ -43,7 +47,7 @@ public class OMLModContainer extends ModContainer {
     public ResourceLocation getLogo() {
         if (this.logo == null) {
             try {
-                InputStream stream = ModContainer.class.getResourceAsStream("/logo.png");
+                InputStream stream = this.getClass().getResourceAsStream("/logo.png");
                 BufferedImage image = ImageIO.read(stream);
                 DynamicTexture texture = new DynamicTexture(image);
                 this.logo = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("mods/" + getModID(), texture);
@@ -52,5 +56,30 @@ public class OMLModContainer extends ModContainer {
             }
         }
         return logo;
+    }
+
+    @Override
+    public IMod getInstance() {
+        return null;
+    }
+
+    @Override
+    public String getURL() {
+        return "https://openmodloader.xyz";
+    }
+
+    @Override
+    public String getUpdateURL() {
+        return null;
+    }
+
+    @Override
+    public String[] getTransformers() {
+        return new String[0];
+    }
+
+    @Override
+    public String[] getDependencies() {
+        return new String[0];
     }
 }

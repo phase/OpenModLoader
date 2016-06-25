@@ -7,8 +7,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import org.apache.commons.lang3.StringUtils;
 import xyz.openmodloader.modloader.ModContainer;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class GuiModListSelectionEntry implements GuiListExtended.a {
     private static final ResourceLocation ICON_MISSING = new ResourceLocation("textures/misc/unknown_server.png");
