@@ -4,16 +4,22 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.WorldServer;
 import org.lwjgl.input.Keyboard;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.client.gui.GuiModList;
 import xyz.openmodloader.event.impl.*;
 import xyz.openmodloader.event.strippable.Side;
 import xyz.openmodloader.modloader.IMod;
+import xyz.openmodloader.network.Channel;
+import xyz.openmodloader.network.ChannelManager;
+import xyz.openmodloader.network.DataType;
+import xyz.openmodloader.network.Packet;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,6 +27,8 @@ import java.io.File;
 import java.util.Arrays;
 
 public class OMLTestMod implements IMod {
+    private Channel channel;
+
     @Override
     public void onEnable() {
         OpenModLoader.INSTANCE.getLogger().info("Loading test mod");
@@ -58,12 +66,30 @@ public class OMLTestMod implements IMod {
                 }
             }
         });
+
+        testNetwork();
+    }
+
+    private void testNetwork() {
+        channel = ChannelManager.create("OMLTest")
+                .createPacket("test")
+                    .with("str", DataType.STRING)
+                    .handle((context, packet) -> {
+                        System.out.println("PHYSICAL SIDE: " + OpenModLoader.INSTANCE.getSidedHandler().getSide());
+                        System.out.println("THREAD: " + Thread.currentThread().getName());
+                        System.out.println("DATA: " + packet.get("str", DataType.STRING));
+                    })
+                .build();
     }
 
     private void onBlockPlace(BlockEvent.Place event) {
         OpenModLoader.INSTANCE.getLogger().info("Placed block: " + event.getBlockState() + " isRemote: " + event.getWorld().isRemote);
         if (event.getBlockState().getBlock() == Blocks.GRASS) {
             event.setBlockState(Blocks.DIRT.getDefaultState());
+        } if (event.getWorld() instanceof WorldServer && event.getBlockState().getBlock() == Blocks.BEDROCK) {
+            channel.send("test")
+                    .set("str", "Hello, Client!")
+                    .toAllInRadius((WorldServer)event.getWorld(), event.getPos(), 8);
         }
     }
 
@@ -137,6 +163,12 @@ public class OMLTestMod implements IMod {
 
     private void onKeyPressed(InputEvent.Keyboard event) {
         OpenModLoader.INSTANCE.getLogger().info(String.format("Key pressed %c (%d)", event.getCharacter(), event.getKey()));
+
+        if (event.getKey() == Keyboard.KEY_SEMICOLON) {
+            channel.send("test")
+                    .set("str", "Hello, Server!")
+                    .toServer();
+        }
     }
 
     private void onMouseClick(InputEvent.Mouse event) {

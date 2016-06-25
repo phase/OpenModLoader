@@ -27,7 +27,7 @@ public class Channel {
 	}
 
 	void addPacket(PacketSpec spec) {
-		specs.put(spec.getID(), spec);
+		specs.put(spec.id, spec);
 	}
 
 	public Channel build() {

@@ -21,7 +21,7 @@ public class PacketWrapper implements net.minecraft.network.Packet<INetHandler> 
 	public void readPacketData(PacketBuffer buf) throws IOException {
 		Channel channel = ChannelManager.get(buf.readInt());
 		PacketSpec spec = channel.getSpec(buf.readInt());
-		packet = new Packet(channel, spec);
+		Packet packet = new Packet(channel, spec);
 		packet.read(buf);
 	}
 
@@ -33,8 +33,8 @@ public class PacketWrapper implements net.minecraft.network.Packet<INetHandler> 
 	}
 
 	@Override
-	public void processPacket(INetHandler handler) {
-
+	public void processPacket(INetHandler netHandler) {
+		packet.handle();
 	}
 
 }

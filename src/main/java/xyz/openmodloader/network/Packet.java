@@ -1,9 +1,20 @@
 package xyz.openmodloader.network;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.WorldServer;
+import xyz.openmodloader.OpenModLoader;
+import xyz.openmodloader.server.OMLServerHelper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Packet {
 
@@ -14,7 +25,7 @@ public class Packet {
 	final Map<String, DataType> types = new HashMap<>();
 
 	public Packet(Channel channel, PacketSpec spec) {
-		this.id = spec.getID();
+		this.id = spec.id;
 		this.channel = channel;
 		this.spec = spec;
 
@@ -37,16 +48,68 @@ public class Packet {
 		return (T)values.get(id);
 	}
 
-	void write(PacketBuffer buf) {
+	PacketBuffer write(PacketBuffer buf) {
+
 		values.forEach((id, value) -> {
 			types.get(id).write(buf, value);
 		});
+		return buf;
 	}
 
 	void read(PacketBuffer buf) {
 		types.forEach((id, type) -> {
 			values.put(id, type.read(buf));
 		});
+	}
+
+	void handle() {
+		spec.handler.accept(new Context(), this);
+	}
+
+//	Client -> Server
+	public void toServer() {
+		OpenModLoader.INSTANCE.getSidedHandler().getClientPlayer().connection.sendPacket(new PacketWrapper(this));
+	}
+
+//	Server -> Client
+	public void toPlayer(EntityPlayerMP player) {
+		player.connection.sendPacket(new PacketWrapper(this));
+	}
+
+	public void toAll(List<EntityPlayerMP> players) {
+		PacketWrapper packet = new PacketWrapper(this);
+		players.stream()
+				.map(player -> player.connection)
+				.forEach(connection -> connection.sendPacket(packet));
+	}
+
+	public void toAll() {
+		MinecraftServer server = OMLServerHelper.getServer();
+		toAll(server.getPlayerList().getPlayerList());
+	}
+
+	public void toAll(List<EntityPlayerMP> players, Predicate<EntityPlayer> predicate) {
+		toAll(players.stream()
+			.filter(predicate::test)
+			.collect(Collectors.toList()));
+	}
+
+	public void toAllInRadius(WorldServer world, Vec3d pos, double radius) {
+		double maxDistance = radius*radius + radius*radius + radius*radius;
+		toAll(world.getPlayers(EntityPlayerMP.class, player -> (player.getDistanceSq(pos.xCoord, pos.yCoord, pos.zCoord) <= maxDistance)));
+	}
+
+	public void toAllInRadius(WorldServer world, Vec3i pos, double radius) {
+		toAllInRadius(world, new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), radius);
+	}
+
+	public void toAllInRadius(int dimension, Vec3d pos, double radius) {
+		MinecraftServer server = OMLServerHelper.getServer();
+		toAllInRadius(server.worldServerForDimension(dimension), pos, radius);
+	}
+
+	public void toAllInRadius(int dimension, Vec3i pos, double radius) {
+		toAllInRadius(dimension, new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), radius);
 	}
 
 }

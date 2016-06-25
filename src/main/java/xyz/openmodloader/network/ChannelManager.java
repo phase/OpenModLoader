@@ -2,6 +2,7 @@ package xyz.openmodloader.network;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import net.minecraft.network.PacketBuffer;
 
 public class ChannelManager {
 
@@ -12,7 +13,7 @@ public class ChannelManager {
 		return new Channel(name);
 	}
 
-	static void register(String name, Channel channel) {
+	public static void register(String name, Channel channel) {
 		channels.put(name, channel);
 	}
 
@@ -38,6 +39,14 @@ public class ChannelManager {
 
 	public static int getID(String name) {
 		return ids.get(name);
+	}
+
+	public static boolean exists(String channel) {
+		return channels.containsKey(channel);
+	}
+
+	public static void handle(String channel, PacketBuffer buf) {
+		get(channel).handle(buf.readInt(), buf);
 	}
 
 }

@@ -1,23 +1,22 @@
 package xyz.openmodloader.network;
 
-import net.minecraft.entity.player.EntityPlayer;
+import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.strippable.Side;
 
 public class Context {
 
 	private final Side side;
-	private final EntityPlayer player;
 
-	public Context(Side side, EntityPlayer player) {
+	public Context() {
+		this(OpenModLoader.INSTANCE.getSidedHandler().getSide());
+	}
+
+	public Context(Side side) {
 		this.side = side;
-		this.player = player;
 	}
 
 	public Side getSide() {
 		return side;
 	}
 
-	public EntityPlayer getPlayer() {
-		return player;
-	}
 }

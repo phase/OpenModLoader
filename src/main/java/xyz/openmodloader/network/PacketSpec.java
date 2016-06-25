@@ -9,22 +9,22 @@ import java.util.function.BiConsumer;
 
 public class PacketSpec {
 
-	private final Channel builder;
-	private final String id;
+	private final Channel channel;
+	final String id;
 	final Map<String, DataType> types;
-	private Side receivingSide;
-	private BiConsumer<Context, Packet> handler;
+	BiConsumer<Context, Packet> handler;
 
 	PacketSpec(Channel builder, String id) {
-		this.builder = builder;
+		this.channel = builder;
 		this.id = id;
 		this.types = new HashMap<>();
 	}
 
 	private PacketSpec(PacketSpec spec) {
-		this.builder = null;
+		this.channel = null;
 		this.id = spec.id;
 		this.types = ImmutableMap.copyOf(spec.types);
+		this.handler = spec.handler;
 	}
 
 	public PacketSpec with(String id, DataType type) {
@@ -36,18 +36,13 @@ public class PacketSpec {
 		return this;
 	}
 
-	public PacketSpec receiveOn(Side receivingSide) {
-		this.receivingSide = receivingSide;
-		return this;
-	}
-
 	public Channel handle(BiConsumer<Context, Packet> handler) {
 		if (isImmutable()) throw new IllegalStateException("Cannot use PacketSpec.handle on an immutable clone");
 		if (this.handler != null) throw new IllegalStateException(String.format("Packet %s already has a handler, %s", id, this.handler));
 
 		this.handler = handler;
-		builder.addPacket(new PacketSpec(this));
-		return builder;
+		channel.addPacket(new PacketSpec(this));
+		return channel;
 	}
 
 	public Channel handle(BiConsumer<Context, Packet> clientHandler, BiConsumer<Context, Packet> serverHandler) {
@@ -61,16 +56,12 @@ public class PacketSpec {
 				serverHandler.accept(context, packet);
 			}
 		};
-		builder.addPacket(new PacketSpec(this));
-		return builder;
-	}
-
-	public String getID() {
-		return id;
+		channel.addPacket(new PacketSpec(this));
+		return channel;
 	}
 
 	private boolean isImmutable() {
-		return builder == null;
+		return channel == null;
 	}
 
 }
