@@ -13,7 +13,7 @@ import xyz.openmodloader.modloader.Version;
 public enum OpenModLoader {
     INSTANCE;
 
-    private Version mcversion = new Version("1.10.0");
+    private Version mcversion = new Version("1.10.2");
     private Version version = new Version("0.0.1-develop");
     private Logger logger = LogManager.getFormatterLogger("OpenModLoader");
     private EventBus eventBus = new EventBus();
