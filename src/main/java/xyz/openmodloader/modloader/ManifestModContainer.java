@@ -45,7 +45,7 @@ class ManifestModContainer implements ModContainer {
     private String author;
     @SerializedName("URL")
     private String url;
-    @SerializedName("UpdateURL")
+    @SerializedName("Update-URL")
     private String updateURL;
     @SerializedName("Logo")
     private String logoString;
