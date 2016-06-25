@@ -55,6 +55,6 @@ public class Version {
 
     @Override
     public String toString() {
-        return getMajor() + "." + getMinor() + "." + getPatch();
+        return getMajor() + "." + getMinor() + "." + getPatch() + (tag == null ? "" :  "-" + tag);
     }
 }
