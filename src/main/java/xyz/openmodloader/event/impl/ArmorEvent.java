@@ -65,6 +65,7 @@ public class ArmorEvent extends Event {
 
     /**
      * Sets the piece of armor that was used.
+     *
      * @param armor The piece of armor that should be used.
      */
     public void setArmor(ItemStack armor) {
@@ -76,15 +77,16 @@ public class ArmorEvent extends Event {
         return true;
     }
 
-    public static ArmorEvent handle(Entity entity, ItemStack armor, EntityEquipmentSlot slot){
+    public static ArmorEvent handle(Entity entity, ItemStack armor, EntityEquipmentSlot slot) {
         ArmorEvent event;
-        if(armor != null){
-           event = new ArmorEvent.Equip(entity, armor, slot);
-        }else{
-           event = new ArmorEvent.Unequip(entity, armor, slot);
+        if (armor != null) {
+            event = new ArmorEvent.Equip(entity, armor, slot);
+        } else {
+            event = new ArmorEvent.Unequip(entity, armor, slot);
         }
         return OpenModLoader.INSTANCE.getEventBus().post(event) ? event : null;
     }
+
     public static class Equip extends ArmorEvent {
 
         /**
