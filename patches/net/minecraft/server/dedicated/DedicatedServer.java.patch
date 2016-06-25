@@ -1,0 +1,10 @@
+--- /net/minecraft/server/dedicated
++++ /net/minecraft/server/dedicated
+@@ -85,6 +85,7 @@
+     }
+ 
+     public boolean startServer() throws IOException {
++        xyz.openmodloader.OpenModLoader.INSTANCE.minecraftConstruction(xyz.openmodloader.server.OMLServerHandler.INSTANCE);
+         Thread var1 = new Thread("Server console handler") {
+             public void run() {
+                 BufferedReader var1 = new BufferedReader(new InputStreamReader(System.in));
