@@ -5,5 +5,6 @@ Major: 1
 Minor: 0
 Patch: 0
 Description: This is a description!
+Author: OML
 UpdateURL: http://example.com/
 Logo: logo.png

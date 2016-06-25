@@ -162,7 +162,7 @@ public class ModContainer {
         return dependencies.split("\\s*,\\s*");
     }
 
-    Set<String> getDependencySet() {
+    public Set<String> getDependencySet() {
         Set<String> set = Sets.newHashSet();
         for (String s : getDependencies()) {
             set.add(s.split("\\s:\\s")[0]);
