@@ -36,12 +36,8 @@ class ManifestModContainer implements ModContainer {
     private String modID;
     @SerializedName("Name")
     private String name;
-    @SerializedName("Major")
-    private String major;
-    @SerializedName("Minor")
-    private String minor;
-    @SerializedName("Patch")
-    private String patch;
+    @SerializedName("Version")
+    private String versionString;
     @SerializedName("Minecraft-Version")
     private String mcversionString;
     @SerializedName("Side")
@@ -66,7 +62,7 @@ class ManifestModContainer implements ModContainer {
      */
     public static ManifestModContainer create(Manifest manifest) {
         Set<Object> attributeNames = manifest.getMainAttributes().keySet();
-        if (!attributeNames.containsAll(Arrays.asList(new Attributes.Name("ID"), new Attributes.Name("Mod-Class")))) {
+        if (!attributeNames.containsAll(Arrays.asList(new Attributes.Name("ID"), new Attributes.Name("Mod-Class"), new Attributes.Name("Version")))) {
             return null;
         }
         ManifestModContainer container = new ManifestModContainer();
@@ -138,7 +134,7 @@ class ManifestModContainer implements ModContainer {
     @Override
     public Version getVersion() {
         if (version == null) {
-            this.version = new Version(Integer.parseInt(this.major), Integer.parseInt(this.minor), Integer.parseInt(this.patch));
+            this.version = new Version(versionString);
         }
         return version;
     }
