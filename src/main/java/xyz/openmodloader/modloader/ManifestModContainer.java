@@ -179,7 +179,9 @@ class ManifestModContainer implements ModContainer {
         return dependencies.split("\\s*,\\s*");
     }
 
-    /** INTERNAL */
+    /**
+     * INTERNAL
+     */
 
     Set<String> getDependencySet() {
         Set<String> set = Sets.newHashSet();
