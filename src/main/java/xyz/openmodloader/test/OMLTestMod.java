@@ -1,5 +1,14 @@
 package xyz.openmodloader.test;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.Arrays;
+
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -10,19 +19,22 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
-import org.lwjgl.input.Keyboard;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.client.gui.GuiModInfo;
 import xyz.openmodloader.client.gui.GuiModList;
 import xyz.openmodloader.config.Config;
-import xyz.openmodloader.event.impl.*;
+import xyz.openmodloader.event.impl.ArmorEvent;
+import xyz.openmodloader.event.impl.BlockEvent;
+import xyz.openmodloader.event.impl.CommandEvent;
+import xyz.openmodloader.event.impl.EnchantmentEvent;
+import xyz.openmodloader.event.impl.EntityEvent;
+import xyz.openmodloader.event.impl.ExplosionEvent;
+import xyz.openmodloader.event.impl.GuiEvent;
+import xyz.openmodloader.event.impl.InputEvent;
+import xyz.openmodloader.event.impl.MessageEvent;
+import xyz.openmodloader.event.impl.ScreenshotEvent;
 import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.modloader.IMod;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Arrays;
 
 public class OMLTestMod implements IMod {
     @Override
@@ -69,7 +81,7 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.getEventBus().register(ArmorEvent.Equip.class, this::onArmorEquip);
         OpenModLoader.INSTANCE.getEventBus().register(ArmorEvent.Unequip.class, this::onArmorUnequip);
 
-        Config config = new Config(new File("./config/test.cfg"));
+        Config config = new Config(new File("./config/test.conf"));
         Config category1 = config.getConfig("category1", "configures stuff");
         category1.getBoolean("boolean1", true, "this is a boolean");
         category1.getBoolean("boolean2", true, "this is another boolean");
