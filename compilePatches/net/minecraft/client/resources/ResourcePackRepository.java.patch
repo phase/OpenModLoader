@@ -1,6 +1,6 @@
 --- /net/minecraft/client/resources
 +++ /net/minecraft/client/resources
-@@ -265,7 +265,7 @@
+@@ -270,7 +270,7 @@
  
      private void deleteOldServerResourcesPacks() {
          try {

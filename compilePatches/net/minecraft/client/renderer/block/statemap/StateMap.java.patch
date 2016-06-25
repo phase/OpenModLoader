@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer/block/statemap
 +++ /net/minecraft/client/renderer/block/statemap
-@@ -45,8 +45,8 @@
+@@ -50,8 +50,8 @@
          return new ModelResourceLocation(var3, this.getPropertyString(var2));
      }
  
@@ -10,4 +10,4 @@
 +        return var1.getName((T)var2.remove(this.name));
      }
  
-     public static class a {
+     @Strippable(

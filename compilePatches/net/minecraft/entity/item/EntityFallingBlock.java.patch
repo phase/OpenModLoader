@@ -1,6 +1,6 @@
 --- /net/minecraft/entity/item
 +++ /net/minecraft/entity/item
-@@ -161,7 +161,7 @@
+@@ -166,7 +166,7 @@
          if(this.hurtEntities) {
              int var4 = MathHelper.ceiling_float_int(var1 - 1.0F);
              if(var4 > 0) {

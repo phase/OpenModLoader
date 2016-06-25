@@ -1,6 +1,6 @@
 --- /net/minecraft/tileentity
 +++ /net/minecraft/tileentity
-@@ -79,7 +79,7 @@
+@@ -87,7 +87,7 @@
              int var6 = this.pos.getY();
              int var7 = this.pos.getZ();
              AxisAlignedBB var8 = (new AxisAlignedBB((double)var5, (double)var6, (double)var7, (double)(var5 + 1), (double)(var6 + 1), (double)(var7 + 1))).expandXyz(var1).addCoord(0.0D, (double)this.worldObj.getHeight(), 0.0D);

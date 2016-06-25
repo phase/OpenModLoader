@@ -1,6 +1,14 @@
 --- /net/minecraft/server
 +++ /net/minecraft/server
-@@ -684,7 +684,7 @@
+@@ -51,7 +51,6 @@
+ import net.minecraft.profiler.ISnooperInfo;
+ import net.minecraft.profiler.Profiler;
+ import net.minecraft.profiler.Snooper;
+-import net.minecraft.server.MinecraftServer$2;
+ import net.minecraft.server.dedicated.DedicatedServer;
+ import net.minecraft.server.management.PlayerList;
+ import net.minecraft.server.management.PlayerProfileCache;
+@@ -715,7 +714,7 @@
              return var5;
          } else {
              boolean var7 = !var2.contains(" ");
@@ -9,3 +17,16 @@
              if(!var8.isEmpty()) {
                  for(String var10 : var8) {
                      if(var7) {
+@@ -1238,7 +1237,11 @@
+             }
+ 
+             var12.startServerThread();
+-            Runtime.getRuntime().addShutdownHook(new MinecraftServer$2("Server Shutdown Thread", var12));
++            Runtime.getRuntime().addShutdownHook(new Thread("Server Shutdown Thread"){
++                public void run() {
++                    var12.stopServer();
++                }
++            });
+         } catch (Exception var14) {
+             LOG.fatal("Failed to start the minecraft server", var14);
+         }

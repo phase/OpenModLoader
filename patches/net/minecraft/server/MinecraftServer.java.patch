@@ -1,6 +1,6 @@
 --- /net/minecraft/server
 +++ /net/minecraft/server
-@@ -493,6 +493,7 @@
+@@ -523,6 +523,7 @@
      }
  
      public void tick() {

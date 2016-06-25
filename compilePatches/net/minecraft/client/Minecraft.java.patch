@@ -1,6 +1,6 @@
 --- /net/minecraft/client
 +++ /net/minecraft/client
-@@ -352,22 +352,19 @@
+@@ -357,22 +357,20 @@
  
          while(true) {
              try {
@@ -24,6 +24,7 @@
 +                            this.displayGuiScreen(new GuiMemoryErrorScreen());
 +                            System.gc();
 +                        }
++                        continue;
 +                    } else {
 +                        this.displayCrashReport(this.crashReporter);
                      }
@@ -34,7 +35,7 @@
              } catch (MinecraftError var12) {
                  break;
              } catch (ReportedException var13) {
-@@ -685,7 +682,7 @@
+@@ -690,7 +688,7 @@
      }
  
      private void updateDisplayMode() throws LWJGLException {

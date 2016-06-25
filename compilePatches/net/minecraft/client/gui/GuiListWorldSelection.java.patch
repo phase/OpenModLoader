@@ -1,14 +1,6 @@
 --- /net/minecraft/client/gui
 +++ /net/minecraft/client/gui
-@@ -10,6 +10,7 @@
- import net.minecraft.client.gui.GuiListExtended;
- import net.minecraft.client.gui.GuiListWorldSelectionEntry;
- import net.minecraft.client.gui.GuiWorldSelection;
-+import net.minecraft.world.World;
- import net.minecraft.world.storage.ISaveFormat;
- import net.minecraft.world.storage.WorldSummary;
- import org.apache.logging.log4j.LogManager;
-@@ -30,7 +31,7 @@
+@@ -35,7 +35,7 @@
      public void refreshList() {
          ISaveFormat var1 = this.mc.getSaveLoader();
  

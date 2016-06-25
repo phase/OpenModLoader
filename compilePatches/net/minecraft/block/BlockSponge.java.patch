@@ -1,6 +1,6 @@
 --- /net/minecraft/block
 +++ /net/minecraft/block
-@@ -58,7 +58,7 @@
+@@ -60,7 +60,7 @@
  
      private boolean absorb(World var1, BlockPos var2) {
          LinkedList var3 = Lists.newLinkedList();

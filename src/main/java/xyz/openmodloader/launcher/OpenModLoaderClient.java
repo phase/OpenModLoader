@@ -7,7 +7,8 @@ import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 import net.minecraft.launchwrapper.Launch;
-import xyz.openmodloader.event.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Side;
+
 
 import java.io.File;
 import java.net.Proxy;
@@ -16,7 +17,7 @@ import java.util.Arrays;
 public class OpenModLoaderClient {
     public static void main(String[] args) {
         System.setProperty("org.lwjgl.librarypath", new File("../.gradle/minecraft/natives/").getAbsolutePath());
-        OMLSideTransformer.SIDE = Side.CLIENT;
+        OMLStrippableTransformer.SIDE = Side.CLIENT;
         LaunchArguments arguments = new LaunchArguments(args);
 
         if (arguments.containsArgument("password")) {

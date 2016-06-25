@@ -1,8 +1,8 @@
 --- /net/minecraft/potion
 +++ /net/minecraft/potion
-@@ -139,8 +139,8 @@
-     }
- 
+@@ -147,8 +147,8 @@
+         side = Side.CLIENT
+     )
      public static void addPotionTooltip(ItemStack var0, List<String> var1, float var2) {
 -        List var3 = getEffectsFromStack(var0);
 -        ArrayList var4 = Lists.newArrayList();
@@ -11,7 +11,7 @@
          if(var3.isEmpty()) {
              String var5 = I18n.translateToLocal("effect.none").trim();
              var1.add(TextFormatting.GRAY + var5);
-@@ -148,7 +148,7 @@
+@@ -156,7 +156,7 @@
              for(PotionEffect var6 : var3) {
                  String var7 = I18n.translateToLocal(var6.getEffectName()).trim();
                  Potion var8 = var6.getPotion();
@@ -20,7 +20,7 @@
                  if(!var9.isEmpty()) {
                      for(Entry var11 : var9.entrySet()) {
                          AttributeModifier var12 = (AttributeModifier)var11.getValue();
-@@ -177,7 +177,7 @@
+@@ -185,7 +185,7 @@
              var1.add("");
              var1.add(TextFormatting.DARK_PURPLE + I18n.translateToLocal("potion.whenDrank"));
  

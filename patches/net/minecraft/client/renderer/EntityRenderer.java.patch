@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer
 +++ /net/minecraft/client/renderer
-@@ -897,6 +897,7 @@
+@@ -902,6 +902,7 @@
  
                  try {
                      this.mc.currentScreen.drawScreen(var22, var23, var1);

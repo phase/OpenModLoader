@@ -1,6 +1,6 @@
 --- /net/minecraft/server/integrated
 +++ /net/minecraft/server/integrated
-@@ -58,11 +58,11 @@
+@@ -63,11 +63,11 @@
          this.theWorldSettings = this.isDemo()?DemoWorldServer.DEMO_WORLD_SETTINGS:var4;
      }
  
@@ -14,7 +14,7 @@
          this.convertMapIfNeeded(var1);
          this.worldServers = new WorldServer[3];
          this.timeOfLastDimensionTick = new long[this.worldServers.length][100];
-@@ -108,7 +108,7 @@
+@@ -113,7 +113,7 @@
          this.initialWorldChunkLoad();
      }
  
@@ -23,7 +23,7 @@
          LOGGER.info("Starting integrated minecraft server version 1.10.2");
          this.setOnlineMode(true);
          this.setCanSpawnAnimals(true);
-@@ -122,7 +122,7 @@
+@@ -127,7 +127,7 @@
          return true;
      }
  
@@ -32,7 +32,7 @@
          boolean var1 = this.isGamePaused;
          this.isGamePaused = Minecraft.getMinecraft().getConnection() != null && Minecraft.getMinecraft().isGamePaused();
          if(!var1 && this.isGamePaused) {
-@@ -188,7 +188,7 @@
+@@ -193,7 +193,7 @@
          return true;
      }
  
@@ -41,7 +41,7 @@
          super.saveAllWorlds(var1);
      }
  
-@@ -204,7 +204,7 @@
+@@ -209,7 +209,7 @@
          return false;
      }
  

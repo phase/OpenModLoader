@@ -1,0 +1,34 @@
+--- /net/minecraft/server/dedicated
++++ /net/minecraft/server/dedicated
+@@ -84,7 +84,7 @@
+         };
+     }
+ 
+-    protected boolean startServer() throws IOException {
++    public boolean startServer() throws IOException {
+         Thread var1 = new Thread("Server console handler") {
+             public void run() {
+                 BufferedReader var1 = new BufferedReader(new InputStreamReader(System.in));
+@@ -287,7 +287,7 @@
+         return this.settings.getBooleanProperty("hardcore", false);
+     }
+ 
+-    protected void finalTick(CrashReport var1) {
++    public void finalTick(CrashReport var1) {
+     }
+ 
+     public CrashReport addServerInfoToCrashReport(CrashReport var1) {
+@@ -306,11 +306,11 @@
+         return var1;
+     }
+ 
+-    protected void systemExitNow() {
++    public void systemExitNow() {
+         System.exit(0);
+     }
+ 
+-    protected void updateTimeLightAndEntities() {
++    public void updateTimeLightAndEntities() {
+         super.updateTimeLightAndEntities();
+         this.executePendingCommands();
+     }

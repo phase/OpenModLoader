@@ -1,6 +1,6 @@
 --- /net/minecraft/client/gui
 +++ /net/minecraft/client/gui
-@@ -125,7 +125,7 @@
+@@ -130,7 +130,7 @@
          }
  
          int var5 = MathHelper.floor_float((float)this.getChatWidth() / this.getChatScale());

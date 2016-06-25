@@ -1,6 +1,6 @@
 --- /net/minecraft/entity/monster
 +++ /net/minecraft/entity/monster
-@@ -105,7 +105,7 @@
+@@ -107,7 +107,7 @@
                      ItemStack var5 = this.getHeldItemMainhand();
                      this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, (ItemStack)null);
                      if(var5 != null && var5.getItem() == Items.POTIONITEM) {

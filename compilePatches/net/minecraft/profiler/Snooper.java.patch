@@ -1,6 +1,6 @@
 --- /net/minecraft/profiler
 +++ /net/minecraft/profiler
-@@ -80,7 +80,7 @@
+@@ -82,7 +82,7 @@
  
      private void addJvmArgsToSnooper() {
          RuntimeMXBean var1 = ManagementFactory.getRuntimeMXBean();

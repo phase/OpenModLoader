@@ -1,0 +1,37 @@
+--- /net/minecraft/server/management
++++ /net/minecraft/server/management
+@@ -1,34 +0,0 @@
+-package net.minecraft.server.management;
+-
+-import com.mojang.authlib.GameProfile;
+-import com.mojang.authlib.ProfileLookupCallback;
+-import com.mojang.authlib.yggdrasil.ProfileNotFoundException;
+-import net.minecraft.server.MinecraftServer;
+-import net.minecraft.server.management.PreYggdrasilConverter;
+-import net.minecraft.server.management.PreYggdrasilConverter$ConversionError;
+-import net.minecraft.server.management.UserListOps;
+-import net.minecraft.server.management.UserListOpsEntry;
+-import xyz.openmodloader.launcher.strippable.Side;
+-import xyz.openmodloader.launcher.strippable.Strippable;
+-
+-@Strippable(
+-    side = Side.SERVER
+-)
+-final class PreYggdrasilConverter$3 implements ProfileLookupCallback {
+-    PreYggdrasilConverter$3(MinecraftServer var1, UserListOps var2) {
+-        this.a = var1;
+-        this.b = var2;
+-    }
+-
+-    public void onProfileLookupSucceeded(GameProfile var1) {
+-        this.a.getPlayerProfileCache().addEntry(var1);
+-        this.b.addEntry(new UserListOpsEntry(var1, this.a.getOpPermissionLevel(), false));
+-    }
+-
+-    public void onProfileLookupFailed(GameProfile var1, Exception var2) {
+-        PreYggdrasilConverter.access$000().warn("Could not lookup oplist entry for {}", new Object[]{var1.getName(), var2});
+-        if(!(var2 instanceof ProfileNotFoundException)) {
+-            throw new PreYggdrasilConverter$ConversionError("Could not request user " + var1.getName() + " from backend systems", var2);
+-        }
+-    }
+-}

@@ -1,0 +1,20 @@
+--- /net/minecraft/server/management
++++ /net/minecraft/server/management
+@@ -160,7 +160,7 @@
+         side = Side.SERVER
+     )
+     public void readSavedFile() throws FileNotFoundException {
+-        Collection var1 = null;
++        Collection<UserListEntry> var1 = null;
+         BufferedReader var2 = null;
+ 
+         try {
+@@ -175,7 +175,7 @@
+ 
+             for(UserListEntry var4 : var1) {
+                 if(var4.getValue() != null) {
+-                    this.values.put(this.getObjectKey(var4.getValue()), var4);
++                    this.values.put(this.getObjectKey((K) var4.getValue()), (V) var4);
+                 }
+             }
+         }

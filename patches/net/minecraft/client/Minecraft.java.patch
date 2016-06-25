@@ -1,6 +1,6 @@
 --- /net/minecraft/client
 +++ /net/minecraft/client
-@@ -389,6 +389,7 @@
+@@ -395,6 +395,7 @@
      }
  
      private void startGame() throws LWJGLException {
@@ -8,7 +8,7 @@
          this.gameSettings = new GameSettings(this, this.mcDataDir);
          this.defaultResourcePacks.add(this.mcDefaultResourcePack);
          this.startTimerHackThread();
-@@ -787,6 +788,8 @@
+@@ -793,6 +794,8 @@
      }
  
      public void displayGuiScreen(@Nullable GuiScreen var1) {
@@ -17,7 +17,7 @@
          if(this.currentScreen != null) {
              this.currentScreen.onGuiClosed();
          }
-@@ -907,6 +910,7 @@
+@@ -913,6 +916,7 @@
              this.mcProfiler.endStartSection("gameRenderer");
              this.entityRenderer.updateCameraAndRender(this.timer.renderPartialTicks, var1);
              this.mcProfiler.endSection();
@@ -25,7 +25,7 @@
          }
  
          this.mcProfiler.endSection();
-@@ -1350,6 +1354,7 @@
+@@ -1356,6 +1360,7 @@
              --this.rightClickDelayTimer;
          }
  
@@ -33,7 +33,7 @@
          this.mcProfiler.startSection("gui");
          if(!this.isGamePaused) {
              this.ingameGUI.updateTick();
-@@ -1511,6 +1516,7 @@
+@@ -1517,6 +1522,7 @@
                  this.debugCrashKeyPressTime = getSystemTime();
              }
  
@@ -41,7 +41,7 @@
              this.dispatchKeypresses();
              if(this.currentScreen != null) {
                  this.currentScreen.handleKeyboardInput();
-@@ -1743,6 +1749,7 @@
+@@ -1749,6 +1755,7 @@
              int var1 = Mouse.getEventButton();
              KeyBinding.setKeyBindState(var1 - 100, Mouse.getEventButtonState());
              if(Mouse.getEventButtonState()) {
@@ -49,7 +49,7 @@
                  if(this.thePlayer.isSpectator() && var1 == 2) {
                      this.ingameGUI.getSpectatorGui().onMiddleClick();
                  } else {
-@@ -2454,7 +2461,8 @@
+@@ -2460,7 +2467,8 @@
                      if(var1 == this.gameSettings.keyBindFullscreen.getKeyCode()) {
                          this.toggleFullscreen();
                      } else if(var1 == this.gameSettings.keyBindScreenshot.getKeyCode()) {

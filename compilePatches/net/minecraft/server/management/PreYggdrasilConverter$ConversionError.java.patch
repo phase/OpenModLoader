@@ -1,0 +1,20 @@
+--- /net/minecraft/server/management
++++ /net/minecraft/server/management
+@@ -1,17 +0,0 @@
+-package net.minecraft.server.management;
+-
+-import xyz.openmodloader.launcher.strippable.Side;
+-import xyz.openmodloader.launcher.strippable.Strippable;
+-
+-@Strippable(
+-    side = Side.SERVER
+-)
+-class PreYggdrasilConverter$ConversionError extends RuntimeException {
+-    private PreYggdrasilConverter$ConversionError(String var1, Throwable var2) {
+-        super(var1, var2);
+-    }
+-
+-    private PreYggdrasilConverter$ConversionError(String var1) {
+-        super(var1);
+-    }
+-}

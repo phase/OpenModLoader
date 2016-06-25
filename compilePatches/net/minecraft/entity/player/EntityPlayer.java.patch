@@ -1,6 +1,6 @@
 --- /net/minecraft/entity/player
 +++ /net/minecraft/entity/player
-@@ -520,7 +520,7 @@
+@@ -534,7 +534,7 @@
      public void addToPlayerScore(Entity var1, int var2) {
          if(var1 != this) {
              this.addScore(var2);

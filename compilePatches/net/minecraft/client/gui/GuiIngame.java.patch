@@ -1,6 +1,6 @@
 --- /net/minecraft/client/gui
 +++ /net/minecraft/client/gui
-@@ -340,7 +340,7 @@
+@@ -345,7 +345,7 @@
      }
  
      protected void renderPotionEffects(ScaledResolution var1) {
@@ -9,13 +9,7 @@
          if(!var2.isEmpty()) {
              this.mc.getTextureManager().bindTexture(GuiContainer.INVENTORY_BACKGROUND);
              GlStateManager.enableBlend();
-@@ -542,12 +542,12 @@
-     private void renderScoreboard(ScoreObjective var1, ScaledResolution var2) {
-         Scoreboard var3 = var1.getScoreboard();
-         Collection var4 = var3.getSortedScores(var1);
--        ArrayList var5 = Lists.newArrayList(Iterables.filter(var4, new Predicate<Score>() {
-+        ArrayList<Score> var5 = Lists.newArrayList(Iterables.filter(var4, new Predicate<Score>() {
-             public boolean apply(@Nullable Score var1) {
+@@ -552,7 +552,7 @@
                  return var1.getPlayerName() != null && !var1.getPlayerName().startsWith("#");
              }
          }));

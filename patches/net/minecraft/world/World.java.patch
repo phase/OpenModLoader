@@ -1,6 +1,6 @@
 --- /net/minecraft/world
 +++ /net/minecraft/world
-@@ -832,6 +832,7 @@
+@@ -846,6 +846,7 @@
                  this.updateAllPlayersSleepingFlag();
              }
  
@@ -8,7 +8,7 @@
              this.getChunkFromChunkCoords(var2, var3).addEntity(var1);
              this.loadedEntityList.add(var1);
              this.onEntityAdded(var1);
-@@ -1673,7 +1674,8 @@
+@@ -1708,7 +1709,8 @@
      }
  
      public Explosion newExplosion(@Nullable Entity var1, double var2, double var4, double var6, float var8, boolean var9, boolean var10) {
@@ -18,7 +18,7 @@
          var11.doExplosionA();
          var11.doExplosionB(true);
          return var11;
-@@ -1842,6 +1844,7 @@
+@@ -1883,6 +1885,7 @@
      }
  
      public void tick() {
@@ -26,7 +26,7 @@
          this.updateWeather();
      }
  
-@@ -2273,9 +2276,12 @@
+@@ -2320,9 +2323,12 @@
      }
  
      public void loadEntities(Collection<Entity> var1) {
@@ -39,7 +39,7 @@
              this.onEntityAdded(var3);
          }
  
-@@ -2534,6 +2540,7 @@
+@@ -2590,6 +2596,7 @@
          }
  
          if(!this.loadedEntityList.contains(var1)) {

@@ -1,6 +1,6 @@
 --- /net/minecraft/entity
 +++ /net/minecraft/entity
-@@ -256,8 +256,8 @@
+@@ -261,8 +261,8 @@
      }
  
      public void sendLeashedEntitiesInChunk(EntityPlayerMP var1, Chunk var2) {

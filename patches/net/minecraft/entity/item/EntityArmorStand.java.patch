@@ -1,6 +1,6 @@
 --- /net/minecraft/entity/item
 +++ /net/minecraft/entity/item
-@@ -134,8 +134,9 @@
+@@ -136,8 +136,9 @@
              this.handItems[var1.getIndex()] = var2;
              break;
          case ARMOR:

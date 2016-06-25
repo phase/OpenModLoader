@@ -1,0 +1,22 @@
+--- /net/minecraft/server
++++ /net/minecraft/server
+@@ -1,19 +0,0 @@
+-package net.minecraft.server;
+-
+-import net.minecraft.server.dedicated.DedicatedServer;
+-import xyz.openmodloader.launcher.strippable.Side;
+-import xyz.openmodloader.launcher.strippable.Strippable;
+-
+-@Strippable(
+-    side = Side.SERVER
+-)
+-final class MinecraftServer$2 extends Thread {
+-    MinecraftServer$2(String var1, DedicatedServer var2) {
+-        super(var1);
+-        this.field_96244_a = var2;
+-    }
+-
+-    public void run() {
+-        this.field_96244_a.stopServer();
+-    }
+-}

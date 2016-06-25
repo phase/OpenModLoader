@@ -1,23 +1,15 @@
 --- /net/minecraft/client/renderer/block/model
 +++ /net/minecraft/client/renderer/block/model
-@@ -27,6 +27,7 @@
- import java.util.Map.Entry;
- import javax.annotation.Nullable;
- import net.minecraft.block.Block;
-+import net.minecraft.block.state.IBlockState;
- import net.minecraft.client.renderer.BlockModelShapes;
- import net.minecraft.client.renderer.block.model.BakedQuad;
- import net.minecraft.client.renderer.block.model.BlockPart;
-@@ -111,7 +112,7 @@
+@@ -116,7 +116,7 @@
              for(final ResourceLocation var5 : var1.getBlockstateLocations(var3)) {
                  try {
                      ModelBlockDefinition var6 = this.getModelBlockDefinition(var5);
 -                    Map var7 = var1.getVariants(var3);
-+                    Map<IBlockState, ModelResourceLocation> var7 = var1.getVariants(var3);
++                    Map<net.minecraft.block.state.IBlockState, ModelResourceLocation> var7 = var1.getVariants(var3);
                      if(var6.hasMultipartData()) {
                          HashSet var8 = Sets.newHashSet(var7.values());
                          var6.getMultipartData().setStateContainer(var3.getBlockState());
-@@ -381,7 +382,7 @@
+@@ -386,7 +386,7 @@
              }
          }
  
@@ -26,7 +18,7 @@
              ModelBlockDefinition var12 = (ModelBlockDefinition)var11.getKey();
              Multipart var4 = var12.getMultipartData();
              String var5 = ((ResourceLocation)Block.REGISTRY.getNameForObject(var4.getStateContainer().getBlock())).toString();
-@@ -396,7 +397,7 @@
+@@ -401,7 +401,7 @@
  
              IBakedModel var13 = var6.makeMultipartModel();
  
@@ -35,7 +27,7 @@
                  if(!var12.hasVariant(var15.getVariant())) {
                      this.bakedRegistry.putObject(var15, var13);
                  }
-@@ -468,7 +469,7 @@
+@@ -473,7 +473,7 @@
  
      private Set<ResourceLocation> getVariantsTextureLocations() {
          HashSet var1 = Sets.newHashSet();
@@ -44,7 +36,7 @@
          Collections.sort(var2, new Comparator<ModelResourceLocation>() {
              public int compare(ModelResourceLocation var1, ModelResourceLocation var2) {
                  return var1.toString().compareTo(var2.toString());
-@@ -617,7 +618,7 @@
+@@ -622,7 +622,7 @@
      }
  
      private void loadSprites() {

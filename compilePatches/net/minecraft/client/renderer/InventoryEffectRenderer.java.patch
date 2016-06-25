@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer
 +++ /net/minecraft/client/renderer
-@@ -44,7 +44,7 @@
+@@ -49,7 +49,7 @@
          int var1 = this.guiLeft - 124;
          int var2 = this.guiTop;
          boolean var3 = true;

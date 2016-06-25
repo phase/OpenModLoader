@@ -1,7 +1,7 @@
 --- /net/minecraft/network/status/server
 +++ /net/minecraft/network/status/server
-@@ -13,7 +13,7 @@
- import net.minecraft.util.text.Style;
+@@ -15,7 +15,7 @@
+ import xyz.openmodloader.launcher.strippable.Strippable;
  
  public class SPacketServerInfo implements Packet<INetHandlerStatusClient> {
 -    private static final Gson GSON = (new GsonBuilder()).registerTypeAdapter(ServerStatusResponse.c.class, new ServerStatusResponse.c.a()).registerTypeAdapter(ServerStatusResponse.a.class, new ServerStatusResponse.a.a()).registerTypeAdapter(ServerStatusResponse.class, new ServerStatusResponse.b()).registerTypeHierarchyAdapter(ITextComponent.class, new ITextComponent.a()).registerTypeHierarchyAdapter(Style.class, new Style.a()).registerTypeAdapterFactory(new EnumTypeAdapterFactory()).create();

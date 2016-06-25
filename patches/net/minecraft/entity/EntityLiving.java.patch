@@ -1,6 +1,6 @@
 --- /net/minecraft/entity
 +++ /net/minecraft/entity
-@@ -733,7 +733,8 @@
+@@ -741,7 +741,8 @@
              this.inventoryHands[var1.getIndex()] = var2;
              break;
          case ARMOR:

@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer/tileentity
 +++ /net/minecraft/client/renderer/tileentity
-@@ -82,7 +82,7 @@
+@@ -87,7 +87,7 @@
      public <T extends TileEntity> TileEntitySpecialRenderer<T> getSpecialRendererByClass(Class<? extends TileEntity> var1) {
          TileEntitySpecialRenderer var2 = (TileEntitySpecialRenderer)this.mapSpecialRenderers.get(var1);
          if(var2 == null && var1 != TileEntity.class) {

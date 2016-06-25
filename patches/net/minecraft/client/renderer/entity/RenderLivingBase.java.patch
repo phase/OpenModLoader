@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer/entity
 +++ /net/minecraft/client/renderer/entity
-@@ -351,6 +351,7 @@
+@@ -356,6 +356,7 @@
  
      protected void renderLayers(T var1, float var2, float var3, float var4, float var5, float var6, float var7, float var8) {
          for(LayerRenderer var10 : this.layerRenderers) {

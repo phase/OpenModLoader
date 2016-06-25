@@ -1,6 +1,6 @@
 --- /net/minecraft/client/gui
 +++ /net/minecraft/client/gui
-@@ -340,6 +340,7 @@
+@@ -345,6 +345,7 @@
              for(int var4 = 0; var4 < this.buttonList.size(); ++var4) {
                  GuiButton var5 = (GuiButton)this.buttonList.get(var4);
                  if(var5.mousePressed(this.mc, var1, var2)) {
@@ -8,7 +8,7 @@
                      this.selectedButton = var5;
                      var5.playPressSound(this.mc.getSoundHandler());
                      this.actionPerformed(var5);
-@@ -370,6 +371,8 @@
+@@ -375,6 +376,8 @@
          this.width = var2;
          this.height = var3;
          this.buttonList.clear();
@@ -17,7 +17,7 @@
          this.initGui();
      }
  
-@@ -401,6 +404,7 @@
+@@ -406,6 +409,7 @@
          int var2 = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
          int var3 = Mouse.getEventButton();
          if(Mouse.getEventButtonState()) {
@@ -25,7 +25,7 @@
              if(this.mc.gameSettings.touchscreen && this.touchValue++ > 0) {
                  return;
              }
-@@ -425,6 +429,7 @@
+@@ -430,6 +434,7 @@
      public void handleKeyboardInput() {
          char var1 = Keyboard.getEventCharacter();
          if(Keyboard.getEventKey() == 0 && var1 >= 32 || Keyboard.getEventKeyState()) {
