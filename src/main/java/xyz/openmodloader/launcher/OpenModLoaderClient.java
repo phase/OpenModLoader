@@ -39,12 +39,11 @@ public class OpenModLoaderClient {
             arguments.addArgument("userProperties", new GsonBuilder().registerTypeAdapter(PropertyMap.class, new PropertyMap.Serializer()).create().toJson(auth.getUserProperties()));
         }
 
-        arguments.addArgument("version", "1.10");
+        arguments.addArgument("version", "1.10.2");
         arguments.addArgument("assetIndex", "1.10");
         arguments.addArgument("accessToken", "OpenModLoader");
         arguments.addArgument("tweakClass", "xyz.openmodloader.launcher.OMLTweaker");
 
-        System.out.println(Arrays.toString(arguments.getArguments()));
         Launch.main(arguments.getArguments());
     }
 }
