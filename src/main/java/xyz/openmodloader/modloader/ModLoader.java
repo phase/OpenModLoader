@@ -18,6 +18,8 @@ import com.google.common.collect.Multimap;
 import net.minecraft.launchwrapper.Launch;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.launcher.OMLAccessTransformer;
+import xyz.openmodloader.launcher.OMLStrippableTransformer;
+import xyz.openmodloader.launcher.strippable.Side;
 
 public class ModLoader {
     /**
@@ -121,14 +123,22 @@ public class ModLoader {
             OpenModLoader.INSTANCE.getLogger().error("Found invalid manifest in file " + file.getAbsolutePath().replace("!", "").replace(File.separator + "META-INF" + File.separator + "MANIFEST.MF", ""));
             return null;
         }
-        if (container.getModID().isEmpty())
+        OpenModLoader.INSTANCE.getLogger().info("Found mod " + container.getName() + " with id " + container.getModID());
+        if (container.getModID().isEmpty()) {
             throw new RuntimeException("Empty mod ID for mod '" + container.getName() + "'!");
+        }
         for (char c : container.getModID().toCharArray()) {
             if (c != '-' && c != '_' && !CharSet.ASCII_ALPHA_LOWER.contains(c) && !CharSet.ASCII_NUMERIC.contains(c)) {
                 throw new RuntimeException("Illegal characters in ID '" + container.getModID() + "' for mod '" + container.getName() + "'.");
             }
         }
-        OpenModLoader.INSTANCE.getLogger().info("Found mod " + container.getName() + " with id " + container.getModID());
+        if (!container.getMinecraftVersion().equals(OpenModLoader.INSTANCE.getMinecraftVersion())) {
+            OpenModLoader.INSTANCE.getLogger().warn("Mod '%s' is expecting Minecraft %s, but we are running on Minecraft %s!", container.getName(), container.getMinecraftVersion(), OpenModLoader.INSTANCE.getMinecraftVersion());
+        }
+        if (container.getSide() != Side.UNIVERSAL && container.getSide() != OMLStrippableTransformer.getSide()) {
+            OpenModLoader.INSTANCE.getLogger().info("Invalid side %s for mod %s. The mod will not be loaded.", OMLStrippableTransformer.getSide(), container.getName());
+            return container;
+        }
         for (String transformer : container.getTransformers()) {
             Launch.classLoader.registerTransformer(transformer);
         }
@@ -141,6 +151,9 @@ public class ModLoader {
      */
     public static void registerMods() {
         for (ModContainer mod : MODS) {
+            if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
+                continue;
+            }
             IMod instance = mod.getInstance();
             if (instance != null) {
                 MODS_MAP.put(instance, mod); // load the instances
@@ -148,6 +161,9 @@ public class ModLoader {
         }
         for (ModContainer mod : MODS) {
             try {
+                if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
+                    continue;
+                }
                 IMod instance = mod.getInstance();
                 if (instance != null) {
                     instance.onEnable();

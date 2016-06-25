@@ -18,6 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
+import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.launcher.strippable.Strippable;
 
@@ -26,6 +27,8 @@ class ManifestModContainer implements ModContainer {
     private transient ResourceLocation logo;
     private transient IMod instance;
     private transient Version version;
+    private transient Version mcversion;
+    private transient Side side;
 
     @SerializedName("Mod-Class")
     private String classString;
@@ -39,6 +42,10 @@ class ManifestModContainer implements ModContainer {
     private String minor;
     @SerializedName("Patch")
     private String patch;
+    @SerializedName("Minecraft-Version")
+    private String mcversionString;
+    @SerializedName("Side")
+    private String sideString;
     @SerializedName("Description")
     private String description;
     @SerializedName("Author")
@@ -137,6 +144,16 @@ class ManifestModContainer implements ModContainer {
     }
 
     @Override
+    public Version getMinecraftVersion() {
+        if (mcversion == null)
+            if (mcversionString == null)
+                mcversion = OpenModLoader.INSTANCE.getMinecraftVersion();
+            else
+                mcversion = new Version(mcversionString);
+        return mcversion;
+    }
+
+    @Override
     public String getModID() {
         return modID;
     }
@@ -144,6 +161,16 @@ class ManifestModContainer implements ModContainer {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public Side getSide() {
+        if (side == null)
+            if (sideString == null)
+                side = Side.UNIVERSAL;
+            else
+                side = Side.valueOf(sideString);
+        return side;
     }
 
     @Override

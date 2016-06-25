@@ -23,6 +23,11 @@ class OMLModContainer implements ModContainer {
     }
 
     @Override
+    public Version getMinecraftVersion() {
+        return OpenModLoader.INSTANCE.getMinecraftVersion();
+    }
+
+    @Override
     public String getModID() {
         return "oml";
     }
@@ -81,5 +86,10 @@ class OMLModContainer implements ModContainer {
     @Override
     public String[] getDependencies() {
         return new String[0];
+    }
+
+    @Override
+    public Side getSide() {
+        return Side.UNIVERSAL;
     }
 }

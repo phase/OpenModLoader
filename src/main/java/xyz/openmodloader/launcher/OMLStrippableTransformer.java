@@ -163,4 +163,8 @@ public class OMLStrippableTransformer implements IClassTransformer {
         }
         return environment;
     }
+
+    public static Side getSide() {
+        return SIDE;
+    }
 }

@@ -6,6 +6,8 @@ public class Version {
     private final String tag;
 
     public Version(String version) {
+        if (!version.matches("[0-9]+\\.[0-9]+\\.[0-9]+(|-\\w+)"))
+            throw new IllegalArgumentException("Version string does not match SemVer specification");
         String[] parts0 = version.split("-");
         String[] parts = parts0[0].split("\\.");
         this.major = Integer.parseInt(parts[0]);
@@ -56,5 +58,33 @@ public class Version {
     @Override
     public String toString() {
         return getMajor() + "." + getMinor() + "." + getPatch() + (tag == null ? "" :  "-" + tag);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + major;
+        result = prime * result + minor;
+        result = prime * result + patch;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Version other = (Version) obj;
+        if (major != other.major)
+            return false;
+        if (minor != other.minor)
+            return false;
+        if (patch != other.patch)
+            return false;
+        return true;
     }
 }
