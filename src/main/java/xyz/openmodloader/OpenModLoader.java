@@ -4,13 +4,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import xyz.openmodloader.event.EventBus;
-import xyz.openmodloader.event.strippable.Side;
 import xyz.openmodloader.modloader.ModLoader;
+import xyz.openmodloader.modloader.Version;
 
 public enum OpenModLoader {
     INSTANCE;
 
-    private String version = "0.0.1-develop";
+    private Version version = new Version("0.0.1-develop");
     private Logger logger = LogManager.getLogger();
     private EventBus eventBus = new EventBus();
     private ISidedHandler sidedHandler;
@@ -22,7 +22,7 @@ public enum OpenModLoader {
         getSidedHandler().onInitialize();
     }
 
-    public String getVersion() {
+    public Version getVersion() {
         return version;
     }
 

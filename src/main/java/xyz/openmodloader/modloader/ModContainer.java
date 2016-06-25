@@ -22,35 +22,35 @@ import xyz.openmodloader.event.strippable.Side;
 import xyz.openmodloader.event.strippable.Strippable;
 
 public class ModContainer {
-    private transient Class<?> mainClass;
-    private transient ResourceLocation logo;
-    private transient IMod instance;
-    private transient Version version;
+    protected transient Class<?> mainClass;
+    protected transient ResourceLocation logo;
+    protected transient IMod instance;
+    protected transient Version version;
 
     @SerializedName("Mod-Class")
-    private String classString;
+    protected String classString;
     @SerializedName("ID")
-    private String modID;
+    protected String modID;
     @SerializedName("Name")
-    private String name;
+    protected String name;
     @SerializedName("Major")
-    private String major;
+    protected String major;
     @SerializedName("Minor")
-    private String minor;
+    protected String minor;
     @SerializedName("Patch")
-    private String patch;
+    protected String patch;
     @SerializedName("Description")
-    private String description;
+    protected String description;
     @SerializedName("Author")
-    private String author;
+    protected String author;
     @SerializedName("UpdateURL")
-    private String updateURL;
+    protected String updateURL;
     @SerializedName("Logo")
-    private String logoString;
+    protected String logoString;
     @SerializedName("Transformers")
-    private String transformers;
+    protected String transformers;
     @SerializedName("Dependencies")
-    private String dependencies;
+    protected String dependencies;
 
     /**
      * Uses a manifest to create a mod container.

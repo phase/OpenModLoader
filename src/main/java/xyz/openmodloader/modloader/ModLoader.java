@@ -87,6 +87,9 @@ public class ModLoader {
                     }
                 }
             }
+            ModContainer oml = new OMLModContainer();
+            MODS.add(oml);
+            ID_MAP.put(oml.getModID(), oml);
             MODS.addAll(DependencySorter.sort(unsortedMods));
             for (ModContainer mod : MODS) {
                 for (String dep : mod.getDependencies()) {
@@ -94,7 +97,7 @@ public class ModLoader {
                     ModContainer depContainer = ID_MAP.get(depParts[0]);
                     if (depContainer == null) {
                         throw new RuntimeException("Missing dependency '" + dep + "' for mod '" + mod.getName() + "'.");
-                    } else if (depParts.length > 1 && depContainer.getVersion().atLeast(new Version(depParts[1]))) {
+                    } else if (depParts.length > 1 && !depContainer.getVersion().atLeast(new Version(depParts[1]))) {
                         throw new RuntimeException("Outdated dependency '" + dep + "' for mod '" + mod.getName() + "'. Expected version '" + depParts[1] + "', but got version '" + depContainer.getVersion() + "'.");
                     }
                 }
