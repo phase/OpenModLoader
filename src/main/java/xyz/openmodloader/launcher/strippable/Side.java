@@ -1,4 +1,4 @@
-package xyz.openmodloader.event.strippable;
+package xyz.openmodloader.launcher.strippable;
 
 public enum Side {
     CLIENT,

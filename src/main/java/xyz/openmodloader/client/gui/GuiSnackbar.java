@@ -5,8 +5,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.ITextComponent;
-import xyz.openmodloader.event.strippable.Side;
-import xyz.openmodloader.event.strippable.Strippable;
+import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Strippable;
 
 import java.util.ArrayList;
 import java.util.List;

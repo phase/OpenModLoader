@@ -10,8 +10,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import xyz.openmodloader.OpenModLoader;
-import xyz.openmodloader.event.strippable.Side;
-import xyz.openmodloader.event.strippable.Strippable;
+import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Strippable;
 
 class OMLModContainer implements ModContainer {
 

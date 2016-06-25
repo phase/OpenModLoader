@@ -16,7 +16,7 @@ import xyz.openmodloader.client.gui.GuiModInfo;
 import xyz.openmodloader.client.gui.GuiModList;
 import xyz.openmodloader.config.Config;
 import xyz.openmodloader.event.impl.*;
-import xyz.openmodloader.event.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.modloader.IMod;
 
 import java.awt.*;
