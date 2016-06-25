@@ -11,6 +11,8 @@ import java.lang.annotation.Target;
 public @interface Strippable {
     Side side() default Side.UNIVERSAL;
 
+    Environment environment() default Environment.UNIVERSAL;
+
     String[] mods() default {};
 
     String[] classes() default {};
@@ -20,6 +22,13 @@ public @interface Strippable {
     @Repeatable(value = InterfaceContainer.class)
     public static @interface Interface {
         String[] interfaces();
-        String[] mods();
+        
+        Side side() default Side.UNIVERSAL;
+
+        Environment environment() default Environment.UNIVERSAL;
+
+        String[] mods() default {};
+
+        String[] classes() default {};
     }
 }

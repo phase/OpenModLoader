@@ -47,7 +47,6 @@ public class OMLTweaker implements ITweaker {
 
     @Override
     public void injectIntoClassLoader(LaunchClassLoader classLoader) {
-        classLoader.registerTransformer("xyz.openmodloader.launcher.OMLClassTransformer");
         classLoader.registerTransformer("xyz.openmodloader.launcher.OMLStrippableTransformer");
         classLoader.registerTransformer("xyz.openmodloader.launcher.OMLAccessTransformer");
         classLoader.addClassLoaderExclusion("com.google.common");

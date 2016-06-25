@@ -14,6 +14,7 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.launchwrapper.Launch;
+import xyz.openmodloader.launcher.strippable.Environment;
 import xyz.openmodloader.launcher.strippable.InterfaceContainer;
 import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.launcher.strippable.Strippable;
@@ -57,21 +58,46 @@ public class OMLStrippableTransformer implements IClassTransformer {
     private void handleStrippableInterface(ClassNode classNode, AnnotationNode an) {
         List<Object> values = an.values;
         System.out.println(values);
+        String side = Side.UNIVERSAL.name();
+        String envo = Environment.UNIVERSAL.name();
         List<String> mods = Collections.emptyList();
+        List<String> classes = Collections.emptyList();
         final Set<String> interfaces = Sets.newHashSet();
         for (int i = 0; i < values.size() - 1; i += 2) {
             Object key = values.get(i);
             Object value = values.get(i + 1);
             if (key instanceof String && ((String) key).equals("mods")) {
                 mods = (List<String>) value;
+            } else if (key instanceof String && ((String) key).equals("classes")) {
+                classes = (List<String>) value;
+            } else if (key instanceof String && ((String) key).equals("side")) {
+                side = ((String[]) value)[1];
+            } else if (key instanceof String && ((String) key).equals("environment")) {
+                envo = ((String[]) value)[1];
             } else if (key instanceof String && ((String) key).equals("interfaces")) {
                 interfaces.addAll((List<String>) value);
             }
         }
+        if (!side.equals("UNIVERSAL") && !SIDE.toString().equals(side)) {
+            classNode.interfaces.removeIf((i) -> interfaces.contains(i.replace('/', '.')));
+            return;
+        }
+        if (!envo.equals("UNIVERSAL") && !getEnvironment().toString().equals(side)) {
+            classNode.interfaces.removeIf((i) -> interfaces.contains(i.replace('/', '.')));
+            return;
+        }
         for (String mod: mods) {
             if (!MODS.contains(mod)) {
                 classNode.interfaces.removeIf((i) -> interfaces.contains(i.replace('/', '.')));
-                break;
+                return;
+            }
+        }
+        for (String cls: classes) {
+            try {
+                Class.forName(cls, false, Launch.classLoader);
+            } catch (ClassNotFoundException e) {
+                classNode.interfaces.removeIf((i) -> interfaces.contains(i.replace('/', '.')));
+                return;
             }
         }
     }
@@ -87,7 +113,15 @@ public class OMLStrippableTransformer implements IClassTransformer {
                         if (key instanceof String && ((String) key).equals("side")) {
                             if (value instanceof String[]) {
                                 String side = ((String[]) value)[1];
-                                if (!side.equals("universal") && !side.equals(SIDE.toString())) {
+                                System.out.println(side);
+                                if (!side.equals("UNIVERSAL") && !side.equals(SIDE.toString())) {
+                                    return true;
+                                }
+                            }
+                        } else if (key instanceof String && ((String) key).equals("environment")) {
+                            if (value instanceof String[]) {
+                                String side = ((String[]) value)[1];
+                                if (!side.equals("UNIVERSAL") && !side.equals(getEnvironment().toString())) {
                                     return true;
                                 }
                             }
@@ -117,5 +151,19 @@ public class OMLStrippableTransformer implements IClassTransformer {
             }
         }
         return false;
+    }
+
+    private static Environment environment;
+
+    public static Environment getEnvironment() {
+        if (environment == null) {
+            try {
+                Class.forName("net.minecraft.block.Block", false, Launch.classLoader);
+                environment = Environment.DEVELOPMENT;
+            } catch (ClassNotFoundException e) {
+                environment = Environment.PRODUCTION;
+            }
+        }
+        return environment;
     }
 }

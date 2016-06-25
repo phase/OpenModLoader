@@ -4,6 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import xyz.openmodloader.event.EventBus;
+import xyz.openmodloader.launcher.OMLStrippableTransformer;
+import xyz.openmodloader.launcher.strippable.Environment;
 import xyz.openmodloader.modloader.ModLoader;
 import xyz.openmodloader.modloader.Version;
 
@@ -36,5 +38,9 @@ public enum OpenModLoader {
 
     public ISidedHandler getSidedHandler() {
         return sidedHandler;
+    }
+
+    public Environment getEnvironment() {
+        return OMLStrippableTransformer.getEnvironment();
     }
 }
