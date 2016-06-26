@@ -1,0 +1,18 @@
+--- /net/minecraft/tileentity
++++ /net/minecraft/tileentity
+@@ -240,6 +240,7 @@
+     }
+ 
+     public static int getItemBurnTime(ItemStack var0) {
++        if(true) return xyz.openmodloader.registry.FuelRegistry.getItemBurnTime(var0);
+         if(var0 == null) {
+             return 0;
+         } else {
+@@ -264,6 +265,7 @@
+     }
+ 
+     public static boolean isItemFuel(ItemStack var0) {
++        if (true) return xyz.openmodloader.registry.FuelRegistry.isItemFuel(var0);
+         return getItemBurnTime(var0) > 0;
+     }
+ 

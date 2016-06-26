@@ -1,0 +1,14 @@
+--- /net/minecraft/item
++++ /net/minecraft/item
+@@ -71,6 +71,11 @@
+         return this.material.getEnchantability();
+     }
+ 
++    @Deprecated//OML
++    public Item.a getMaterial() {
++        return this.material;
++    }
++
+     public String getToolMaterialName() {
+         return this.material.toString();
+     }
