@@ -1,14 +1,15 @@
 package xyz.openmodloader.client.gui;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiListExtended;
-import xyz.openmodloader.modloader.ModLoader;
-
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiListExtended;
+import xyz.openmodloader.modloader.ModLoader;
 
 public class GuiModListSelection extends GuiListExtended {
     private GuiModList parent;
@@ -24,7 +25,7 @@ public class GuiModListSelection extends GuiListExtended {
     public void refreshList(String search) {
         this.selectEntry(-1);
         this.entries.clear();
-        this.entries.addAll(ModLoader.MODS.stream().filter(mod -> mod.getName().toLowerCase(Locale.ENGLISH).contains(search.toLowerCase(Locale.ENGLISH)) || mod.getModID().toLowerCase(Locale.ENGLISH).contains(search.toLowerCase(Locale.ENGLISH))).map(mod -> new GuiModListSelectionEntry(this, mod)).collect(Collectors.toList()));
+        this.entries.addAll(ModLoader.getModList().stream().filter(mod -> mod.getName().toLowerCase(Locale.ENGLISH).contains(search.toLowerCase(Locale.ENGLISH)) || mod.getModID().toLowerCase(Locale.ENGLISH).contains(search.toLowerCase(Locale.ENGLISH))).map(mod -> new GuiModListSelectionEntry(this, mod)).collect(Collectors.toList()));
     }
 
     @Override
