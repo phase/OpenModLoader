@@ -1,0 +1,10 @@
+--- /net/minecraft/entity/player
++++ /net/minecraft/entity/player
+@@ -452,6 +452,7 @@
+     @Nullable
+     public Entity changeDimension(int var1) {
+         this.invulnerableDimensionChange = true;
++        var1 = xyz.openmodloader.event.impl.EntityEvent.ChangeDimension.handle(this, dimension, var1);
+         if(this.dimension == 1 && var1 == 1) {
+             this.worldObj.removeEntity(this);
+             if(!this.playerConqueredTheEnd) {

@@ -2,6 +2,7 @@ package xyz.openmodloader.event.impl;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
+import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.Event;
 
 /**
@@ -78,6 +79,82 @@ public class EntityEvent extends Event {
         @Override
         public boolean isCancelable() {
             return true;
+        }
+    }
+
+    /**
+     * This event is fired when an entity moves from one dimension to another.
+     */
+    public static class ChangeDimension extends EntityEvent {
+
+        /**
+         * The dimension this entity is travelling from.
+         */
+        protected final int previousDimension;
+
+        /**
+         * The dimension this entity is travelling to.
+         */
+        protected int newDimension;
+
+        /**
+         * Constructor for the new even that is fired when an entity changes dimensions.
+         *
+         * @param entity The entity that has fired this event.
+         * @param previousDimension The dimension this entity is travelling from.
+         * @param newDimension The dimension this entity is travelling to.
+         */
+        public ChangeDimension(Entity entity, int previousDimension, int newDimension) {
+            super(entity);
+            this.previousDimension = previousDimension;
+            this.newDimension = newDimension;
+        }
+
+        /**
+         * Gets the dimension this entity is travelling from.
+         *
+         * @return the dimension this entity is travelling from.
+         */
+        public int getPreviousDimension() {
+            return previousDimension;
+        }
+
+        /**
+         * Gets the dimension this entity is travelling to.
+         *
+         * @return the dimension this entity is travelling to.
+         */
+        public int getNewDimension() {
+            return newDimension;
+        }
+
+        /**
+         * Sets the dimension this entity will travel to.
+         *
+         * @param newDimension the new dimension to travel to.
+         */
+        public void setNewDimension(int newDimension) {
+            this.newDimension = newDimension;
+        }
+
+        @Override
+        public boolean isCancelable() {
+            return true;
+        }
+
+        /**
+         * Hook to make related patches much cleaner.
+         *
+         * @param entity the entity travelling through dimensions.
+         * @param previousDimension the dimension the entity is coming from.
+         * @param newDimension the dimension the entity is travelling to.
+         *
+         * @return the new dimension to travel to.
+         */
+        public static int handle(Entity entity, int previousDimension, int newDimension) {
+            final EntityEvent.ChangeDimension event = new EntityEvent.ChangeDimension(entity, previousDimension, newDimension);
+            OpenModLoader.INSTANCE.getEventBus().post(event);
+            return event.isCanceled() ? event.previousDimension : event.newDimension;
         }
     }
 }
