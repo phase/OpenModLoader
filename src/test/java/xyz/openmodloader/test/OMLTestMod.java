@@ -22,7 +22,6 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldServer;
-import org.lwjgl.input.Keyboard;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.client.gui.GuiModInfo;
 import xyz.openmodloader.client.gui.GuiModList;
@@ -38,17 +37,17 @@ import xyz.openmodloader.event.impl.InputEvent;
 import xyz.openmodloader.event.impl.MessageEvent;
 import xyz.openmodloader.event.impl.ScreenshotEvent;
 import xyz.openmodloader.launcher.strippable.Side;
-import xyz.openmodloader.modloader.IMod;
+import xyz.openmodloader.modloader.Mod;
+import xyz.openmodloader.modloader.version.UpdateManager;
 import xyz.openmodloader.network.Channel;
 import xyz.openmodloader.network.ChannelManager;
 import xyz.openmodloader.network.DataType;
-import xyz.openmodloader.network.Packet;
 
-public class OMLTestMod implements IMod {
+public class OMLTestMod implements Mod {
     private Channel channel;
 
     @Override
-    public void onEnable() {
+    public void onInitialize() {
         OpenModLoader.INSTANCE.getLogger().info("Loading test mod");
 
         OpenModLoader.INSTANCE.getEventBus().register(BlockEvent.Place.class, this::onBlockPlace);
@@ -150,6 +149,10 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.getLogger().info("Opening gui: " + event.getGui());
         if (event.getGui() instanceof GuiLanguage) {
             event.setCanceled(true);
+        } else if (event.getGui() instanceof GuiMainMenu) {
+            if (!UpdateManager.getOutdatedMods().isEmpty()) {
+                OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(new TextComponentString("Mod updates found!"));
+            }
         }
     }
 

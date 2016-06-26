@@ -1,4 +1,4 @@
-package xyz.openmodloader.modloader;
+package xyz.openmodloader.modloader.version;
 
 public class Version {
 

@@ -1,21 +1,20 @@
 package xyz.openmodloader.modloader;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.launcher.strippable.Strippable;
+import xyz.openmodloader.modloader.version.Version;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 class OMLModContainer implements ModContainer {
-
     private File modFile;
     private ResourceLocation logo;
 
@@ -75,7 +74,7 @@ class OMLModContainer implements ModContainer {
     }
 
     @Override
-    public IMod getInstance() {
+    public Mod getInstance() {
         return null;
     }
 

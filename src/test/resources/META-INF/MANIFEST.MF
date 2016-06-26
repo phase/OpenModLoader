@@ -5,5 +5,5 @@ Version: 0.1.0-test
 Description: This is a description!
 Author: OML
 URL: http://example.com/
-Update-URL: http://example.com/
+Update-URL: https://gist.githubusercontent.com/anonymous/bf49748c02fc854be2cc312110b91ebc/raw/ad770f1c717a4d22eb6e89984fec8cdcffe560ea/2016-06-26_20-53-08.txt
 Logo: logo.png

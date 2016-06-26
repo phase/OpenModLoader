@@ -8,7 +8,8 @@ import xyz.openmodloader.event.EventBus;
 import xyz.openmodloader.launcher.OMLStrippableTransformer;
 import xyz.openmodloader.launcher.strippable.Environment;
 import xyz.openmodloader.modloader.ModLoader;
-import xyz.openmodloader.modloader.Version;
+import xyz.openmodloader.modloader.version.UpdateManager;
+import xyz.openmodloader.modloader.version.Version;
 import xyz.openmodloader.network.Channel;
 import xyz.openmodloader.network.ChannelManager;
 import xyz.openmodloader.network.DataType;
@@ -28,6 +29,7 @@ public enum OpenModLoader {
         getLogger().info("Loading OpenModLoader " + getVersion());
         getLogger().info("Running Minecraft %s on %s using Java %s", mcversion, SystemUtils.OS_NAME, SystemUtils.JAVA_VERSION);
         ModLoader.loadMods();
+        UpdateManager.checkForUpdates();
         getSidedHandler().onInitialize();
         channel = ChannelManager.create("oml")
                 .createPacket("snackbar")

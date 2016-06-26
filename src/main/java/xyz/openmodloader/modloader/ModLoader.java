@@ -1,7 +1,6 @@
 package xyz.openmodloader.modloader;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -27,6 +26,9 @@ import xyz.openmodloader.event.impl.GuiEvent;
 import xyz.openmodloader.launcher.OMLAccessTransformer;
 import xyz.openmodloader.launcher.OMLStrippableTransformer;
 import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.modloader.version.JsonUpdateContainer;
+import xyz.openmodloader.modloader.version.UpdateManager;
+import xyz.openmodloader.modloader.version.Version;
 
 /**
  * The Class ModLoader.
@@ -40,7 +42,7 @@ public class ModLoader {
     /**
      * A map of all loaded mods. Key is the mod class and value is the ModContainer.
      */
-    private static final Map<IMod, ModContainer> MODS_MAP = new HashMap<>();
+    private static final Map<Mod, ModContainer> MODS_MAP = new HashMap<>();
 
     /**
      * A map of all loaded mods. Key is the mod id and value is the ModContainer.
@@ -238,7 +240,7 @@ public class ModLoader {
             if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
                 continue;
             }
-            IMod instance = mod.getInstance();
+            Mod instance = mod.getInstance();
             if (instance != null) {
                 MODS_MAP.put(instance, mod); // load the instances
             }
@@ -248,9 +250,26 @@ public class ModLoader {
                 if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
                     continue;
                 }
-                IMod instance = mod.getInstance();
+                Mod instance = mod.getInstance();
                 if (instance != null) {
-                    instance.onEnable();
+                    instance.onInitialize();
+                }
+                if (!UpdateManager.hasUpdateContainer(mod) && mod.getUpdateURL() != null) {
+                    InputStream stream = null;
+                    try {
+                        stream = new URL(mod.getUpdateURL()).openStream();
+                        UpdateManager.registerUpdater(mod, new JsonUpdateContainer(stream));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (stream != null) {
+                            try {
+                                stream.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 }
             } catch (RuntimeException e) {
                 OpenModLoader.INSTANCE.getLogger().warn("An error occurred while enabling mod " + mod.getModID());
@@ -265,7 +284,7 @@ public class ModLoader {
      * @param mod the mod instance
      * @return the mod container
      */
-    public static ModContainer getContainer(IMod mod) {
+    public static ModContainer getContainer(Mod mod) {
         return MODS_MAP.get(mod);
     }
 

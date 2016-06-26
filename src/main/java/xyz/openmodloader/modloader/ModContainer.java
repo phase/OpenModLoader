@@ -4,14 +4,14 @@ import java.io.File;
 
 import net.minecraft.util.ResourceLocation;
 import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.modloader.version.Version;
 
 public interface ModContainer {
-
     String getLogo();
 
     ResourceLocation getLogoTexture();
 
-    IMod getInstance();
+    Mod getInstance();
 
     Version getVersion();
 

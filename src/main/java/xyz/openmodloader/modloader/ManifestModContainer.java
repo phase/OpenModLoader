@@ -1,5 +1,17 @@
 package xyz.openmodloader.modloader;
 
+import com.google.common.collect.Sets;
+import com.google.gson.annotations.SerializedName;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.launchwrapper.Launch;
+import net.minecraft.util.ResourceLocation;
+import xyz.openmodloader.OpenModLoader;
+import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Strippable;
+import xyz.openmodloader.modloader.version.Version;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,22 +22,10 @@ import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-import com.google.common.collect.Sets;
-import com.google.gson.annotations.SerializedName;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.launchwrapper.Launch;
-import net.minecraft.util.ResourceLocation;
-import xyz.openmodloader.OpenModLoader;
-import xyz.openmodloader.launcher.strippable.Side;
-import xyz.openmodloader.launcher.strippable.Strippable;
-
 class ManifestModContainer implements ModContainer {
     private transient Class<?> mainClass;
     private transient ResourceLocation logoTexture;
-    private transient IMod instance;
+    private transient Mod instance;
     private transient Version version;
     private transient Version mcversion;
     private transient Side side;
@@ -124,13 +124,13 @@ class ManifestModContainer implements ModContainer {
     }
 
     @Override
-    public IMod getInstance() {
+    public Mod getInstance() {
         if (classString == null) {
             return null;
         }
         if (this.instance == null) {
             try {
-                this.instance = (IMod) this.getMainClass().newInstance();
+                this.instance = (Mod) this.getMainClass().newInstance();
             } catch (ClassCastException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }

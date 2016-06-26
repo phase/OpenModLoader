@@ -12,7 +12,6 @@ import xyz.openmodloader.event.impl.MessageEvent;
 import xyz.openmodloader.event.impl.UpdateEvent;
 import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.launcher.strippable.Strippable;
-import xyz.openmodloader.modloader.IMod;
 import xyz.openmodloader.modloader.ModContainer;
 import xyz.openmodloader.modloader.ModLoader;
 import xyz.openmodloader.util.ReflectionHelper;
