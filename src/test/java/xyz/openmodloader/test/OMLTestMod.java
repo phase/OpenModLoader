@@ -89,6 +89,8 @@ public class OMLTestMod implements IMod {
         OpenModLoader.INSTANCE.getEventBus().register(ArmorEvent.Equip.class, this::onArmorEquip);
         OpenModLoader.INSTANCE.getEventBus().register(ArmorEvent.Unequip.class, this::onArmorUnequip);
 
+        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.ChangeDimension.class, this::onChangeDimension);
+
         Config config = new Config(new File("./config/test.conf"));
         Config category1 = config.getConfig("category1", "configures stuff");
         category1.getBoolean("boolean1", true, "this is a boolean");
@@ -231,5 +233,12 @@ public class OMLTestMod implements IMod {
     private void onArmorUnequip(ArmorEvent.Unequip event){
         OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " unequipped " + event.getArmor().getItem().getUnlocalizedName() + " to the " + event.getSlot().getName() + " slot");
         event.setCanceled(true);
+    }
+
+    private void onChangeDimension(EntityEvent.ChangeDimension event) {
+        OpenModLoader.INSTANCE.getLogger().info("Entity: %s is travelling from dimension %d to %d", event.getEntity(), event.getPreviousDimension(), event.getNewDimension());
+        if (event.getNewDimension() == -1) {
+            event.setNewDimension(1);
+        }
     }
 }
