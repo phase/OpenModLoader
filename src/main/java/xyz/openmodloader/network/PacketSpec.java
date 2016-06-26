@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.server.MinecraftServer;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.launcher.strippable.Side;
-import xyz.openmodloader.server.OMLServerHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -112,7 +111,7 @@ public class PacketSpec {
                     handler.accept(context, packet);
                 });
             } else if (context.getSide() == Side.SERVER) {
-                MinecraftServer server = OMLServerHelper.getServer();
+                MinecraftServer server = OpenModLoader.INSTANCE.getSidedHandler().getServer();
                 server.addScheduledTask(() -> {
                     handler.accept(context, packet);
                 });
@@ -134,7 +133,7 @@ public class PacketSpec {
                     clientHandler.accept(context, packet);
                 });
             } else if (context.getSide() == Side.SERVER) {
-                MinecraftServer server = OMLServerHelper.getServer();
+                MinecraftServer server = OpenModLoader.INSTANCE.getSidedHandler().getServer();
                 server.addScheduledTask(() -> {
                     serverHandler.accept(context, packet);
                 });

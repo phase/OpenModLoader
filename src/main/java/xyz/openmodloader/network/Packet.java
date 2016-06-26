@@ -8,7 +8,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.WorldServer;
 import xyz.openmodloader.OpenModLoader;
-import xyz.openmodloader.server.OMLServerHelper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -129,7 +128,7 @@ public class Packet extends AbstractPacket {
      * Sends this packet to all players on the server.
      */
     public void toAll() {
-        MinecraftServer server = OMLServerHelper.getServer();
+        MinecraftServer server = OpenModLoader.INSTANCE.getSidedHandler().getServer();
         toAll(server.getPlayerList().getPlayerList());
     }
 
@@ -172,7 +171,7 @@ public class Packet extends AbstractPacket {
      * @param radius The radius around the position that players must be in to send the packet to
      */
     public void toAllInRadius(int dimension, Vec3d pos, double radius) {
-        MinecraftServer server = OMLServerHelper.getServer();
+        MinecraftServer server = OpenModLoader.INSTANCE.getSidedHandler().getServer();
         toAllInRadius(server.worldServerForDimension(dimension), pos, radius);
     }
 

@@ -2,6 +2,7 @@ package xyz.openmodloader.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.ITextComponent;
 import xyz.openmodloader.SidedHandler;
 import xyz.openmodloader.OpenModLoader;
@@ -16,9 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Strippable(side = Side.CLIENT)
-public enum OMLClientHandler implements SidedHandler {
-    INSTANCE;
-
+public class OMLClientHandler implements SidedHandler {
     @Override
     public void onInitialize() {
         OpenModLoader.INSTANCE.getEventBus().register(UpdateEvent.ClientUpdate.class, event -> {
@@ -61,7 +60,12 @@ public enum OMLClientHandler implements SidedHandler {
         Minecraft.getMinecraft().addScheduledTask(runnable);
     }
 
-    public List<String> getMainMenuStrings() {
+    @Override
+    public MinecraftServer getServer() {
+        return Minecraft.getMinecraft().getIntegratedServer();
+    }
+
+    public static List<String> getMainMenuStrings() {
         List<String> list = new ArrayList<>();
         list.add(ModLoader.MODS.size() + " mod" + ((ModLoader.MODS.size() == 1 ? "" : "s") + " enabled"));
         list.add("Version " + OpenModLoader.INSTANCE.getVersion());

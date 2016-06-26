@@ -4,7 +4,7 @@
      }
  
      private void startGame() throws LWJGLException {
-+        xyz.openmodloader.OpenModLoader.INSTANCE.minecraftConstruction(xyz.openmodloader.client.OMLClientHandler.INSTANCE);
++        xyz.openmodloader.OpenModLoader.INSTANCE.minecraftConstruction(new xyz.openmodloader.client.OMLClientHandler());
          this.gameSettings = new GameSettings(this, this.mcDataDir);
          this.defaultResourcePacks.add(this.mcDefaultResourcePack);
          this.startTimerHackThread();
