@@ -17,9 +17,9 @@ public enum OpenModLoader {
     private Version version = new Version("0.0.1-develop");
     private Logger logger = LogManager.getFormatterLogger("OpenModLoader");
     private EventBus eventBus = new EventBus();
-    private ISidedHandler sidedHandler;
+    private SidedHandler sidedHandler;
 
-    public void minecraftConstruction(ISidedHandler sidedHandler) {
+    public void minecraftConstruction(SidedHandler sidedHandler) {
         this.sidedHandler = sidedHandler;
         getLogger().info("Loading OpenModLoader " + getVersion());
         getLogger().info("Running Minecraft %s on %s using Java %s", mcversion, SystemUtils.OS_NAME, SystemUtils.JAVA_VERSION);
@@ -43,7 +43,7 @@ public enum OpenModLoader {
         return eventBus;
     }
 
-    public ISidedHandler getSidedHandler() {
+    public SidedHandler getSidedHandler() {
         return sidedHandler;
     }
 

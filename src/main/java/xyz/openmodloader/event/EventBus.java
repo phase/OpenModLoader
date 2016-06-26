@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @see xyz.openmodloader.OpenModLoader#EVENT_BUS
  */
 public class EventBus {
-    private final ConcurrentHashMap<Class<? extends Event>, List<IEventExecutor<?>>> map = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class<? extends Event>, List<EventExecutor<?>>> map = new ConcurrentHashMap<>();
 
     /**
      * Registers a handler for the given event type.
@@ -19,7 +19,7 @@ public class EventBus {
      * @param handler The event handler.
      * @param <T>     The event type.
      */
-    public <T extends Event> void register(Class<T> clazz, IEventExecutor<T> handler) {
+    public <T extends Event> void register(Class<T> clazz, EventExecutor<T> handler) {
         if (!map.containsKey(clazz)) {
             map.put(clazz, new ArrayList<>());
         }
@@ -36,8 +36,8 @@ public class EventBus {
     public boolean post(Event event) {
         Class<? extends Event> clazz = event.getClass();
         if (map.containsKey(clazz)) {
-            List<IEventExecutor<?>> handlers = map.get(clazz);
-            for (IEventExecutor handler : handlers) {
+            List<EventExecutor<?>> handlers = map.get(clazz);
+            for (EventExecutor handler : handlers) {
                 handler.execute(event);
                 if (event.isCanceled()) {
                     return false;

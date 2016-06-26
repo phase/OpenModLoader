@@ -3,7 +3,7 @@ package xyz.openmodloader.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.text.ITextComponent;
-import xyz.openmodloader.ISidedHandler;
+import xyz.openmodloader.SidedHandler;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.client.gui.GuiSnackbar;
 import xyz.openmodloader.event.impl.MessageEvent;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Strippable(side = Side.CLIENT)
-public enum OMLClientHandler implements ISidedHandler {
+public enum OMLClientHandler implements SidedHandler {
     INSTANCE;
 
     @Override
