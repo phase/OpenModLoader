@@ -1,22 +1,25 @@
 package xyz.openmodloader.launcher;
 
+import java.io.File;
+import java.net.Proxy;
+
 import com.google.gson.GsonBuilder;
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
+
 import net.minecraft.launchwrapper.Launch;
 import xyz.openmodloader.launcher.strippable.Side;
 
-
-import java.io.File;
-import java.net.Proxy;
-import java.util.Arrays;
-
 public class OpenModLoaderClient {
     public static void main(String[] args) {
-        System.setProperty("org.lwjgl.librarypath", new File("../.gradle/minecraft/natives/").getAbsolutePath());
+        File file = new File(".gradle/minecraft/natives/");
+        if (!file.exists()) {
+            file = new File("../.gradle/minecraft/natives/");
+        }
+        System.setProperty("org.lwjgl.librarypath", file.getAbsolutePath());
         OMLStrippableTransformer.SIDE = Side.CLIENT;
         LaunchArguments arguments = new LaunchArguments(args);
 
