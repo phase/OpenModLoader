@@ -5,6 +5,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.ITextComponent;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.SidedHandler;
+import xyz.openmodloader.event.impl.MessageEvent;
 import xyz.openmodloader.launcher.strippable.Side;
 
 public class OMLServerHandler implements SidedHandler {
@@ -26,6 +27,10 @@ public class OMLServerHandler implements SidedHandler {
 
     @Override
     public void openSnackbar(ITextComponent component) {
+        component = MessageEvent.Snackbar.handle(component, Side.SERVER);
+        if (component == null) {
+            return;
+        }
         OpenModLoader.INSTANCE.getChannel()
                 .send("snackbar")
                 .set("component", component)
