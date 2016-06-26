@@ -1,6 +1,14 @@
 --- /net/minecraft/server
 +++ /net/minecraft/server
-@@ -493,6 +493,7 @@
+@@ -379,6 +379,7 @@
+     public void run() {
+         try {
+             if(this.startServer()) {
++                xyz.openmodloader.server.OMLServerHelper.setServer(this);
+                 this.currentTime = getCurrentTimeMillis();
+                 long var1 = 0L;
+                 this.statusResponse.setServerDescription(new TextComponentString(this.motd));
+@@ -493,6 +494,7 @@
      }
  
      public void tick() {

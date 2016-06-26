@@ -3,8 +3,9 @@ package xyz.openmodloader.network;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
+import net.minecraft.network.PacketBuffer;
 
-public class Channel {
+public class Channel extends AbstractChannel<Packet> {
 
 	final String id;
 	private final BiMap<String, PacketSpec> specs;
@@ -41,6 +42,24 @@ public class Channel {
 		return new Packet(this, specs.get(id));
 	}
 
+	@Override
+	public void write(PacketBuffer buf, Packet packet) {
+		buf.writeInt(getID(packet.spec));
+	}
+
+	@Override
+	public Packet read(PacketBuffer buf) {
+		PacketSpec spec = getSpec(buf.readInt());
+		Packet packet = new Packet(this, spec);
+		packet.read(buf);
+		return packet;
+	}
+
+	@Override
+	public void handle(Packet packet) {
+		packet.handle();
+	}
+
 	public PacketSpec getSpec(String name) {
 		return specs.get(name);
 	}
@@ -64,5 +83,4 @@ public class Channel {
 	public int getID(String name) {
 		return specIDs.get(name);
 	}
-
 }

@@ -7,9 +7,11 @@ import java.io.IOException;
 
 public class PacketWrapper implements net.minecraft.network.Packet<INetHandler> {
 
-	private Packet packet;
+	private AbstractChannel channel;
+	private IPacket packet;
 
-	public PacketWrapper(Packet packet) {
+	public PacketWrapper(AbstractChannel channel, IPacket packet) {
+		this.channel = channel;
 		this.packet = packet;
 	}
 
@@ -19,22 +21,19 @@ public class PacketWrapper implements net.minecraft.network.Packet<INetHandler> 
 
 	@Override
 	public void readPacketData(PacketBuffer buf) throws IOException {
-		Channel channel = ChannelManager.get(buf.readInt());
-		PacketSpec spec = channel.getSpec(buf.readInt());
-		Packet packet = new Packet(channel, spec);
-		packet.read(buf);
+		AbstractChannel<?> channel = ChannelManager.get(buf.readInt());
+		packet = channel.read(buf);
 	}
 
 	@Override
 	public void writePacketData(PacketBuffer buf) throws IOException {
-		buf.writeInt(ChannelManager.getID(packet.channel));
-		buf.writeInt(packet.channel.getID(packet.spec));
-		packet.write(buf);
+		buf.writeInt(ChannelManager.getID(channel));
+		channel.write(buf, packet);
 	}
 
 	@Override
 	public void processPacket(INetHandler netHandler) {
-		packet.handle();
+		channel.handle(packet);
 	}
 
 }

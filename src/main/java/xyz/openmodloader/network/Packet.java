@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Packet {
+public class Packet implements IPacket {
 
 	private final String id;
 	final Channel channel;
@@ -48,7 +48,8 @@ public class Packet {
 		return (T)values.get(id);
 	}
 
-	PacketBuffer write(PacketBuffer buf) {
+	@Override
+	public PacketBuffer write(PacketBuffer buf) {
 
 		values.forEach((id, value) -> {
 			types.get(id).write(buf, value);
@@ -56,28 +57,30 @@ public class Packet {
 		return buf;
 	}
 
-	void read(PacketBuffer buf) {
+	@Override
+	public void read(PacketBuffer buf) {
 		types.forEach((id, type) -> {
 			values.put(id, type.read(buf));
 		});
 	}
 
-	void handle() {
+	@Override
+	public void handle() {
 		spec.handler.accept(new Context(), this);
 	}
 
 //	Client -> Server
 	public void toServer() {
-		OpenModLoader.INSTANCE.getSidedHandler().getClientPlayer().connection.sendPacket(new PacketWrapper(this));
+		OpenModLoader.INSTANCE.getSidedHandler().getClientPlayer().connection.sendPacket(new PacketWrapper(channel, this));
 	}
 
 //	Server -> Client
 	public void toPlayer(EntityPlayerMP player) {
-		player.connection.sendPacket(new PacketWrapper(this));
+		player.connection.sendPacket(new PacketWrapper(channel, this));
 	}
 
 	public void toAll(List<EntityPlayerMP> players) {
-		PacketWrapper packet = new PacketWrapper(this);
+		PacketWrapper packet = new PacketWrapper(channel, this);
 		players.stream()
 				.map(player -> player.connection)
 				.forEach(connection -> connection.sendPacket(packet));

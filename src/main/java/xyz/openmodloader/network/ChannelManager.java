@@ -6,26 +6,26 @@ import net.minecraft.network.PacketBuffer;
 
 public class ChannelManager {
 
-	private static final BiMap<String, Channel> channels = HashBiMap.create();
+	private static final BiMap<String, AbstractChannel> channels = HashBiMap.create();
 	private static final BiMap<String, Integer> ids = HashBiMap.create();
 
 	public static Channel create(String name) {
 		return new Channel(name);
 	}
 
-	public static void register(String name, Channel channel) {
+	public static void register(String name, AbstractChannel<?> channel) {
 		channels.put(name, channel);
 	}
 
-	public static Channel get(String name) {
+	public static <T extends IPacket> AbstractChannel<T> get(String name) {
 		return channels.get(name);
 	}
 
-	public static Channel get(int id) {
+	public static <T extends IPacket> AbstractChannel<T> get(int id) {
 		return channels.get(getName(id));
 	}
 
-	public static String getName(Channel channel) {
+	public static String getName(AbstractChannel<?> channel) {
 		return channels.inverse().get(channel);
 	}
 
@@ -33,7 +33,7 @@ public class ChannelManager {
 		return ids.inverse().get(id);
 	}
 
-	public static int getID(Channel channel) {
+	public static int getID(AbstractChannel<?> channel) {
 		return ids.get(getName(channel));
 	}
 
@@ -43,10 +43,6 @@ public class ChannelManager {
 
 	public static boolean exists(String channel) {
 		return channels.containsKey(channel);
-	}
-
-	public static void handle(String channel, PacketBuffer buf) {
-		get(channel).handle(buf.readInt(), buf);
 	}
 
 }
