@@ -2,6 +2,7 @@ package xyz.openmodloader.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.ITextComponent;
 import xyz.openmodloader.SidedHandler;
@@ -11,8 +12,12 @@ import xyz.openmodloader.event.impl.MessageEvent;
 import xyz.openmodloader.event.impl.UpdateEvent;
 import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.launcher.strippable.Strippable;
+import xyz.openmodloader.modloader.IMod;
+import xyz.openmodloader.modloader.ModContainer;
 import xyz.openmodloader.modloader.ModLoader;
+import xyz.openmodloader.util.ReflectionHelper;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +25,22 @@ import java.util.List;
 public class OMLClientHandler implements SidedHandler {
     @Override
     public void onInitialize() {
+        List<IResourcePack> modResourcePacks = new ArrayList<>();
+        for (ModContainer mod : ModLoader.MODS) {
+            File originFile = mod.getOriginFile();
+            if (originFile.isDirectory()) {
+                modResourcePacks.add(new OMLFolderResourcePack(mod));
+            } else {
+                modResourcePacks.add(new OMLFileResourcePack(mod));
+            }
+        }
+        try {
+            List<IResourcePack> defaultResourcePacks = ReflectionHelper.getValue(Minecraft.class, Minecraft.getMinecraft(), "defaultResourcePacks", "aD");
+            defaultResourcePacks.addAll(modResourcePacks);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+
         OpenModLoader.INSTANCE.getEventBus().register(UpdateEvent.ClientUpdate.class, event -> {
             if (GuiSnackbar.CURRENT_SNACKBAR != null) {
                 GuiSnackbar.CURRENT_SNACKBAR.updateSnackbar();

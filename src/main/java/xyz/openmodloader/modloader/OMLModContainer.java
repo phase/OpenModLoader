@@ -1,6 +1,7 @@
 package xyz.openmodloader.modloader;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -15,7 +16,13 @@ import xyz.openmodloader.launcher.strippable.Strippable;
 
 class OMLModContainer implements ModContainer {
 
+    private File originFile;
     private ResourceLocation logo;
+
+
+    public OMLModContainer() {
+        originFile = new File(OMLModContainer.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+    }
 
     @Override
     public Version getVersion() {
@@ -48,8 +55,13 @@ class OMLModContainer implements ModContainer {
     }
 
     @Override
+    public String getLogo() {
+        return "logo.png";
+    }
+
+    @Override
     @Strippable(side = Side.CLIENT)
-    public ResourceLocation getLogo() {
+    public ResourceLocation getLogoTexture() {
         if (this.logo == null) {
             try {
                 InputStream stream = this.getClass().getResourceAsStream("/logo.png");
@@ -92,4 +104,10 @@ class OMLModContainer implements ModContainer {
     public Side getSide() {
         return Side.UNIVERSAL;
     }
+
+    @Override
+    public File getOriginFile() {
+        return originFile;
+    }
+
 }

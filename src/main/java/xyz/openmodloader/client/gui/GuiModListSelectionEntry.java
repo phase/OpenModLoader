@@ -24,7 +24,7 @@ public class GuiModListSelectionEntry implements GuiListExtended.a {
         this.parent = parent;
         this.container = container;
         this.mc = Minecraft.getMinecraft();
-        this.logo = container.getLogo();
+        this.logo = container.getLogoTexture();
     }
 
     @Override

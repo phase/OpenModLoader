@@ -142,7 +142,7 @@ public class ModLoader {
      * @param manifest the manifest instance
      */
     private static ManifestModContainer loadMod(File file, Manifest manifest) {
-        ManifestModContainer container = ManifestModContainer.create(manifest);
+        ManifestModContainer container = ManifestModContainer.create(file, manifest);
         if (container == null) {
             OpenModLoader.INSTANCE.getLogger().error("Found invalid manifest in file " + file.getAbsolutePath().replace("!", "").replace(File.separator + "META-INF" + File.separator + "MANIFEST.MF", ""));
             return null;

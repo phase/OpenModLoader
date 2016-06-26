@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
 
+import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
@@ -100,6 +102,8 @@ public class OMLTestMod implements IMod {
         config.save();
 
         testNetwork();
+
+        testBlock();
     }
 
     private void testNetwork() {
@@ -112,6 +116,10 @@ public class OMLTestMod implements IMod {
                         System.out.println("DATA: " + packet.get("str", DataType.STRING));
                     })
                 .build();
+    }
+
+    private void testBlock() {
+        Block.REGISTRY.register(512, new ResourceLocation("omltest:test"), new BlockTest());
     }
 
     private void onBlockPlace(BlockEvent.Place event) {
@@ -190,7 +198,6 @@ public class OMLTestMod implements IMod {
 
     private void onCommandRan(CommandEvent event) {
         OpenModLoader.INSTANCE.getLogger().info("Player: " + event.getSender().getName() + " ran command: " + event.getCommand().getCommandName() + " with arguments: " + Arrays.toString(event.getArgs()));
-        event.setCanceled(true);
     }
 
     private void onKeyPressed(InputEvent.Keyboard event) {

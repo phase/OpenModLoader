@@ -3,9 +3,13 @@ package xyz.openmodloader.modloader;
 import net.minecraft.util.ResourceLocation;
 import xyz.openmodloader.launcher.strippable.Side;
 
+import java.io.File;
+
 public interface ModContainer {
 
-    ResourceLocation getLogo();
+    String getLogo();
+
+    ResourceLocation getLogoTexture();
 
     IMod getInstance();
 
@@ -30,4 +34,6 @@ public interface ModContainer {
     String[] getTransformers();
 
     String[] getDependencies();
+
+    File getOriginFile();
 }

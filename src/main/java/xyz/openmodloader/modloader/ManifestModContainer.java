@@ -1,6 +1,7 @@
 package xyz.openmodloader.modloader;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -9,13 +10,12 @@ import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-import javax.imageio.ImageIO;
-
 import com.google.common.collect.Sets;
 import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import xyz.openmodloader.OpenModLoader;
@@ -23,8 +23,9 @@ import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.launcher.strippable.Strippable;
 
 class ManifestModContainer implements ModContainer {
+    private transient File originFile;
     private transient Class<?> mainClass;
-    private transient ResourceLocation logo;
+    private transient ResourceLocation logoTexture;
     private transient IMod instance;
     private transient Version version;
     private transient Version mcversion;
@@ -51,7 +52,7 @@ class ManifestModContainer implements ModContainer {
     @SerializedName("Update-URL")
     private String updateURL;
     @SerializedName("Logo")
-    private String logoString;
+    private String logo;
     @SerializedName("Transformers")
     private String transformers;
     @SerializedName("Dependencies")
@@ -60,7 +61,7 @@ class ManifestModContainer implements ModContainer {
     /**
      * Uses a manifest to create a mod container.
      */
-    public static ManifestModContainer create(Manifest manifest) {
+    public static ManifestModContainer create(File file, Manifest manifest) {
         Set<Object> attributeNames = manifest.getMainAttributes().keySet();
         if (!attributeNames.containsAll(Arrays.asList(new Attributes.Name("ID"), new Attributes.Name("Mod-Class"), new Attributes.Name("Version")))) {
             return null;
@@ -80,6 +81,7 @@ class ManifestModContainer implements ModContainer {
                 }
             }
         }
+        container.originFile = file;
         return container;
     }
 
@@ -99,21 +101,26 @@ class ManifestModContainer implements ModContainer {
 
     @Override
     @Strippable(side = Side.CLIENT)
-    public ResourceLocation getLogo() {
-        if (this.logo == null && this.logoString != null) {
+    public String getLogo() {
+        return logo;
+    }
+
+    @Override
+    public ResourceLocation getLogoTexture() {
+        if (this.logoTexture == null && this.logo != null) {
             try {
-                InputStream stream = ManifestModContainer.class.getResourceAsStream("/" + this.logoString);
+                InputStream stream = ManifestModContainer.class.getResourceAsStream("/" + this.logo);
                 if (stream == null) {
                     return null;
                 }
-                BufferedImage image = ImageIO.read(stream);
+                BufferedImage image = TextureUtil.readBufferedImage(stream);
                 DynamicTexture texture = new DynamicTexture(image);
-                this.logo = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("mods/" + getModID(), texture);
+                this.logoTexture = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("mods/" + getModID(), texture);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        return logo;
+        return logoTexture;
     }
 
     @Override
@@ -200,6 +207,11 @@ class ManifestModContainer implements ModContainer {
             return new String[0];
         }
         return dependencies.split("\\s*,\\s*");
+    }
+
+    @Override
+    public File getOriginFile() {
+        return originFile;
     }
 
     /**

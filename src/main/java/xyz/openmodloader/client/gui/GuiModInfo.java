@@ -23,7 +23,7 @@ public class GuiModInfo extends GuiScreen {
     public GuiModInfo(GuiModList parent, ModContainer container) {
         this.parent = parent;
         this.container = container;
-        this.logo = container.getLogo();
+        this.logo = container.getLogoTexture();
     }
 
     @Override
