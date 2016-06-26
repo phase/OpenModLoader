@@ -13,10 +13,13 @@ import java.util.jar.Manifest;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.CharSet;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.launchwrapper.Launch;
 import xyz.openmodloader.OpenModLoader;
+import xyz.openmodloader.client.gui.GuiMissingDependencies;
+import xyz.openmodloader.event.impl.GuiEvent;
 import xyz.openmodloader.launcher.OMLAccessTransformer;
 import xyz.openmodloader.launcher.OMLStrippableTransformer;
 import xyz.openmodloader.launcher.strippable.Side;
@@ -94,18 +97,39 @@ public class ModLoader {
                     }
                 }
             }
+            // sort the mods
             MODS.addAll(DependencySorter.sort(unsortedMods));
+            List<String> missingDeps = Lists.newArrayList();
+            List<String> oudatedDeps = Lists.newArrayList();
+            // check dependencies
             for (ModContainer mod : MODS) {
                 for (String dep : mod.getDependencies()) {
                     String[] depParts = dep.split("\\s*:\\s*");
+                    if (depParts[0].startsWith("optional "))
+                        continue;
                     ModContainer depContainer = ID_MAP.get(depParts[0]);
                     if (depContainer == null) {
-                        throw new RuntimeException("Missing dependency '" + dep + "' for mod '" + mod.getName() + "'.");
+                        missingDeps.add(depParts.length > 1 ? depParts[0] + " v" + depParts[1] : depParts[0]);
+                        OpenModLoader.INSTANCE.getLogger().error("Missing dependency '%s' for mod '%s'.", depParts[0], mod.getName());
                     } else if (depParts.length > 1 && !depContainer.getVersion().atLeast(new Version(depParts[1]))) {
-                        throw new RuntimeException("Outdated dependency '" + dep + "' for mod '" + mod.getName() + "'. Expected version '" + depParts[1] + "', but got version '" + depContainer.getVersion() + "'.");
+                        oudatedDeps.add(depParts.length > 1 ? depParts[0] + " v" + depParts[1] : depParts[0]);
+                        OpenModLoader.INSTANCE.getLogger().error("Outdated dependency '%s' for mod '%s'. Expected version '%s', but got version '%s'.", depContainer.getName(), mod.getName(), depParts[1], depContainer.getVersion());
                     }
                 }
             }
+            // if any dependencies are missing, stop mod loading, and display a GUI
+            if (!missingDeps.isEmpty() || !oudatedDeps.isEmpty()) {
+                MODS.clear();
+                ID_MAP.clear();
+                if (OpenModLoader.INSTANCE.getSidedHandler().getSide() == Side.CLIENT) {
+                    OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.Open.class, (e) -> e.setGui(new GuiMissingDependencies(missingDeps, oudatedDeps)));
+                }
+            }
+            // now that we've checked dependencies, it's time to register the coremods
+            for (ModContainer mod: MODS)
+                for (String transformer : mod.getTransformers()) {
+                    Launch.classLoader.registerTransformer(transformer);
+                }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -138,9 +162,6 @@ public class ModLoader {
         if (container.getSide() != Side.UNIVERSAL && container.getSide() != OMLStrippableTransformer.getSide()) {
             OpenModLoader.INSTANCE.getLogger().info("Invalid side %s for mod %s. The mod will not be loaded.", OMLStrippableTransformer.getSide(), container.getName());
             return container;
-        }
-        for (String transformer : container.getTransformers()) {
-            Launch.classLoader.registerTransformer(transformer);
         }
         return container;
     }
