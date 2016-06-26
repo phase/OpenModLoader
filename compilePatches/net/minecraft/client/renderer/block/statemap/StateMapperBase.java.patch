@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer/block/statemap
 +++ /net/minecraft/client/renderer/block/statemap
-@@ -36,8 +36,8 @@
+@@ -41,8 +41,8 @@
          return var2.toString();
      }
  

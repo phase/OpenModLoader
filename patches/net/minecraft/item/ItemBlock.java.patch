@@ -1,6 +1,6 @@
 --- /net/minecraft/item
 +++ /net/minecraft/item
-@@ -43,6 +43,8 @@
+@@ -45,6 +45,8 @@
          if(var1.stackSize != 0 && var2.canPlayerEdit(var4, var6, var1) && var3.canBlockBePlaced(this.block, var4, false, var6, (Entity)null, var1)) {
              int var12 = this.getMetadata(var1.getMetadata());
              IBlockState var13 = this.block.onBlockPlaced(var3, var4, var6, var7, var8, var9, var12, var2);

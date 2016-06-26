@@ -1,6 +1,6 @@
 --- /net/minecraft/entity/monster
 +++ /net/minecraft/entity/monster
-@@ -278,7 +278,7 @@
+@@ -280,7 +280,7 @@
              }
  
              if(var27 > 0.0D) {

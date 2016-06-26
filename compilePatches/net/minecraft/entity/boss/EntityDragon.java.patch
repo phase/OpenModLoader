@@ -1,6 +1,6 @@
 --- /net/minecraft/entity/boss
 +++ /net/minecraft/entity/boss
-@@ -331,7 +331,7 @@
+@@ -333,7 +333,7 @@
          }
  
          if(this.rand.nextInt(10) == 0) {

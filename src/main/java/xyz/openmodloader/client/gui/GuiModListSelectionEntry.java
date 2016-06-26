@@ -7,8 +7,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import org.apache.commons.lang3.StringUtils;
 import xyz.openmodloader.modloader.ModContainer;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class GuiModListSelectionEntry implements GuiListExtended.a {
     private static final ResourceLocation ICON_MISSING = new ResourceLocation("textures/misc/unknown_server.png");
@@ -23,15 +24,14 @@ public class GuiModListSelectionEntry implements GuiListExtended.a {
         this.parent = parent;
         this.container = container;
         this.mc = Minecraft.getMinecraft();
-        //this.logo = container.getLogo();
-        this.logo = null;
+        this.logo = container.getLogo();
     }
 
     @Override
     public void drawEntry(int index, int x, int y, int width, int height, int mouseX, int mouseY, boolean mouseHovered) {
         this.mc.fontRendererObj.drawString(this.container.getName(), x + 32 + 3, y + 1, 16777215);
         this.mc.fontRendererObj.drawString(this.container.getModID(), x + 32 + 3, y + this.mc.fontRendererObj.FONT_HEIGHT + 3, 8421504);
-        this.mc.fontRendererObj.drawString(this.container.getVersion(), x + 32 + 3, y + this.mc.fontRendererObj.FONT_HEIGHT * 2 + 4, 8421504);
+        this.mc.fontRendererObj.drawString(this.container.getVersion().toString(), x + 32 + 3, y + this.mc.fontRendererObj.FONT_HEIGHT * 2 + 4, 8421504);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(this.logo != null ? this.logo : ICON_MISSING);
         GlStateManager.enableBlend();

@@ -1,6 +1,6 @@
 --- /net/minecraft/client/entity
 +++ /net/minecraft/client/entity
-@@ -826,7 +826,7 @@
+@@ -831,7 +831,7 @@
                                  Vec3d var27 = var20.subtract(var25);
                                  Vec3d var28 = var19.add(var25);
                                  Vec3d var29 = var20.add(var25);

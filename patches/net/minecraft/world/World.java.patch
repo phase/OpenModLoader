@@ -1,6 +1,14 @@
 --- /net/minecraft/world
 +++ /net/minecraft/world
-@@ -1673,7 +1673,8 @@
+@@ -846,6 +846,7 @@
+                 this.updateAllPlayersSleepingFlag();
+             }
+ 
++            if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var1)) && !var4) return false;
+             this.getChunkFromChunkCoords(var2, var3).addEntity(var1);
+             this.loadedEntityList.add(var1);
+             this.onEntityAdded(var1);
+@@ -1708,7 +1709,8 @@
      }
  
      public Explosion newExplosion(@Nullable Entity var1, double var2, double var4, double var6, float var8, boolean var9, boolean var10) {
@@ -10,11 +18,32 @@
          var11.doExplosionA();
          var11.doExplosionB(true);
          return var11;
-@@ -1842,6 +1843,7 @@
+@@ -1883,6 +1885,7 @@
      }
  
      public void tick() {
 +        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.WorldUpdate(this));
          this.updateWeather();
      }
+ 
+@@ -2320,9 +2323,12 @@
+     }
+ 
+     public void loadEntities(Collection<Entity> var1) {
++        if(false)
+         this.loadedEntityList.addAll(var1);
+ 
+         for(Entity var3 : var1) {
++            if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var3))) continue;
++            this.loadedEntityList.add(var3);
+             this.onEntityAdded(var3);
+         }
+ 
+@@ -2590,6 +2596,7 @@
+         }
+ 
+         if(!this.loadedEntityList.contains(var1)) {
++            if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var1))) return;
+             this.loadedEntityList.add(var1);
+         }
  

@@ -1,6 +1,6 @@
 --- /net/minecraft/entity/monster
 +++ /net/minecraft/entity/monster
-@@ -63,7 +63,7 @@
+@@ -65,7 +65,7 @@
      private static final DataParameter<Integer> SKELETON_VARIANT = EntityDataManager.<Integer>createKey(EntitySkeleton.class, DataSerializers.VARINT);
      private static final DataParameter<Boolean> SWINGING_ARMS = EntityDataManager.<Boolean>createKey(EntitySkeleton.class, DataSerializers.BOOLEAN);
      private final EntityAIAttackRangedBow aiArrowAttack = new EntityAIAttackRangedBow(this, 1.0D, 20, 15.0F);

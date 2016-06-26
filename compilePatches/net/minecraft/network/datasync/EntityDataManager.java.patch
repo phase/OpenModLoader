@@ -1,11 +1,11 @@
 --- /net/minecraft/network/datasync
 +++ /net/minecraft/network/datasync
-@@ -251,7 +251,7 @@
+@@ -258,7 +258,7 @@
+     @Strippable(
+         side = Side.CLIENT
+     )
+-    protected <T> void setEntryValue(EntityDataManager.a<T> var1, EntityDataManager.a<?> var2) {
++    protected <T> void setEntryValue(EntityDataManager.a<T> var1, EntityDataManager.a<T> var2) {
+         var1.setValue(var2.getValue());
      }
  
-     protected <T> void setEntryValue(EntityDataManager.a<T> var1, EntityDataManager.a<?> var2) {
--        var1.setValue(var2.getValue());
-+        var1.setValue((T)var2.getValue());
-     }
- 
-     public boolean isEmpty() {

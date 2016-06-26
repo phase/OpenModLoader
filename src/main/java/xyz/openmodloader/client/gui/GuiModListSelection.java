@@ -7,6 +7,7 @@ import xyz.openmodloader.modloader.ModLoader;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class GuiModListSelection extends GuiListExtended {
@@ -23,7 +24,7 @@ public class GuiModListSelection extends GuiListExtended {
     public void refreshList(String search) {
         this.selectEntry(-1);
         this.entries.clear();
-        this.entries.addAll(ModLoader.MODS.stream().filter(mod -> mod.getName().contains(search) || mod.getModID().contains(search)).map(mod -> new GuiModListSelectionEntry(this, mod)).collect(Collectors.toList()));
+        this.entries.addAll(ModLoader.MODS.stream().filter(mod -> mod.getName().toLowerCase(Locale.ENGLISH).contains(search.toLowerCase(Locale.ENGLISH)) || mod.getModID().toLowerCase(Locale.ENGLISH).contains(search.toLowerCase(Locale.ENGLISH))).map(mod -> new GuiModListSelectionEntry(this, mod)).collect(Collectors.toList()));
     }
 
     @Override

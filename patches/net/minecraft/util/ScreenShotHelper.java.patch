@@ -1,6 +1,6 @@
 --- /net/minecraft/util
 +++ /net/minecraft/util
-@@ -41,10 +41,14 @@
+@@ -46,10 +46,14 @@
                  var7 = new File(var5, var1);
              }
  

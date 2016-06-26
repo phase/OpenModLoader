@@ -1,6 +1,6 @@
 --- /net/minecraft/entity/monster
 +++ /net/minecraft/entity/monster
-@@ -176,7 +176,7 @@
+@@ -181,7 +181,7 @@
  
      class a extends EntityAINearestAttackableTarget<EntityPlayer> {
          public a() {

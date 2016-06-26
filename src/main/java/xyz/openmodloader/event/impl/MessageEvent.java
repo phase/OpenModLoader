@@ -3,7 +3,7 @@ package xyz.openmodloader.event.impl;
 import net.minecraft.util.text.ITextComponent;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.Event;
-import xyz.openmodloader.event.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Side;
 
 public class MessageEvent extends Event {
     /**

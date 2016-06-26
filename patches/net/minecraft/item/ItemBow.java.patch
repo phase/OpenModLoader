@@ -1,6 +1,6 @@
 --- /net/minecraft/item
 +++ /net/minecraft/item
-@@ -68,7 +68,7 @@
+@@ -76,7 +76,7 @@
      public void onPlayerStoppedUsing(ItemStack var1, World var2, EntityLivingBase var3, int var4) {
          if(var3 instanceof EntityPlayer) {
              EntityPlayer var5 = (EntityPlayer)var3;
@@ -9,7 +9,7 @@
              ItemStack var7 = this.findAmmo(var5);
              if(var7 != null || var6) {
                  if(var7 == null) {
-@@ -87,17 +87,17 @@
+@@ -95,17 +95,17 @@
                              var12.setIsCritical(true);
                          }
  

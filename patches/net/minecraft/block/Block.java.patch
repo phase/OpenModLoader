@@ -1,6 +1,6 @@
 --- /net/minecraft/block
 +++ /net/minecraft/block
-@@ -574,15 +574,20 @@
+@@ -591,15 +591,20 @@
          if(!var1.isRemote) {
              int var6 = this.quantityDroppedWithBonus(var5, var1.rand);
  
@@ -21,7 +21,7 @@
          }
      }
  
-@@ -689,13 +694,13 @@
+@@ -709,13 +714,13 @@
      public void harvestBlock(World var1, EntityPlayer var2, BlockPos var3, IBlockState var4, @Nullable TileEntity var5, @Nullable ItemStack var6) {
          var2.addStat(StatList.getBlockStats(this));
          var2.addExhaustion(0.025F);

@@ -1,0 +1,270 @@
+--- /net/minecraft/server/management
++++ /net/minecraft/server/management
+@@ -22,22 +22,12 @@
+ import java.util.Map;
+ import java.util.UUID;
+ import javax.annotation.Nullable;
++
++import com.mojang.authlib.yggdrasil.ProfileNotFoundException;
+ import net.minecraft.entity.player.EntityPlayer;
+ import net.minecraft.server.MinecraftServer;
+ import net.minecraft.server.dedicated.DedicatedServer;
+ import net.minecraft.server.dedicated.PropertyManager;
+-import net.minecraft.server.management.PlayerList;
+-import net.minecraft.server.management.PreYggdrasilConverter$2;
+-import net.minecraft.server.management.PreYggdrasilConverter$3;
+-import net.minecraft.server.management.PreYggdrasilConverter$4;
+-import net.minecraft.server.management.PreYggdrasilConverter$6;
+-import net.minecraft.server.management.PreYggdrasilConverter$ConversionError;
+-import net.minecraft.server.management.UserListBans;
+-import net.minecraft.server.management.UserListEntryBan;
+-import net.minecraft.server.management.UserListIPBans;
+-import net.minecraft.server.management.UserListIPBansEntry;
+-import net.minecraft.server.management.UserListOps;
+-import net.minecraft.server.management.UserListWhitelist;
+ import net.minecraft.util.StringUtils;
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+@@ -100,7 +90,7 @@
+         side = Side.SERVER
+     )
+     static List<String> readFile(File var0, Map<String, String[]> var1) throws IOException {
+-        List var2 = Files.readLines(var0, Charsets.UTF_8);
++        List<String> var2 = Files.readLines(var0, Charsets.UTF_8);
+ 
+         for(String var4 : var2) {
+             var4 = var4.trim();
+@@ -117,28 +107,50 @@
+         side = Side.SERVER
+     )
+     public static boolean convertUserBanlist(MinecraftServer var0) {
+-        UserListBans var1 = new UserListBans(PlayerList.FILE_PLAYERBANS);
++        UserListBans var1b = new UserListBans(PlayerList.FILE_PLAYERBANS);
+         if(OLD_PLAYERBAN_FILE.exists() && OLD_PLAYERBAN_FILE.isFile()) {
+-            if(var1.getSaveFile().exists()) {
++            if(var1b.getSaveFile().exists()) {
+                 try {
+-                    var1.readSavedFile();
++                    var1b.readSavedFile();
+                 } catch (FileNotFoundException var6) {
+-                    LOGGER.warn("Could not load existing file {}", new Object[]{var1.getSaveFile().getName(), var6});
++                    LOGGER.warn("Could not load existing file {}", new Object[]{var1b.getSaveFile().getName(), var6});
+                 }
+             }
+ 
+             try {
+-                HashMap var2 = Maps.newHashMap();
+-                readFile(OLD_PLAYERBAN_FILE, var2);
+-                PreYggdrasilConverter$2 var3 = new PreYggdrasilConverter$2(var0, var2, var1);
+-                lookupNames(var0, var2.keySet(), var3);
+-                var1.writeChanges();
++                HashMap var2b = Maps.<String, String[]>newHashMap();
++                readFile(OLD_PLAYERBAN_FILE, var2b);
++                ProfileLookupCallback var3 = new ProfileLookupCallback() {
++                    public void onProfileLookupSucceeded(GameProfile var1) {
++                        var0.getPlayerProfileCache().addEntry(var1);
++                        String[] var2 = (String[])var2b.get(var1.getName().toLowerCase(Locale.ROOT));
++                        if(var2 == null) {
++                            PreYggdrasilConverter.LOGGER.warn("Could not convert user banlist entry for {}", new Object[]{var1.getName()});
++                            throw new PreYggdrasilConverter$ConversionError("Profile not in the conversionlist");
++                        } else {
++                            Date var3 = var2.length > 1?PreYggdrasilConverter.parseDate(var2[1], (Date)null):null;
++                            String var4 = var2.length > 2?var2[2]:null;
++                            Date var5 = var2.length > 3?PreYggdrasilConverter.parseDate(var2[3], (Date)null):null;
++                            String var6 = var2.length > 4?var2[4]:null;
++                            var1b.addEntry(new UserListBansEntry(var1, var3, var4, var5, var6));
++                        }
++                    }
++
++                    public void onProfileLookupFailed(GameProfile var1, Exception var2) {
++                        PreYggdrasilConverter.LOGGER.warn("Could not lookup user banlist entry for {}", new Object[]{var1.getName(), var2});
++                        if(!(var2 instanceof ProfileNotFoundException)) {
++                            throw new PreYggdrasilConverter$ConversionError("Could not request user " + var1.getName() + " from backend systems", var2);
++                        }
++                    }
++                };
++                lookupNames(var0, var2b.keySet(), var3);
++                var1b.writeChanges();
+                 backupConverted(OLD_PLAYERBAN_FILE);
+                 return true;
+             } catch (IOException var4) {
+                 LOGGER.warn("Could not read old user banlist to convert it!", var4);
+                 return false;
+-            } catch (PreYggdrasilConverter$ConversionError var5) {
++            } catch (ConversionError var5) {
+                 LOGGER.error("Conversion failed, please try again later", var5);
+                 return false;
+             }
+@@ -162,7 +174,7 @@
+             }
+ 
+             try {
+-                HashMap var2 = Maps.newHashMap();
++                HashMap<String, String[]> var2 = Maps.newHashMap();
+                 readFile(OLD_IPBAN_FILE, var2);
+ 
+                 for(String var4 : var2.keySet()) {
+@@ -202,7 +214,19 @@
+ 
+             try {
+                 List var2 = Files.readLines(OLD_OPS_FILE, Charsets.UTF_8);
+-                PreYggdrasilConverter$3 var3 = new PreYggdrasilConverter$3(var0, var1);
++                ProfileLookupCallback var3 = new ProfileLookupCallback() {
++                    public void onProfileLookupSucceeded(GameProfile var1b) {
++                        var0.getPlayerProfileCache().addEntry(var1b);
++                        var1.addEntry(new UserListOpsEntry(var1b, var0.getOpPermissionLevel(), false));
++                    }
++
++                    public void onProfileLookupFailed(GameProfile var1, Exception var2) {
++                        PreYggdrasilConverter.LOGGER.warn("Could not lookup oplist entry for {}", new Object[]{var1.getName(), var2});
++                        if(!(var2 instanceof ProfileNotFoundException)) {
++                            throw new PreYggdrasilConverter$ConversionError("Could not request user " + var1.getName() + " from backend systems", var2);
++                        }
++                    }
++                };
+                 lookupNames(var0, var2, var3);
+                 var1.writeChanges();
+                 backupConverted(OLD_OPS_FILE);
+@@ -210,7 +234,7 @@
+             } catch (IOException var4) {
+                 LOGGER.warn("Could not read old oplist to convert it!", var4);
+                 return false;
+-            } catch (PreYggdrasilConverter$ConversionError var5) {
++            } catch (ConversionError var5) {
+                 LOGGER.error("Conversion failed, please try again later", var5);
+                 return false;
+             }
+@@ -235,7 +259,19 @@
+ 
+             try {
+                 List var2 = Files.readLines(OLD_WHITELIST_FILE, Charsets.UTF_8);
+-                PreYggdrasilConverter$4 var3 = new PreYggdrasilConverter$4(var0, var1);
++                ProfileLookupCallback var3 = new ProfileLookupCallback() {
++                    public void onProfileLookupSucceeded(GameProfile var1b) {
++                        var0.getPlayerProfileCache().addEntry(var1b);
++                        var1.addEntry(new UserListWhitelistEntry(var1b));
++                    }
++
++                    public void onProfileLookupFailed(GameProfile var1, Exception var2) {
++                        PreYggdrasilConverter.LOGGER.warn("Could not lookup user whitelist entry for {}", new Object[]{var1.getName(), var2});
++                        if(!(var2 instanceof ProfileNotFoundException)) {
++                            throw new PreYggdrasilConverter$ConversionError("Could not request user " + var1.getName() + " from backend systems", var2);
++                        }
++                    }
++                };
+                 lookupNames(var0, var2, var3);
+                 var1.writeChanges();
+                 backupConverted(OLD_WHITELIST_FILE);
+@@ -243,7 +279,7 @@
+             } catch (IOException var4) {
+                 LOGGER.warn("Could not read old whitelist to convert it!", var4);
+                 return false;
+-            } catch (PreYggdrasilConverter$ConversionError var5) {
++            } catch (ConversionError var5) {
+                 LOGGER.error("Conversion failed, please try again later", var5);
+                 return false;
+             }
+@@ -275,10 +311,58 @@
+ 
+             try {
+                 String[] var14 = (String[])var6.toArray(new String[var6.size()]);
+-                PreYggdrasilConverter$6 var15 = new PreYggdrasilConverter$6(var0, var3, var4, var2, var14);
++                ProfileLookupCallback var15 = new ProfileLookupCallback() {
++                    @Override
++                    public void onProfileLookupSucceeded(GameProfile gameProfile) {
++                        var0.getPlayerProfileCache().addEntry(gameProfile);
++                        UUID var2 = gameProfile.getId();
++                        if(var2 == null) {
++                            throw new PreYggdrasilConverter$ConversionError("Missing UUID for user profile " + gameProfile.getName());
++                        } else {
++                            this.renamePlayerFile(var3, this.getFileNameForProfile(gameProfile), var2.toString());
++                        }
++                    }
++
++                    @Override
++                    public void onProfileLookupFailed(GameProfile var1, Exception var2) {
++                        PreYggdrasilConverter.LOGGER.warn("Could not lookup user uuid for {}", new Object[]{var1.getName(), var2});
++                        if(var2 instanceof ProfileNotFoundException) {
++                            String var3 = this.getFileNameForProfile(var1);
++                            this.renamePlayerFile(var4, var3, var3);
++                        } else {
++                            throw new PreYggdrasilConverter$ConversionError("Could not request user " + var1.getName() + " from backend systems", var2);
++                        }
++                    }
++
++                    private void renamePlayerFile(File var1, String var2, String var3) {
++                        File var4 = new File(var2, var2 + ".dat");
++                        File var5 = new File(var1, var3 + ".dat");
++                        PreYggdrasilConverter.mkdir(var1);
++                        if(!var4.renameTo(var5)) {
++                            throw new PreYggdrasilConverter$ConversionError("Could not convert file for " + var2);
++                        }
++                    }
++
++                    private String getFileNameForProfile(GameProfile var1) {
++                        String var2 = null;
++
++                        for(String var6 : var14) {
++                            if(var6 != null && var6.equalsIgnoreCase(var1.getName())) {
++                                var2 = var6;
++                                break;
++                            }
++                        }
++
++                        if(var2 == null) {
++                            throw new PreYggdrasilConverter$ConversionError("Could not find the filename for " + var1.getName() + " anymore");
++                        } else {
++                            return var2;
++                        }
++                    }
++                };
+                 lookupNames(var0, Lists.newArrayList(var14), var15);
+                 return true;
+-            } catch (PreYggdrasilConverter$ConversionError var13) {
++            } catch (ConversionError var13) {
+                 LOGGER.error("Conversion failed, please try again later", var13);
+                 return false;
+             }
+@@ -293,10 +377,10 @@
+     private static void mkdir(File var0) {
+         if(var0.exists()) {
+             if(!var0.isDirectory()) {
+-                throw new PreYggdrasilConverter$ConversionError("Can\'t create directory " + var0.getName() + " in world save directory.");
++                throw new PreYggdrasilConverter.ConversionError("Can\'t create directory " + var0.getName() + " in world save directory.");
+             }
+         } else if(!var0.mkdirs()) {
+-            throw new PreYggdrasilConverter$ConversionError("Can\'t create directory " + var0.getName() + " in world save directory.");
++            throw new PreYggdrasilConverter.ConversionError("Can\'t create directory " + var0.getName() + " in world save directory.");
+         }
+     }
+ 
+@@ -403,4 +487,29 @@
+ 
+         return var2;
+     }
++
++    @Strippable(
++            side = Side.SERVER
++    )
++    public static class ConversionError extends RuntimeException {
++        private ConversionError(String var1, Throwable var2) {
++            super(var1, var2);
++        }
++
++        private ConversionError(String var1) {
++            super(var1);
++        }
++    }
++
++    static class PreYggdrasilConverter$ConversionError extends RuntimeException {
++        private PreYggdrasilConverter$ConversionError(String var1, Throwable var2) {
++            super(var1, var2);
++        }
++
++        private PreYggdrasilConverter$ConversionError(String var1) {
++            super(var1);
++        }
++    }
+ }
++
++

@@ -1,6 +1,6 @@
 --- /net/minecraft/block
 +++ /net/minecraft/block
-@@ -125,7 +125,7 @@
+@@ -127,7 +127,7 @@
  
      private IBlockState updateSurroundingRedstone(World var1, BlockPos var2, IBlockState var3) {
          var3 = this.calculateCurrentChanges(var1, var2, var2, var3);

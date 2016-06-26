@@ -1,6 +1,14 @@
 --- /net/minecraft/entity
 +++ /net/minecraft/entity
-@@ -308,6 +308,7 @@
+@@ -205,6 +205,7 @@
+         this.dataManager.register(CUSTOM_NAME, "");
+         this.dataManager.register(SILENT, Boolean.valueOf(false));
+         this.dataManager.register(field_189655_aD, Boolean.valueOf(false));
++        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Constructing(this));
+         this.entityInit();
+     }
+ 
+@@ -325,6 +326,7 @@
      }
  
      public void onUpdate() {
@@ -8,3 +16,11 @@
          if(!this.worldObj.isRemote) {
              this.setFlag(6, this.isGlowing());
          }
+@@ -1908,6 +1910,7 @@
+             this.worldObj.theProfiler.startSection("changeDimension");
+             MinecraftServer var2 = this.getServer();
+             int var3 = this.dimension;
++            var1 = xyz.openmodloader.event.impl.EntityEvent.ChangeDimension.handle(this, var3, var1);
+             WorldServer var4 = var2.worldServerForDimension(var3);
+             WorldServer var5 = var2.worldServerForDimension(var1);
+             this.dimension = var1;

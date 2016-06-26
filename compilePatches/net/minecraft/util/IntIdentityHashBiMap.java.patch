@@ -1,6 +1,6 @@
 --- /net/minecraft/util
 +++ /net/minecraft/util
-@@ -18,9 +18,9 @@
+@@ -20,9 +20,9 @@
  
      public IntIdentityHashBiMap(int var1) {
          var1 = (int)((float)var1 / 0.8F);
@@ -12,12 +12,9 @@
      }
  
      public int getId(K var1) {
-@@ -51,11 +51,11 @@
-     }
- 
+@@ -55,15 +55,15 @@
      private void grow(int var1) {
--        Object[] var2 = this.values;
-+        K[] var2 = this.values;
+         Object[] var2 = this.values;
          int[] var3 = this.intKeys;
 -        this.values = (Object[])(new Object[var1]);
 +        this.values = (K[])(new Object[var1]);
@@ -26,4 +23,11 @@
 +        this.byId = (K[])(new Object[var1]);
          this.nextFreeIndex = 0;
          this.mapSize = 0;
+ 
+         for(int var4 = 0; var4 < var2.length; ++var4) {
+             if(var2[var4] != null) {
+-                this.put(var2[var4], var3[var4]);
++                this.put((K) var2[var4], var3[var4]);
+             }
+         }
  

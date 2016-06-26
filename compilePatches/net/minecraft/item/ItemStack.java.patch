@@ -1,6 +1,6 @@
 --- /net/minecraft/item
 +++ /net/minecraft/item
-@@ -504,7 +504,7 @@
+@@ -509,7 +509,7 @@
          }
  
          for(EntityEquipmentSlot var34 : EntityEquipmentSlot.values()) {

@@ -1,28 +1,37 @@
 package xyz.openmodloader;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import xyz.openmodloader.event.EventBus;
-import xyz.openmodloader.event.strippable.Side;
+import xyz.openmodloader.launcher.OMLStrippableTransformer;
+import xyz.openmodloader.launcher.strippable.Environment;
 import xyz.openmodloader.modloader.ModLoader;
+import xyz.openmodloader.modloader.Version;
 
 public enum OpenModLoader {
     INSTANCE;
 
-    private String version = "0.0.1-develop";
-    private Logger logger = LogManager.getLogger();
+    private Version mcversion = new Version("1.10.2");
+    private Version version = new Version("0.0.1-develop");
+    private Logger logger = LogManager.getFormatterLogger("OpenModLoader");
     private EventBus eventBus = new EventBus();
     private ISidedHandler sidedHandler;
 
     public void minecraftConstruction(ISidedHandler sidedHandler) {
         this.sidedHandler = sidedHandler;
         getLogger().info("Loading OpenModLoader " + getVersion());
+        getLogger().info("Running Minecraft %s on %s using Java %s", mcversion, SystemUtils.OS_NAME, SystemUtils.JAVA_VERSION);
         ModLoader.registerMods();
         getSidedHandler().onInitialize();
     }
 
-    public String getVersion() {
+    public Version getMinecraftVersion() {
+        return mcversion;
+    }
+
+    public Version getVersion() {
         return version;
     }
 
@@ -36,5 +45,9 @@ public enum OpenModLoader {
 
     public ISidedHandler getSidedHandler() {
         return sidedHandler;
+    }
+
+    public Environment getEnvironment() {
+        return OMLStrippableTransformer.getEnvironment();
     }
 }

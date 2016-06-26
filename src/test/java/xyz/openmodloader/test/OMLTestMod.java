@@ -1,9 +1,19 @@
 package xyz.openmodloader.test;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.Arrays;
+
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
@@ -12,19 +22,25 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldServer;
 import org.lwjgl.input.Keyboard;
 import xyz.openmodloader.OpenModLoader;
+import xyz.openmodloader.client.gui.GuiModInfo;
 import xyz.openmodloader.client.gui.GuiModList;
-import xyz.openmodloader.event.impl.*;
-import xyz.openmodloader.event.strippable.Side;
+import xyz.openmodloader.config.Config;
+import xyz.openmodloader.event.impl.ArmorEvent;
+import xyz.openmodloader.event.impl.BlockEvent;
+import xyz.openmodloader.event.impl.CommandEvent;
+import xyz.openmodloader.event.impl.EnchantmentEvent;
+import xyz.openmodloader.event.impl.EntityEvent;
+import xyz.openmodloader.event.impl.ExplosionEvent;
+import xyz.openmodloader.event.impl.GuiEvent;
+import xyz.openmodloader.event.impl.InputEvent;
+import xyz.openmodloader.event.impl.MessageEvent;
+import xyz.openmodloader.event.impl.ScreenshotEvent;
+import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.modloader.IMod;
 import xyz.openmodloader.network.Channel;
 import xyz.openmodloader.network.ChannelManager;
 import xyz.openmodloader.network.DataType;
 import xyz.openmodloader.network.Packet;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Arrays;
 
 public class OMLTestMod implements IMod {
     private Channel channel;
@@ -66,6 +82,20 @@ public class OMLTestMod implements IMod {
                 }
             }
         });
+
+        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Constructing.class, this::onEntityConstruct);
+        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Join.class, this::onEntityJoinWorld);
+
+        OpenModLoader.INSTANCE.getEventBus().register(ArmorEvent.Equip.class, this::onArmorEquip);
+        OpenModLoader.INSTANCE.getEventBus().register(ArmorEvent.Unequip.class, this::onArmorUnequip);
+
+        Config config = new Config(new File("./config/test.conf"));
+        Config category1 = config.getConfig("category1", "configures stuff");
+        category1.getBoolean("boolean1", true, "this is a boolean");
+        category1.getBoolean("boolean2", true, "this is another boolean");
+        Config category2 = category1.getConfig("category2", "configures more stuff");
+        category2.getString("string1", "string", "this is a string");
+        config.save();
 
         testNetwork();
     }
@@ -114,7 +144,7 @@ public class OMLTestMod implements IMod {
     }
 
     private void onGuiDraw(GuiEvent.Draw event) {
-        if (!(event.getGui() instanceof GuiMainMenu) && !(event.getGui() instanceof GuiModList)) {
+        if (!(event.getGui() instanceof GuiMainMenu) && !(event.getGui() instanceof GuiModList) && !(event.getGui() instanceof GuiModInfo)) {
             Minecraft.getMinecraft().fontRendererObj.drawString("Open Mod Loader", 5, 5, 0xFFFFFFFF);
         }
     }
@@ -178,4 +208,28 @@ public class OMLTestMod implements IMod {
         }
     }
 
+    private void onEntityConstruct(EntityEvent.Constructing event) {
+        if (event.getEntity() instanceof EntityPlayer) {
+            OpenModLoader.INSTANCE.getLogger().info("A player was constructed.");
+        }
+    }
+
+    private void onEntityJoinWorld(EntityEvent.Join event) {
+        if (event.getEntity() instanceof EntityPlayer) {
+            OpenModLoader.INSTANCE.getLogger().info(String.format("A player joined the world on side %s.", event.getWorld().isRemote ? "client" : "server"));
+        }
+        if (event.getEntity() instanceof EntityPig) {
+            event.setCanceled(true);
+        }
+    }
+
+    private void onArmorEquip(ArmorEvent.Equip event){
+        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " equipped " + event.getArmor().getItem().getUnlocalizedName() + " to the " + event.getSlot().getName() + " slot");
+        event.setCanceled(true);
+    }
+
+    private void onArmorUnequip(ArmorEvent.Unequip event){
+        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " unequipped " + event.getArmor().getItem().getUnlocalizedName() + " to the " + event.getSlot().getName() + " slot");
+        event.setCanceled(true);
+    }
 }

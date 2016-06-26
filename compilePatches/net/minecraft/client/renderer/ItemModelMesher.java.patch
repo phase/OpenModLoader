@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer
 +++ /net/minecraft/client/renderer
-@@ -76,7 +76,7 @@
+@@ -81,7 +81,7 @@
      public void rebuildCache() {
          this.simpleShapesCache.clear();
  

@@ -1,6 +1,6 @@
 --- /net/minecraft/entity/projectile
 +++ /net/minecraft/entity/projectile
-@@ -35,7 +35,7 @@
+@@ -40,7 +40,7 @@
  
      protected void onImpact(RayTraceResult var1) {
          if(!this.worldObj.isRemote) {

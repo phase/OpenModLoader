@@ -1,17 +1,18 @@
 package xyz.openmodloader.launcher;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Sets;
+
 import net.minecraft.client.main.Main;
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
-import xyz.openmodloader.modloader.ModLoader;
 
 public class OMLTweaker implements ITweaker {
     private Map<String, String> args;
@@ -46,14 +47,20 @@ public class OMLTweaker implements ITweaker {
 
     @Override
     public void injectIntoClassLoader(LaunchClassLoader classLoader) {
-        classLoader.registerTransformer(OMLClassTransformer.class.getCanonicalName());
-        classLoader.registerTransformer(OMLSideTransformer.class.getCanonicalName());
-        classLoader.registerTransformer(OMLAccessTransformer.class.getCanonicalName());
+        classLoader.registerTransformer("xyz.openmodloader.launcher.OMLStrippableTransformer");
+        classLoader.registerTransformer("xyz.openmodloader.launcher.OMLAccessTransformer");
         classLoader.addClassLoaderExclusion("com.google.common");
         classLoader.addTransformerExclusion("xyz.openmodloader.modloader");
         classLoader.addTransformerExclusion("xyz.openmodloader.launcher");
         try {
-            Class.forName("xyz.openmodloader.modloader.ModLoader", true, classLoader).getMethod("loadMods").invoke(null);
+            Class<?> cls = Class.forName("xyz.openmodloader.modloader.ModLoader", true, classLoader);
+            cls.getMethod("loadMods").invoke(null);
+            //have to use reflection, cause class loader wizardry
+            Field field = cls.getDeclaredField("ID_MAP");
+            field.setAccessible(true);
+            Map<String, ?> map = (Map<String, ?>) field.get(null);
+            OMLStrippableTransformer.MODS = Sets.newHashSetWithExpectedSize(map.size());
+            OMLStrippableTransformer.MODS.addAll(map.keySet());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

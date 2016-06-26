@@ -1,6 +1,6 @@
 --- /net/minecraft/client/audio
 +++ /net/minecraft/client/audio
-@@ -69,7 +69,7 @@
+@@ -74,7 +74,7 @@
              try {
                  for(IResource var6 : var1.getAllResources(new ResourceLocation(var3, "sounds.json"))) {
                      try {

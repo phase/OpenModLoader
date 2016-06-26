@@ -1,6 +1,6 @@
 --- /net/minecraft/world
 +++ /net/minecraft/world
-@@ -2182,7 +2182,7 @@
+@@ -2226,7 +2226,7 @@
          ArrayList var3 = Lists.newArrayList();
  
          for(Entity var5 : this.loadedEntityList) {
@@ -9,7 +9,7 @@
                  var3.add(var5);
              }
          }
-@@ -2194,7 +2194,7 @@
+@@ -2238,7 +2238,7 @@
          ArrayList var3 = Lists.newArrayList();
  
          for(Entity var5 : this.playerEntities) {

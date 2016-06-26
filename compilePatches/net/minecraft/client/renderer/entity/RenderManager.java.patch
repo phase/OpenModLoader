@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer/entity
 +++ /net/minecraft/client/renderer/entity
-@@ -273,7 +273,7 @@
+@@ -278,7 +278,7 @@
      public <T extends Entity> Render<T> getEntityClassRenderObject(Class<? extends Entity> var1) {
          Render var2 = (Render)this.entityRenderMap.get(var1);
          if(var2 == null && var1 != Entity.class) {
@@ -9,7 +9,7 @@
              this.entityRenderMap.put(var1, var2);
          }
  
-@@ -281,11 +281,11 @@
+@@ -286,11 +286,11 @@
      }
  
      @Nullable

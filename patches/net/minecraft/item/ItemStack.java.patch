@@ -1,6 +1,6 @@
 --- /net/minecraft/item
 +++ /net/minecraft/item
-@@ -216,7 +216,7 @@
+@@ -218,7 +218,7 @@
              return false;
          } else {
              if(var1 > 0) {

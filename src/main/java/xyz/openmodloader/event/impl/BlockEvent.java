@@ -1,6 +1,5 @@
 package xyz.openmodloader.event.impl;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -238,7 +237,7 @@ public class BlockEvent extends Event {
          * @return The list of items that the block will drop
          */
         public static List<ItemStack> handle(World world, IBlockState state, BlockPos pos, float chance, int fortune, List<ItemStack> drops) {
-            BlockEvent.HarvestDrops event = new xyz.openmodloader.event.impl.BlockEvent.HarvestDrops(world, state, pos, chance, fortune, ImmutableList.copyOf(drops));
+            BlockEvent.HarvestDrops event = new xyz.openmodloader.event.impl.BlockEvent.HarvestDrops(world, state, pos, chance, fortune, drops);
             OpenModLoader.INSTANCE.getEventBus().post(event);
             return event.getDrops();
         }

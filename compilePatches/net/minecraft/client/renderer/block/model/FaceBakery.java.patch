@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer/block/model
 +++ /net/minecraft/client/renderer/block/model
-@@ -19,22 +19,22 @@
+@@ -24,22 +24,22 @@
      private static final float SCALE_ROTATION_22_5 = 1.0F / (float)Math.cos(0.39269909262657166D) - 1.0F;
      private static final float SCALE_ROTATION_GENERAL = 1.0F / (float)Math.cos(0.7853981852531433D) - 1.0F;
      private static final FaceBakery.a[] UV_ROTATIONS = new FaceBakery.a[ModelRotation.values().length * EnumFacing.values().length];

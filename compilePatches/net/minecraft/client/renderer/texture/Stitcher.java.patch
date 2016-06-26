@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer/texture
 +++ /net/minecraft/client/renderer/texture
-@@ -60,7 +60,7 @@
+@@ -65,7 +65,7 @@
      }
  
      public List<TextureAtlasSprite> getStichSlots() {

@@ -1,6 +1,6 @@
 --- /net/minecraft/block
 +++ /net/minecraft/block
-@@ -34,7 +34,7 @@
+@@ -39,7 +39,7 @@
      public void harvestBlock(World var1, EntityPlayer var2, BlockPos var3, IBlockState var4, @Nullable TileEntity var5, @Nullable ItemStack var6) {
          var2.addStat(StatList.getBlockStats(this));
          var2.addExhaustion(0.025F);
@@ -9,7 +9,7 @@
              ItemStack var9 = this.createStackedBlock(var4);
              if(var9 != null) {
                  spawnAsEntity(var1, var3, var9);
-@@ -45,7 +45,7 @@
+@@ -50,7 +50,7 @@
                  return;
              }
  

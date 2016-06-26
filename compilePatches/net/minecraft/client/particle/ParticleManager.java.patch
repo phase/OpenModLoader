@@ -1,6 +1,6 @@
 --- /net/minecraft/client/particle
 +++ /net/minecraft/client/particle
-@@ -264,7 +264,7 @@
+@@ -269,7 +269,7 @@
          GlStateManager.blendFunc(GlStateManager.r.SRC_ALPHA, GlStateManager.l.ONE_MINUS_SRC_ALPHA);
          GlStateManager.alphaFunc(516, 0.003921569F);
  
@@ -9,11 +9,11 @@
              for(int var9 = 0; var9 < 2; ++var9) {
                  if(!this.fxLayers[var8][var9].isEmpty()) {
                      switch(var9) {
-@@ -300,9 +300,10 @@
+@@ -305,9 +305,10 @@
                                      return var13.toString();
                                  }
                              });
-+                            final int finalVar = var8;
++                            int finalVar = var8;
                              var16.setDetail("Particle Type", new ICrashReportDetail<String>() {
                                  public String call() throws Exception {
 -                                    return var8 == 0?"MISC_TEXTURE":(var8 == 1?"TERRAIN_TEXTURE":(var8 == 3?"ENTITY_PARTICLE_TEXTURE":"Unknown - " + var8));
@@ -21,7 +21,7 @@
                                  }
                              });
                              throw new ReportedException(var15);
-@@ -328,7 +329,7 @@
+@@ -333,7 +334,7 @@
          float var8 = MathHelper.cos(var1.rotationPitch * 0.017453292F);
  
          for(int var9 = 0; var9 < 2; ++var9) {

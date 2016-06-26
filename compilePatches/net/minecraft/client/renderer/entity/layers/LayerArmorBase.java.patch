@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer/entity/layers
 +++ /net/minecraft/client/renderer/entity/layers
-@@ -46,7 +46,7 @@
+@@ -51,7 +51,7 @@
          if(var10 != null && var10.getItem() instanceof ItemArmor) {
              ItemArmor var11 = (ItemArmor)var10.getItem();
              if(var11.getEquipmentSlot() == var9) {

@@ -1,6 +1,6 @@
 --- /net/minecraft/block
 +++ /net/minecraft/block
-@@ -239,7 +239,7 @@
+@@ -253,7 +253,7 @@
  
      @Nullable
      public RayTraceResult collisionRayTrace(IBlockState var1, World var2, BlockPos var3, Vec3d var4, Vec3d var5) {

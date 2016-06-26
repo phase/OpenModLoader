@@ -1,6 +1,6 @@
 --- /net/minecraft/server/management
 +++ /net/minecraft/server/management
-@@ -362,7 +362,7 @@
+@@ -364,7 +364,7 @@
  
      public EntityPlayerMP createPlayerForUser(GameProfile var1) {
          UUID var2 = EntityPlayer.getUUID(var1);

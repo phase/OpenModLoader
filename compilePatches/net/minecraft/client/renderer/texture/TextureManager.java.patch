@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer/texture
 +++ /net/minecraft/client/renderer/texture
-@@ -52,7 +52,7 @@
+@@ -57,7 +57,7 @@
          }
      }
  
@@ -9,11 +9,11 @@
          boolean var3 = true;
  
          try {
-@@ -66,9 +66,10 @@
+@@ -71,9 +71,10 @@
              CrashReport var5 = CrashReport.makeCrashReport(var9, "Registering texture");
              CrashReportCategory var6 = var5.makeCategory("Resource location being registered");
              var6.addCrashSection("Resource location", var1);
-+            final ITextureObject finalVar = var2;
++            ITextureObject finalVar = var2;
              var6.setDetail("Texture object class", new ICrashReportDetail<String>() {
                  public String call() throws Exception {
 -                    return var2.getClass().getName();

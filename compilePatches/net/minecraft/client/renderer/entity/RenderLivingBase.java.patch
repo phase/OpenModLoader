@@ -1,6 +1,6 @@
 --- /net/minecraft/client/renderer/entity
 +++ /net/minecraft/client/renderer/entity
-@@ -37,7 +37,7 @@
+@@ -42,7 +42,7 @@
      }
  
      protected <V extends EntityLivingBase, U extends LayerRenderer<V>> boolean addLayer(U var1) {

@@ -8,8 +8,8 @@ import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.client.gui.GuiSnackbar;
 import xyz.openmodloader.event.impl.MessageEvent;
 import xyz.openmodloader.event.impl.UpdateEvent;
-import xyz.openmodloader.event.strippable.Side;
-import xyz.openmodloader.event.strippable.Strippable;
+import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Strippable;
 import xyz.openmodloader.modloader.ModLoader;
 
 import java.util.ArrayList;

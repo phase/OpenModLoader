@@ -1,6 +1,6 @@
 --- /net/minecraft/client/gui
 +++ /net/minecraft/client/gui
-@@ -51,7 +51,7 @@
+@@ -56,7 +56,7 @@
  
      public void renderPlayerlist(int var1, Scoreboard var2, @Nullable ScoreObjective var3) {
          NetHandlerPlayClient var4 = this.mc.thePlayer.connection;
@@ -9,7 +9,7 @@
          int var6 = 0;
          int var7 = 0;
  
-@@ -89,7 +89,7 @@
+@@ -94,7 +94,7 @@
          int var14 = var1 / 2 - (var13 * var36 + (var36 - 1) * 5) / 2;
          int var15 = 10;
          int var16 = var13 * var36 + (var36 - 1) * 5;
@@ -18,7 +18,7 @@
          if(this.header != null) {
              var17 = this.mc.fontRendererObj.listFormattedStringToWidth(this.header.getFormattedText(), var1 - 50);
  
-@@ -98,7 +98,7 @@
+@@ -103,7 +103,7 @@
              }
          }
  

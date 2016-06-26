@@ -1,6 +1,6 @@
 --- /net/minecraft/inventory
 +++ /net/minecraft/inventory
-@@ -129,7 +129,7 @@
+@@ -134,7 +134,7 @@
          } else {
              ItemStack var5 = var1.copy();
              ItemStack var6 = this.inputSlots.getStackInSlot(1);
@@ -9,7 +9,7 @@
              var3 = var3 + var1.getRepairCost() + (var6 == null?0:var6.getRepairCost());
              this.materialCost = 0;
              if(var6 != null) {
-@@ -174,7 +174,7 @@
+@@ -179,7 +179,7 @@
                          }
                      }
  

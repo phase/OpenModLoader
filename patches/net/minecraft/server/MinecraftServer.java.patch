@@ -1,6 +1,6 @@
 --- /net/minecraft/server
 +++ /net/minecraft/server
-@@ -379,6 +379,7 @@
+@@ -403,6 +403,7 @@
      public void run() {
          try {
              if(this.startServer()) {
@@ -8,7 +8,7 @@
                  this.currentTime = getCurrentTimeMillis();
                  long var1 = 0L;
                  this.statusResponse.setServerDescription(new TextComponentString(this.motd));
-@@ -493,6 +494,7 @@
+@@ -523,6 +524,7 @@
      }
  
      public void tick() {

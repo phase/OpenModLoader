@@ -1,6 +1,6 @@
 --- /net/minecraft/client/gui
 +++ /net/minecraft/client/gui
-@@ -38,7 +38,7 @@
+@@ -43,7 +43,7 @@
              this.selectedResourcePacks = Lists.newArrayList();
              ResourcePackRepository var1 = this.mc.getResourcePackRepository();
              var1.updateRepositoryEntriesAll();
@@ -9,7 +9,7 @@
              var2.removeAll(var1.getRepositoryEntries());
  
              for(ResourcePackRepository.a var4 : var2) {
-@@ -94,7 +94,7 @@
+@@ -99,7 +99,7 @@
                  OpenGlHelper.openFile(var2);
              } else if(var1.id == 1) {
                  if(this.changed) {

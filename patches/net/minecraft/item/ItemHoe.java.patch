@@ -1,0 +1,14 @@
+--- /net/minecraft/item
++++ /net/minecraft/item
+@@ -85,6 +85,11 @@
+         return true;
+     }
+ 
++    @Deprecated//OML
++    public Item.a getMaterial() {
++        return this.theToolMaterial;
++    }
++
+     public String getMaterialName() {
+         return this.theToolMaterial.toString();
+     }
