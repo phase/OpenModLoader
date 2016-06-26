@@ -1,0 +1,11 @@
+--- /net/minecraft/network
++++ /net/minecraft/network
+@@ -233,6 +233,8 @@
+             this.registerPacket(EnumPacketDirection.SERVERBOUND, CPacketSpectate.class);
+             this.registerPacket(EnumPacketDirection.SERVERBOUND, CPacketPlayerTryUseItemOnBlock.class);
+             this.registerPacket(EnumPacketDirection.SERVERBOUND, CPacketPlayerTryUseItem.class);
++            this.registerPacket(EnumPacketDirection.SERVERBOUND, xyz.openmodloader.network.PacketWrapper.class);
++            this.registerPacket(EnumPacketDirection.CLIENTBOUND, xyz.openmodloader.network.PacketWrapper.class);
+         }
+     },
+     STATUS(1) {

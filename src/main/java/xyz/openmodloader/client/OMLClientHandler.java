@@ -1,5 +1,7 @@
 package xyz.openmodloader.client;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.text.ITextComponent;
 import xyz.openmodloader.ISidedHandler;
 import xyz.openmodloader.OpenModLoader;
@@ -47,6 +49,16 @@ public enum OMLClientHandler implements ISidedHandler {
             return;
         }
         GuiSnackbar.SNACKBAR_LIST.add(new GuiSnackbar(component));
+    }
+
+    @Override
+    public EntityPlayerSP getClientPlayer() {
+        return Minecraft.getMinecraft().thePlayer;
+    }
+
+    @Override
+    public void handleOnMainThread(Runnable runnable) {
+        Minecraft.getMinecraft().addScheduledTask(runnable);
     }
 
     public List<String> getMainMenuStrings() {
