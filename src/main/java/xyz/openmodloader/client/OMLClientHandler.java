@@ -56,6 +56,11 @@ public enum OMLClientHandler implements ISidedHandler {
         return Minecraft.getMinecraft().thePlayer;
     }
 
+    @Override
+    public void handleOnMainThread(Runnable runnable) {
+        Minecraft.getMinecraft().addScheduledTask(runnable);
+    }
+
     public List<String> getMainMenuStrings() {
         List<String> list = new ArrayList<>();
         list.add(ModLoader.MODS.size() + " mod" + ((ModLoader.MODS.size() == 1 ? "" : "s") + " enabled"));

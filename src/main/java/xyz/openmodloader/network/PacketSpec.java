@@ -1,7 +1,10 @@
 package xyz.openmodloader.network;
 
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.server.MinecraftServer;
+import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.strippable.Side;
+import xyz.openmodloader.server.OMLServerHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +59,8 @@ public class PacketSpec {
 
 	/**
 	 * Sets the handler for this packet spec.
+	 * This handler will be called from the packet handling thread,
+	 * to have a handler run on the main thread use {@link #handleOnMainThread(BiConsumer)}
 	 * Finalizes this packet and registers it with the channel.
 	 * @param handler The packet handler
 	 * @return The channel
@@ -71,6 +76,8 @@ public class PacketSpec {
 
 	/**
 	 * Sets the handler for this packet spec.
+	 * These handlers will be called from the packet handling thread,
+	 * to have a handler run on the main thread use {@link #handleOnMainThread(BiConsumer, BiConsumer)}
 	 * Finalizes this packet and registers it with the channel.
 	 * @param clientHandler The client side handler.
 	 * @param serverHandler The server side handler.
@@ -89,6 +96,50 @@ public class PacketSpec {
 		};
 		channel.addPacket(new PacketSpec(this));
 		return channel;
+	}
+
+	/**
+	 * Sets the handler for this packet spec.
+	 * This handler will be called from the main thread, not the packet handling thread.
+	 * Finalizes this packet and registers it with the channel.
+	 * @param handler The packet handler
+	 * @return The channel
+	 */
+	public Channel handleOnMainThread(BiConsumer<Context, Packet> handler) {
+		return handle((context, packet) -> {
+			if (context.getSide() == Side.CLIENT) {
+				OpenModLoader.INSTANCE.getSidedHandler().handleOnMainThread(() -> {
+					handler.accept(context, packet);
+				});
+			} else if (context.getSide() == Side.SERVER) {
+				MinecraftServer server = OMLServerHelper.getServer();
+				server.addScheduledTask(() -> {
+					handler.accept(context, packet);
+				});
+			}
+		});
+	}
+
+	/**
+	 * Sets the handler for this packet spec.
+	 * These handlers will be called from the main thread, not the packet handling thread.
+	 * @param clientHandler The client side handler.
+	 * @param serverHandler The server side handler.
+	 * @return The channel
+	 */
+	public Channel handleOnMainThread(BiConsumer<Context, Packet> clientHandler, BiConsumer<Context, Packet> serverHandler) {
+		return handle((context, packet) -> {
+			if (context.getSide() == Side.CLIENT) {
+				OpenModLoader.INSTANCE.getSidedHandler().handleOnMainThread(() -> {
+					clientHandler.accept(context, packet);
+				});
+			} else if (context.getSide() == Side.SERVER) {
+				MinecraftServer server = OMLServerHelper.getServer();
+				server.addScheduledTask(() -> {
+					serverHandler.accept(context, packet);
+				});
+			}
+		});
 	}
 
 	private boolean isImmutable() {

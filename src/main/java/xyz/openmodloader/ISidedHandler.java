@@ -12,4 +12,6 @@ public interface ISidedHandler {
     void openSnackbar(ITextComponent component);
 
 	EntityPlayerSP getClientPlayer();
+
+	void handleOnMainThread(Runnable runnable);
 }

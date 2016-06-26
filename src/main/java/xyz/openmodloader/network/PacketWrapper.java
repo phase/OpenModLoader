@@ -53,7 +53,7 @@ public class PacketWrapper implements net.minecraft.network.Packet<INetHandler> 
 	}
 
 	/**
-	 * Handles recieving this packet
+	 * Handles receiving this packet
 	 * @param netHandler
 	 */
 	@Override
