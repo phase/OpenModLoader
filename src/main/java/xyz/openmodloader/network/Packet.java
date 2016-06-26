@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Packet implements IPacket {
+public class Packet extends AbstractPacket {
 
 	private final String id;
 	final Channel channel;
