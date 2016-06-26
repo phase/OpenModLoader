@@ -1,5 +1,7 @@
 package xyz.openmodloader.modloader;
 
+import java.io.File;
+
 import net.minecraft.util.ResourceLocation;
 import xyz.openmodloader.launcher.strippable.Side;
 
@@ -26,6 +28,8 @@ public interface ModContainer {
     String getURL();
 
     String getUpdateURL();
+
+    File getSourceFile();
 
     String[] getTransformers();
 

@@ -2,10 +2,13 @@ package xyz.openmodloader.launcher;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
 
 import com.google.common.collect.Sets;
 
@@ -54,15 +57,19 @@ public class OMLTweaker implements ITweaker {
         classLoader.addTransformerExclusion("xyz.openmodloader.launcher");
         try {
             Class<?> cls = Class.forName("xyz.openmodloader.modloader.ModLoader", true, classLoader);
-            cls.getMethod("loadMods").invoke(null);
+            cls.getMethod("registerMods").invoke(null);
             //have to use reflection, cause class loader wizardry
             Field field = cls.getDeclaredField("ID_MAP");
             field.setAccessible(true);
             Map<String, ?> map = (Map<String, ?>) field.get(null);
             OMLStrippableTransformer.MODS = Sets.newHashSetWithExpectedSize(map.size());
             OMLStrippableTransformer.MODS.addAll(map.keySet());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (NoSuchFieldException | SecurityException | ClassNotFoundException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException e) {
+            LogManager.getLogger().fatal("Error while registering mods", e);
+            System.exit(1);
+        } catch (InvocationTargetException e) {
+            LogManager.getLogger().fatal("Error while registering mods", e.getTargetException());
+            System.exit(1);
         }
     }
 

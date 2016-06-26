@@ -1,6 +1,7 @@
 package xyz.openmodloader.modloader;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -91,5 +92,10 @@ class OMLModContainer implements ModContainer {
     @Override
     public Side getSide() {
         return Side.UNIVERSAL;
+    }
+
+    @Override
+    public File getSourceFile() {
+        return null;
     }
 }

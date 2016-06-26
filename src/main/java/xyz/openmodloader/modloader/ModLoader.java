@@ -6,24 +6,31 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.CharSet;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.launchwrapper.Launch;
 import xyz.openmodloader.OpenModLoader;
-import xyz.openmodloader.client.gui.GuiMissingDependencies;
+import xyz.openmodloader.client.gui.GuiLoadError;
 import xyz.openmodloader.event.impl.GuiEvent;
 import xyz.openmodloader.launcher.OMLAccessTransformer;
 import xyz.openmodloader.launcher.OMLStrippableTransformer;
 import xyz.openmodloader.launcher.strippable.Side;
 
+/**
+ * The Class ModLoader.
+ */
 public class ModLoader {
     /**
      * A list of all loaded mods.
@@ -53,85 +60,137 @@ public class ModLoader {
     /**
      * Attempts to load all mods from the mods directory. While this is public,
      * it is intended for internal use only!
+     *
+     * @throws Exception the exception
      */
-    public static void loadMods() {
-        try {
-            ModContainer oml = new OMLModContainer();
-            MODS.add(oml);
-            ID_MAP.put(oml.getModID(), oml);
-            List<ManifestModContainer> unsortedMods = new ArrayList<>();
-            if (MOD_DIRECTORY.exists()) {
-                File[] files = MOD_DIRECTORY.listFiles();
-                if (files != null) {
-                    for (File mod : files) {
-                        Launch.classLoader.addURL(mod.toURI().toURL());
-                    }
-                }
-            }
+    public static void registerMods() throws Exception {
+        // register the OML container
+        ModContainer oml = new OMLModContainer();
+        MODS.add(oml);
+        ID_MAP.put(oml.getModID(), oml);
 
-            URL roots;
-            Enumeration<URL> metas = Launch.classLoader.getResources("META-INF");
-            while (metas.hasMoreElements()) {
-                roots = metas.nextElement();
-                File root = new File(roots.getPath());
-                File[] files = root.listFiles();
-                if (files != null) {
-                    for (File file : files) {
-                        if (file.getName().equals("MANIFEST.MF")) {
-                            FileInputStream stream = new FileInputStream(file);
-                            ManifestModContainer mod = loadMod(file, new Manifest(stream));
-                            if (mod != null) {
-                                if (ID_MAP.containsKey(mod.getModID()))
-                                    throw new RuntimeException("Mod ID '" + mod.getModID() + "' has already been registered");
-                                unsortedMods.add(mod);
-                                ID_MAP.put(mod.getModID(), mod);
-                            }
-                            stream.close();
-                        } else if (file.getName().endsWith(".at")) {
-                            Multimap<String, String> entries = OMLAccessTransformer.getEntries();
-                            FileUtils.readLines(file).stream().filter(line -> line.matches("\\w+((\\.\\w+)+|)\\s+(\\w+(\\(\\S+|)|\\*\\(\\)|\\*)")).forEach(line -> {
-                                String[] parts = line.split(" ");
-                                entries.put(parts[0], parts[1]);
-                            });
+        List<ManifestModContainer> unsortedMods = new ArrayList<>();
+        Set<String> duplicates = new HashSet<>();
+
+        // register the mods
+        registerModsFromFolder(duplicates, unsortedMods);
+        registerClassPathMods(duplicates, unsortedMods);
+
+        // sort the mods
+        MODS.addAll(DependencySorter.sort(unsortedMods));
+        Set<String> missingDeps = new HashSet<>();
+        Set<String> oudatedDeps = new HashSet<>();
+        // check dependencies
+        for (ModContainer mod : MODS) {
+            for (String dep : mod.getDependencies()) {
+                String[] depParts = dep.split("\\s*:\\s*");
+                if (depParts[0].startsWith("optional "))
+                    continue;
+                ModContainer depContainer = ID_MAP.get(depParts[0]);
+                if (depContainer == null) {
+                    missingDeps.add(depParts.length > 1 ? depParts[0] + " v" + depParts[1] : depParts[0]);
+                    OpenModLoader.INSTANCE.getLogger().error("Missing dependency '%s' for mod '%s'.", depParts[0], mod.getName());
+                } else if (depParts.length > 1 && !depContainer.getVersion().atLeast(new Version(depParts[1]))) {
+                    oudatedDeps.add(depParts.length > 1 ? depParts[0] + " v" + depParts[1] : depParts[0]);
+                    OpenModLoader.INSTANCE.getLogger().error("Outdated dependency '%s' for mod '%s'. Expected version '%s', but got version '%s'.", depContainer.getName(), mod.getName(), depParts[1], depContainer.getVersion());
+                }
+            }
+        }
+        // if any dependencies are missing, stop mod loading, and display a GUI
+        if (!duplicates.isEmpty() || !missingDeps.isEmpty() || !oudatedDeps.isEmpty()) {
+            MODS.clear();
+            ID_MAP.clear();
+            if (OMLStrippableTransformer.getSide() == Side.CLIENT) {
+                OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.Open.class, (e) -> e.setGui(new GuiLoadError(missingDeps, oudatedDeps, duplicates)));
+            } else {
+                throw new RuntimeException("Errors during load - see log for more information");
+            }
+        }
+        // now that we've checked dependencies, it's time to register the coremods
+        for (ModContainer mod: MODS) {
+            for (String transformer : mod.getTransformers()) {
+                Launch.classLoader.registerTransformer(transformer);
+            }
+        }
+    }
+
+    /**
+     * Registers mods from the mods folder.
+     */
+    private static void registerModsFromFolder(Set<String> duplicates, List<ManifestModContainer> unsortedMods) throws Exception {
+        if (MOD_DIRECTORY.exists()) {
+            File[] files = MOD_DIRECTORY.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.getName().endsWith(".jar") && !file.isDirectory()) {
+                        Launch.classLoader.addURL(file.toURI().toURL());
+                        JarFile jar = new JarFile(file);
+                        if (jar.getManifest() != null) {
+                            registerMod(duplicates, unsortedMods, file, jar.getManifest());
                         }
+                        Enumeration<JarEntry> entries = jar.entries();
+                        while (entries.hasMoreElements()) {
+                            JarEntry e = entries.nextElement();
+                            if (e.getName().endsWith(".at")) {
+                                Multimap<String, String> ats = OMLAccessTransformer.getEntries();
+                                IOUtils.readLines(jar.getInputStream(e)).stream().filter(line -> line.matches("\\w+((\\.\\w+)+|)\\s+(\\w+(\\(\\S+|)|\\*\\(\\)|\\*)")).forEach(line -> {
+                                    String[] parts = line.split(" ");
+                                    ats.put(parts[0], parts[1]);
+                                });
+                            }
+                        }
+                        jar.close();
                     }
                 }
             }
-            // sort the mods
-            MODS.addAll(DependencySorter.sort(unsortedMods));
-            List<String> missingDeps = Lists.newArrayList();
-            List<String> oudatedDeps = Lists.newArrayList();
-            // check dependencies
-            for (ModContainer mod : MODS) {
-                for (String dep : mod.getDependencies()) {
-                    String[] depParts = dep.split("\\s*:\\s*");
-                    if (depParts[0].startsWith("optional "))
-                        continue;
-                    ModContainer depContainer = ID_MAP.get(depParts[0]);
-                    if (depContainer == null) {
-                        missingDeps.add(depParts.length > 1 ? depParts[0] + " v" + depParts[1] : depParts[0]);
-                        OpenModLoader.INSTANCE.getLogger().error("Missing dependency '%s' for mod '%s'.", depParts[0], mod.getName());
-                    } else if (depParts.length > 1 && !depContainer.getVersion().atLeast(new Version(depParts[1]))) {
-                        oudatedDeps.add(depParts.length > 1 ? depParts[0] + " v" + depParts[1] : depParts[0]);
-                        OpenModLoader.INSTANCE.getLogger().error("Outdated dependency '%s' for mod '%s'. Expected version '%s', but got version '%s'.", depContainer.getName(), mod.getName(), depParts[1], depContainer.getVersion());
+        } else {
+            MOD_DIRECTORY.mkdirs();
+        }
+    }
+
+    /**
+     * Registers the class path mods.
+     */
+    private static void registerClassPathMods(Set<String> duplicates, List<ManifestModContainer> unsortedMods) throws Exception {
+        URL roots;
+        Enumeration<URL> metas = Launch.classLoader.getResources("META-INF");
+        while (metas.hasMoreElements()) {
+            roots = metas.nextElement();
+            File root = new File(roots.getPath());
+            File[] files = root.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.getName().equals("MANIFEST.MF")) {
+                        FileInputStream stream = new FileInputStream(file);
+                        registerMod(duplicates, unsortedMods, file.getParentFile().getParentFile(), new Manifest(stream));
+                        stream.close();
+                    } else if (file.getName().endsWith(".at")) {
+                        Multimap<String, String> entries = OMLAccessTransformer.getEntries();
+                        FileUtils.readLines(file).stream().filter(line -> line.matches("\\w+((\\.\\w+)+|)\\s+(\\w+(\\(\\S+|)|\\*\\(\\)|\\*)")).forEach(line -> {
+                            String[] parts = line.split(" ");
+                            entries.put(parts[0], parts[1]);
+                        });
                     }
                 }
             }
-            // if any dependencies are missing, stop mod loading, and display a GUI
-            if (!missingDeps.isEmpty() || !oudatedDeps.isEmpty()) {
-                MODS.clear();
-                ID_MAP.clear();
-                if (OpenModLoader.INSTANCE.getSidedHandler().getSide() == Side.CLIENT) {
-                    OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.Open.class, (e) -> e.setGui(new GuiMissingDependencies(missingDeps, oudatedDeps)));
-                }
+        }
+    }
+
+    /**
+     * Registers a mod.
+     */
+    private static void registerMod(Set<String> duplicates, List<ManifestModContainer> unsortedMods, File file, Manifest manifest) {
+        ManifestModContainer mod = loadMod(file, manifest);
+        if (mod != null) {
+            if (ID_MAP.containsKey(mod.getModID())) {
+                ModContainer mod2 = ID_MAP.get(mod.getModID());
+                duplicates.add(mod2.getName() + " v" + mod2.getVersion() + " (" + mod2.getSourceFile().getName() + ")");
+                duplicates.add(mod.getName() + " v" + mod.getVersion() + " (" + mod.getSourceFile().getName() + ")");
+                OpenModLoader.INSTANCE.getLogger().error("Duplicate mod IDs for files '%s' and '%s'", mod.getSourceFile(), mod2.getSourceFile());
+            } else if (duplicates.isEmpty()) {
+                unsortedMods.add(mod);
+                ID_MAP.put(mod.getModID(), mod);
             }
-            // now that we've checked dependencies, it's time to register the coremods
-            for (ModContainer mod: MODS)
-                for (String transformer : mod.getTransformers()) {
-                    Launch.classLoader.registerTransformer(transformer);
-                }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -139,12 +198,14 @@ public class ModLoader {
      * Attempts to load a mod from an input stream. This will parse the
      * mods.json file.
      *
+     * @param file the file
      * @param manifest the manifest instance
+     * @return the manifest mod container
      */
     private static ManifestModContainer loadMod(File file, Manifest manifest) {
-        ManifestModContainer container = ManifestModContainer.create(manifest);
+        ManifestModContainer container = ManifestModContainer.create(file, manifest);
         if (container == null) {
-            OpenModLoader.INSTANCE.getLogger().error("Found invalid manifest in file " + file.getAbsolutePath().replace("!", "").replace(File.separator + "META-INF" + File.separator + "MANIFEST.MF", ""));
+            OpenModLoader.INSTANCE.getLogger().error("Found invalid manifest in file " + file);
             return null;
         }
         OpenModLoader.INSTANCE.getLogger().info("Found mod " + container.getName() + " with id " + container.getModID());
@@ -156,12 +217,14 @@ public class ModLoader {
                 throw new RuntimeException("Illegal characters in ID '" + container.getModID() + "' for mod '" + container.getName() + "'.");
             }
         }
+        if (container.getModID().equals("oml")) {
+            throw new RuntimeException("'oml' is a reserved mod id!");
+        }
         if (!container.getMinecraftVersion().equals(OpenModLoader.INSTANCE.getMinecraftVersion())) {
             OpenModLoader.INSTANCE.getLogger().warn("Mod '%s' is expecting Minecraft %s, but we are running on Minecraft %s!", container.getName(), container.getMinecraftVersion(), OpenModLoader.INSTANCE.getMinecraftVersion());
         }
         if (container.getSide() != Side.UNIVERSAL && container.getSide() != OMLStrippableTransformer.getSide()) {
             OpenModLoader.INSTANCE.getLogger().info("Invalid side %s for mod %s. The mod will not be loaded.", OMLStrippableTransformer.getSide(), container.getName());
-            return container;
         }
         return container;
     }
@@ -170,7 +233,7 @@ public class ModLoader {
      * Iterates through all registered mods and enables them. If there is an
      * issue in registering the mod, it will be disabled.
      */
-    public static void registerMods() {
+    public static void loadMods() {
         for (ModContainer mod : MODS) {
             if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
                 continue;

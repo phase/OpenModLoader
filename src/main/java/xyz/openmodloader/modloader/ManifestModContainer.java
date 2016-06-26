@@ -1,6 +1,7 @@
 package xyz.openmodloader.modloader;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -29,6 +30,7 @@ class ManifestModContainer implements ModContainer {
     private transient Version version;
     private transient Version mcversion;
     private transient Side side;
+    private transient File sourceFile;
 
     @SerializedName("Mod-Class")
     private String classString;
@@ -60,7 +62,7 @@ class ManifestModContainer implements ModContainer {
     /**
      * Uses a manifest to create a mod container.
      */
-    public static ManifestModContainer create(Manifest manifest) {
+    public static ManifestModContainer create(File sourceFile, Manifest manifest) {
         Set<Object> attributeNames = manifest.getMainAttributes().keySet();
         if (!attributeNames.containsAll(Arrays.asList(new Attributes.Name("ID"), new Attributes.Name("Mod-Class"), new Attributes.Name("Version")))) {
             return null;
@@ -80,6 +82,7 @@ class ManifestModContainer implements ModContainer {
                 }
             }
         }
+        container.sourceFile = sourceFile;
         return container;
     }
 
@@ -172,6 +175,11 @@ class ManifestModContainer implements ModContainer {
     @Override
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public File getSourceFile() {
+        return sourceFile;
     }
 
     @Override
