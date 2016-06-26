@@ -10,55 +10,55 @@ import java.io.IOException;
  */
 public class PacketWrapper implements net.minecraft.network.Packet<INetHandler> {
 
-	private AbstractChannel channel;
-	private AbstractPacket packet;
+    private AbstractChannel channel;
+    private AbstractPacket packet;
 
-	/**
-	 * Creates a new wrapper packet
-	 * @param channel The OML channel this packet belongs to
-	 * @param packet The OML packet this wrapper corresponds to
-	 */
-	public PacketWrapper(AbstractChannel channel, AbstractPacket packet) {
-		this.channel = channel;
-		this.packet = packet;
-	}
+    /**
+     * Creates a new wrapper packet
+     * @param channel The OML channel this packet belongs to
+     * @param packet The OML packet this wrapper corresponds to
+     */
+    public PacketWrapper(AbstractChannel channel, AbstractPacket packet) {
+        this.channel = channel;
+        this.packet = packet;
+    }
 
-	/**
-	 * No-args constructor deserialization.
-	 */
-	public PacketWrapper() {
+    /**
+     * No-args constructor deserialization.
+     */
+    public PacketWrapper() {
 
-	}
+    }
 
-	/**
-	 * Reads the packet from the given buffer
-	 * @param buf The buffer
-	 * @throws IOException
-	 */
-	@Override
-	public void readPacketData(PacketBuffer buf) throws IOException {
-		AbstractChannel<?> channel = ChannelManager.get(buf.readInt());
-		packet = channel.read(buf);
-	}
+    /**
+     * Reads the packet from the given buffer
+     * @param buf The buffer
+     * @throws IOException
+     */
+    @Override
+    public void readPacketData(PacketBuffer buf) throws IOException {
+        AbstractChannel<?> channel = ChannelManager.get(buf.readInt());
+        packet = channel.read(buf);
+    }
 
-	/**
-	 * Writes the packet to the given buffer
-	 * @param buf The buffer
-	 * @throws IOException
-	 */
-	@Override
-	public void writePacketData(PacketBuffer buf) throws IOException {
-		buf.writeInt(ChannelManager.getID(channel));
-		channel.write(buf, packet);
-	}
+    /**
+     * Writes the packet to the given buffer
+     * @param buf The buffer
+     * @throws IOException
+     */
+    @Override
+    public void writePacketData(PacketBuffer buf) throws IOException {
+        buf.writeInt(ChannelManager.getID(channel));
+        channel.write(buf, packet);
+    }
 
-	/**
-	 * Handles receiving this packet
-	 * @param netHandler
-	 */
-	@Override
-	public void processPacket(INetHandler netHandler) {
-		channel.handle(packet);
-	}
+    /**
+     * Handles receiving this packet
+     * @param netHandler
+     */
+    @Override
+    public void processPacket(INetHandler netHandler) {
+        channel.handle(packet);
+    }
 
 }

@@ -7,22 +7,22 @@ import net.minecraft.network.PacketBuffer;
  */
 public abstract class AbstractPacket {
 
-	/**
-	 * Writes this packet to the given buffer
-	 * @param buf The buffer
-	 * @return The buffer, for convenience
-	 */
-	public abstract PacketBuffer write(PacketBuffer buf);
+    /**
+     * Writes this packet to the given buffer
+     * @param buf The buffer
+     * @return The buffer, for convenience
+     */
+    public abstract PacketBuffer write(PacketBuffer buf);
 
-	/**
-	 * Reads this packet from the given buffer
-	 * @param buf The buffer
-	 */
-	public abstract void read(PacketBuffer buf);
+    /**
+     * Reads this packet from the given buffer
+     * @param buf The buffer
+     */
+    public abstract void read(PacketBuffer buf);
 
-	/**
-	 * Handles receiving this packet
-	 */
-	public abstract void handle();
+    /**
+     * Handles receiving this packet
+     */
+    public abstract void handle();
 
 }

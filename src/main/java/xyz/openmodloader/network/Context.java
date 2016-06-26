@@ -8,24 +8,24 @@ import xyz.openmodloader.event.strippable.Side;
  */
 public class Context {
 
-	private final Side side;
+    private final Side side;
 
-	/**
-	 * Default context constructor, using the physical side
-	 */
-	public Context() {
-		this(OpenModLoader.INSTANCE.getSidedHandler().getSide());
-	}
+    /**
+     * Default context constructor, using the physical side
+     */
+    public Context() {
+        this(OpenModLoader.INSTANCE.getSidedHandler().getSide());
+    }
 
-	public Context(Side side) {
-		this.side = side;
-	}
+    public Context(Side side) {
+        this.side = side;
+    }
 
-	/**
-	 * @return The side the packing is being handled on
-	 */
-	public Side getSide() {
-		return side;
-	}
+    /**
+     * @return The side the packing is being handled on
+     */
+    public Side getSide() {
+        return side;
+    }
 
 }
