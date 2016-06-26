@@ -11,7 +11,7 @@ public class OMLFileResourcePack extends FileResourcePack {
 	private ModContainer mod;
 
 	public OMLFileResourcePack(ModContainer mod) {
-		super(mod.getOriginFile());
+		super(mod.getModFile());
 		this.mod = mod;
 	}
 

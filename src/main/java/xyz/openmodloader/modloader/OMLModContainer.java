@@ -16,12 +16,11 @@ import xyz.openmodloader.launcher.strippable.Strippable;
 
 class OMLModContainer implements ModContainer {
 
-    private File originFile;
+    private File modFile;
     private ResourceLocation logo;
 
-
     public OMLModContainer() {
-        originFile = new File(OMLModContainer.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        modFile = new File(OMLModContainer.class.getProtectionDomain().getCodeSource().getLocation().getPath());
     }
 
     @Override
@@ -105,9 +104,7 @@ class OMLModContainer implements ModContainer {
         return Side.UNIVERSAL;
     }
 
-    @Override
-    public File getOriginFile() {
-        return originFile;
+    public File getModFile() {
+        return modFile;
     }
-
 }

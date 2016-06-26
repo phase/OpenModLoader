@@ -23,13 +23,13 @@ import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.launcher.strippable.Strippable;
 
 class ManifestModContainer implements ModContainer {
-    private transient File originFile;
     private transient Class<?> mainClass;
     private transient ResourceLocation logoTexture;
     private transient IMod instance;
     private transient Version version;
     private transient Version mcversion;
     private transient Side side;
+    private transient File modFile;
 
     @SerializedName("Mod-Class")
     private String classString;
@@ -61,7 +61,7 @@ class ManifestModContainer implements ModContainer {
     /**
      * Uses a manifest to create a mod container.
      */
-    public static ManifestModContainer create(File file, Manifest manifest) {
+    public static ManifestModContainer create(File modFile, Manifest manifest) {
         Set<Object> attributeNames = manifest.getMainAttributes().keySet();
         if (!attributeNames.containsAll(Arrays.asList(new Attributes.Name("ID"), new Attributes.Name("Mod-Class"), new Attributes.Name("Version")))) {
             return null;
@@ -81,7 +81,7 @@ class ManifestModContainer implements ModContainer {
                 }
             }
         }
-        container.originFile = file;
+        container.modFile = modFile;
         return container;
     }
 
@@ -181,6 +181,10 @@ class ManifestModContainer implements ModContainer {
         return description;
     }
 
+    public File getModFile() {
+        return modFile;
+    }
+
     @Override
     public String getAuthor() {
         return author;
@@ -207,11 +211,6 @@ class ManifestModContainer implements ModContainer {
             return new String[0];
         }
         return dependencies.split("\\s*,\\s*");
-    }
-
-    @Override
-    public File getOriginFile() {
-        return originFile;
     }
 
     /**

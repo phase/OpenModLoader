@@ -11,7 +11,7 @@ public class OMLFolderResourcePack extends FolderResourcePack {
 	private ModContainer mod;
 
 	public OMLFolderResourcePack(ModContainer mod) {
-		super(mod.getOriginFile());
+		super(mod.getModFile());
 		this.mod = mod;
 	}
 

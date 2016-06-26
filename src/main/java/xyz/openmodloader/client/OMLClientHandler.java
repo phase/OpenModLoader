@@ -27,8 +27,8 @@ public class OMLClientHandler implements SidedHandler {
     public void onInitialize() {
         List<IResourcePack> modResourcePacks = new ArrayList<>();
         for (ModContainer mod : ModLoader.MODS) {
-            File originFile = mod.getOriginFile();
-            if (originFile.isDirectory()) {
+            File file = mod.getModFile();
+            if (file.isDirectory()) {
                 modResourcePacks.add(new OMLFolderResourcePack(mod));
             } else {
                 modResourcePacks.add(new OMLFileResourcePack(mod));
