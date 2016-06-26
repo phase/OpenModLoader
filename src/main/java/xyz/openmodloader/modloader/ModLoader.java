@@ -1,8 +1,12 @@
 package xyz.openmodloader.modloader;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,10 +38,11 @@ import xyz.openmodloader.modloader.version.Version;
  * The Class ModLoader.
  */
 public class ModLoader {
+
     /**
      * A list of all loaded mods.
      */
-    public static final List<ModContainer> MODS = new ArrayList<>();
+    private static final List<ModContainer> MODS = new ArrayList<>();
 
     /**
      * A map of all loaded mods. Key is the mod class and value is the ModContainer.
@@ -58,6 +63,10 @@ public class ModLoader {
      * The directory to load mods from.
      */
     private static final File MOD_DIRECTORY = new File(RUN_DIRECTORY, "mods");
+
+    private static final List<ModContainer> UNM_MODS = Collections.unmodifiableList(MODS);
+    private static final Map<Mod, ModContainer> UNM_MODS_MAP = Collections.unmodifiableMap(MODS_MAP);
+    private static final Map<String, ModContainer> UNM_ID_MAP = Collections.unmodifiableMap(ID_MAP);
 
     /**
      * Attempts to load all mods from the mods directory. While this is public,
@@ -118,6 +127,10 @@ public class ModLoader {
 
     /**
      * Registers mods from the mods folder.
+     *
+     * @param duplicates the duplicates
+     * @param unsortedMods the unsorted mods
+     * @throws Exception the exception
      */
     private static void registerModsFromFolder(Set<String> duplicates, List<ManifestModContainer> unsortedMods) throws Exception {
         if (MOD_DIRECTORY.exists()) {
@@ -134,6 +147,7 @@ public class ModLoader {
                         while (entries.hasMoreElements()) {
                             JarEntry e = entries.nextElement();
                             if (e.getName().endsWith(".at")) {
+                                System.out.println(e.getName());
                                 Multimap<String, String> ats = OMLAccessTransformer.getEntries();
                                 IOUtils.readLines(jar.getInputStream(e)).stream().filter(line -> line.matches("\\w+((\\.\\w+)+|)\\s+(\\w+(\\(\\S+|)|\\*\\(\\)|\\*)")).forEach(line -> {
                                     String[] parts = line.split(" ");
@@ -152,6 +166,10 @@ public class ModLoader {
 
     /**
      * Registers the class path mods.
+     *
+     * @param duplicates the duplicates
+     * @param unsortedMods the unsorted mods
+     * @throws Exception the exception
      */
     private static void registerClassPathMods(Set<String> duplicates, List<ManifestModContainer> unsortedMods) throws Exception {
         URL roots;
@@ -180,16 +198,21 @@ public class ModLoader {
 
     /**
      * Registers a mod.
+     *
+     * @param duplicates the duplicates
+     * @param unsortedMods the unsorted mods
+     * @param file the file
+     * @param manifest the manifest
      */
     private static void registerMod(Set<String> duplicates, List<ManifestModContainer> unsortedMods, File file, Manifest manifest) {
         ManifestModContainer mod = loadMod(file, manifest);
         if (mod != null) {
             if (ID_MAP.containsKey(mod.getModID())) {
                 ModContainer mod2 = ID_MAP.get(mod.getModID());
-                duplicates.add(mod2.getName() + " v" + mod2.getVersion() + " (" + mod2.getModFile().getName() + ")");
-                duplicates.add(mod.getName() + " v" + mod.getVersion() + " (" + mod.getModFile().getName() + ")");
+                duplicates.add(mod2.getName() + " v" + mod2.getVersion() + " (" + mod2.getModID() + " from " + mod2.getModFile().getName() + ")");
+                duplicates.add(mod.getName() + " v" + mod.getVersion() + " (" + mod.getModID() + " from " + mod.getModFile().getName() + ")");
                 OpenModLoader.INSTANCE.getLogger().error("Duplicate mod IDs for files '%s' and '%s'", mod.getModFile(), mod2.getModFile());
-            } else if (duplicates.isEmpty()) {
+            } else {
                 unsortedMods.add(mod);
                 ID_MAP.put(mod.getModID(), mod);
             }
@@ -198,7 +221,7 @@ public class ModLoader {
 
     /**
      * Attempts to load a mod from an input stream. This will parse the
-     * mods.json file.
+     * manifest file.
      *
      * @param file the file
      * @param manifest the manifest instance
@@ -279,6 +302,33 @@ public class ModLoader {
     }
 
     /**
+     * Returns an immutable and sorted list of mods.
+     *
+     * @return an immutable and sorted list of mods
+     */
+    public static List<ModContainer> getModList() {
+        return UNM_MODS;
+    }
+
+    /**
+     * Returns an immutable map of mod IDs to mod containers.
+     *
+     * @return an immutable map of mod IDs to mod containers
+     */
+    public static Map<String, ModContainer> getIndexedModList() {
+        return UNM_ID_MAP;
+    }
+
+    /**
+     * Returns an immutable map of mod objects to mod containers.
+     *
+     * @return an immutable map of mod objects to mod containers
+     */
+    public static Map<Mod, ModContainer> getModInstanceList() {
+        return UNM_MODS_MAP;
+    }
+
+    /**
      * Get the mod container of a mod.
      *
      * @param mod the mod instance
@@ -296,5 +346,15 @@ public class ModLoader {
      */
     public static ModContainer getContainer(String id) {
         return ID_MAP.get(id);
+    }
+
+    /**
+     * Checks if a mod with the specified id is loaded.
+     *
+     * @param id the id
+     * @return true, if the mod is loaded
+     */
+    public static boolean isModLoaded(String id) {
+        return ID_MAP.containsKey(id);
     }
 }
