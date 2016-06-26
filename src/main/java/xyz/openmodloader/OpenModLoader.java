@@ -20,7 +20,7 @@ public enum OpenModLoader {
     private Version version = new Version("0.0.1-develop");
     private Logger logger = LogManager.getFormatterLogger("OpenModLoader");
     private EventBus eventBus = new EventBus();
-    private Channel channel = ChannelManager.create("oml");
+    private Channel channel;
     private SidedHandler sidedHandler;
 
     public void minecraftConstruction(SidedHandler sidedHandler) {
@@ -29,9 +29,10 @@ public enum OpenModLoader {
         getLogger().info("Running Minecraft %s on %s using Java %s", mcversion, SystemUtils.OS_NAME, SystemUtils.JAVA_VERSION);
         ModLoader.registerMods();
         getSidedHandler().onInitialize();
-        channel.createPacket("snackbar")
-                .with("component", DataType.TEXT_COMPONENT)
-                .handle((context, packet) -> OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(packet.get("component", DataType.TEXT_COMPONENT)))
+        channel = ChannelManager.create("oml")
+                .createPacket("snackbar")
+                    .with("component", DataType.TEXT_COMPONENT)
+                    .handle((context, packet) -> OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(packet.get("component", DataType.TEXT_COMPONENT)))
                 .build();
     }
 
