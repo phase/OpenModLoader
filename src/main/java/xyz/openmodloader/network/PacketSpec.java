@@ -3,7 +3,7 @@ package xyz.openmodloader.network;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.server.MinecraftServer;
 import xyz.openmodloader.OpenModLoader;
-import xyz.openmodloader.event.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.server.OMLServerHelper;
 
 import java.util.HashMap;

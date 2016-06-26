@@ -1,7 +1,7 @@
 package xyz.openmodloader.network;
 
 import xyz.openmodloader.OpenModLoader;
-import xyz.openmodloader.event.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Side;
 
 /**
  * The context in which this packet is being handled
