@@ -1,8 +1,7 @@
 package xyz.openmodloader.launcher.strippable;
 
 public enum Environment {
-
-    OBFUSCATED,
-    DEOBFUSCATED,
+    PRODUCTION,
+    DEVELOPMENT,
     UNIVERSAL
 }
