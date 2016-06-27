@@ -3,7 +3,10 @@ package xyz.openmodloader.client.gui;
 import java.util.Collection;
 
 import net.minecraft.client.gui.GuiScreen;
+import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Strippable;
 
+@Strippable(side = Side.CLIENT)
 public class GuiLoadError extends GuiScreen {
 
     private final Collection<String> missing;

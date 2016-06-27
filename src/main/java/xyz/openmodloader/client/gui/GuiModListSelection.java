@@ -9,8 +9,11 @@ import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiListExtended;
+import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Strippable;
 import xyz.openmodloader.modloader.ModLoader;
 
+@Strippable(side = Side.CLIENT)
 public class GuiModListSelection extends GuiListExtended {
     private GuiModList parent;
     private List<GuiModListSelectionEntry> entries = new ArrayList<>();

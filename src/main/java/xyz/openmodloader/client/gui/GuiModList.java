@@ -1,13 +1,15 @@
 package xyz.openmodloader.client.gui;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraft.client.resources.I18n;
+import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Strippable;
 
-import javax.annotation.Nullable;
-
+@Strippable(side = Side.CLIENT)
 public class GuiModList extends GuiScreen {
     private GuiScreen parent;
     private GuiButton infoButton;

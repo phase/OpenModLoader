@@ -4,14 +4,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiListExtended;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
+import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Strippable;
 import xyz.openmodloader.modloader.ModContainer;
-
-import org.apache.commons.lang3.StringUtils;
 import xyz.openmodloader.modloader.version.UpdateManager;
 
+@Strippable(side = Side.CLIENT)
 public class GuiModListSelectionEntry implements GuiListExtended.a {
     private static final ResourceLocation ICON_MISSING = new ResourceLocation("textures/misc/unknown_server.png");
     private static final ResourceLocation ICON_UPDATE = new ResourceLocation("realms", "textures/gui/realms/trial_icon.png");

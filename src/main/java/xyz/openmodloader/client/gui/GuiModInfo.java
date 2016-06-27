@@ -1,5 +1,7 @@
 package xyz.openmodloader.client.gui;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -9,10 +11,11 @@ import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Strippable;
 import xyz.openmodloader.modloader.ModContainer;
 
-import org.lwjgl.opengl.GL11;
-
+@Strippable(side = Side.CLIENT)
 public class GuiModInfo extends GuiScreen {
     private static final ResourceLocation ICON_MISSING = new ResourceLocation("textures/misc/unknown_server.png");
 
