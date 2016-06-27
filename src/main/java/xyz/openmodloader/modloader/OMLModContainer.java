@@ -17,7 +17,7 @@ import xyz.openmodloader.modloader.version.Version;
 
 class OMLModContainer implements ModContainer {
 
-    private File modFile;
+    private final File modFile;
     private ResourceLocation logo;
 
     public OMLModContainer() {
