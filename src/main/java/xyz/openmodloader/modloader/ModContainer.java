@@ -82,7 +82,7 @@ public interface ModContainer {
 
     /**
      * Gets the mod author. Should be a comma separated list
-     * of contributors.
+     * of contributors. May be null.
      *
      * @return the author
      */

@@ -16,18 +16,18 @@ public class Version {
         if (parts0.length > 1)
             this.tag = parts0[1];
         else
-            this.tag = null;
+            this.tag = "";
     }
 
     public Version(int major, int minor, int patch) {
-        this(major, minor, patch, null);
+        this(major, minor, patch, "");
     }
 
     public Version(int major, int minor, int patch, String tag) {
         this.major = major;
         this.minor = minor;
         this.patch = patch;
-        this.tag = tag;
+        this.tag = tag == null ? "" : tag;
     }
 
     public int getMajor() {

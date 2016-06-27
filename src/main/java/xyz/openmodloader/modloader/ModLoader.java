@@ -18,7 +18,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import net.minecraft.launchwrapper.LaunchClassLoader;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.CharSet;
@@ -26,6 +25,7 @@ import org.apache.commons.lang3.CharSet;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.launchwrapper.Launch;
+import net.minecraft.launchwrapper.LaunchClassLoader;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.SidedHandler;
 import xyz.openmodloader.client.gui.GuiLoadError;
@@ -39,7 +39,10 @@ import xyz.openmodloader.modloader.version.UpdateManager;
 import xyz.openmodloader.modloader.version.Version;
 
 /**
- * The Class ModLoader.
+ * The class responsible for registering and loading mods.
+ * Loads mods from the mods folder and the classpath.
+ * Mods are defined by the MANIFEST.MF file of the mod jar.
+ * See {@link ManifestModContainer} for more info.
  */
 public class ModLoader {
 
