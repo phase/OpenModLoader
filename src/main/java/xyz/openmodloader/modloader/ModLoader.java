@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,6 +66,9 @@ public class ModLoader {
      */
     private static final File MOD_DIRECTORY = new File(RUN_DIRECTORY, "mods");
 
+    /**
+     * Cached immutable versions of the lists and maps used by the loader.
+     */
     private static final List<ModContainer> UNM_MODS = Collections.unmodifiableList(MODS);
     private static final Map<Mod, ModContainer> UNM_MODS_MAP = Collections.unmodifiableMap(MODS_MAP);
     private static final Map<String, ModContainer> UNM_ID_MAP = Collections.unmodifiableMap(ID_MAP);
@@ -259,15 +264,33 @@ public class ModLoader {
      * issue in registering the mod, it will be disabled.
      */
     public static void loadMods() {
+        // load the instances
         for (ModContainer mod : MODS) {
             if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
                 continue;
             }
             Mod instance = mod.getInstance();
             if (instance != null) {
-                MODS_MAP.put(instance, mod); // load the instances
+                MODS_MAP.put(instance, mod);
+                // populate @Instance fields
+                for (Field field: instance.getClass().getDeclaredFields()) {
+                    if (field.isAnnotationPresent(Instance.class)) {
+                        try {
+                            field.setAccessible(true);
+                            if (Modifier.isFinal(field.getModifiers())) {
+                                Field modifiersField = Field.class.getDeclaredField("modifiers");
+                                modifiersField.setAccessible(true);
+                                modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+                            }
+                            field.set(null, instance);
+                        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+                            OpenModLoader.INSTANCE.getLogger().error("Could not set @Instance field", e);
+                        }
+                    }
+                }
             }
         }
+        // initialize the mods and start update checker
         for (ModContainer mod : MODS) {
             try {
                 if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
@@ -321,6 +344,10 @@ public class ModLoader {
 
     /**
      * Returns an immutable map of mod objects to mod containers.
+     * <br>
+     * <b>This map may be smaller than {@link #getModList()} and
+     * {@link #getIndexedModList()}. It only contains mods that
+     * specify a mod class.
      *
      * @return an immutable map of mod objects to mod containers
      */

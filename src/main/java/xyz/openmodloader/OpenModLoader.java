@@ -36,7 +36,7 @@ public enum OpenModLoader {
                     .with("component", DataType.TEXT_COMPONENT)
                     .handle((context, packet) -> OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(packet.get("component", DataType.TEXT_COMPONENT)))
                 .build();
-    }
+        }
 
     public Version getMinecraftVersion() {
         return mcversion;
