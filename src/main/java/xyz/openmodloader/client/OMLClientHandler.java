@@ -63,7 +63,7 @@ public class OMLClientHandler implements SidedHandler {
 
     @Override
     public void openSnackbar(ITextComponent component) {
-        component = MessageEvent.Snackbar.handle(component, Side.SERVER);
+        component = MessageEvent.Snackbar.handle(component, Side.CLIENT);
         if (component == null) {
             return;
         }
