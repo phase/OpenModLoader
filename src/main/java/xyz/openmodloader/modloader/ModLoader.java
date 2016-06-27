@@ -31,6 +31,7 @@ import xyz.openmodloader.SidedHandler;
 import xyz.openmodloader.launcher.OMLAccessTransformer;
 import xyz.openmodloader.launcher.OMLStrippableTransformer;
 import xyz.openmodloader.launcher.OMLTweaker;
+import xyz.openmodloader.launcher.strippable.Environment;
 import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.modloader.version.JsonUpdateContainer;
 import xyz.openmodloader.modloader.version.UpdateManager;
@@ -192,7 +193,7 @@ public class ModLoader {
             File[] files = root.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if (file.getName().equals("MANIFEST.MF")) {
+                    if (file.getName().equals("MANIFEST.MF") || (OMLStrippableTransformer.getEnvironment() == Environment.DEVELOPMENT && file.getName().endsWith(".MF"))) {
                         FileInputStream stream = new FileInputStream(file);
                         registerMod(duplicates, unsortedMods, file.getParentFile().getParentFile(), new Manifest(stream));
                         stream.close();

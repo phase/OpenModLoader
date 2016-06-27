@@ -64,7 +64,7 @@ class ManifestModContainer implements ModContainer {
      */
     public static ManifestModContainer create(File modFile, Manifest manifest) {
         Set<Object> attributeNames = manifest.getMainAttributes().keySet();
-        if (!attributeNames.containsAll(Arrays.asList(new Attributes.Name("ID"), new Attributes.Name("Mod-Class"), new Attributes.Name("Version")))) {
+        if (!attributeNames.containsAll(Arrays.asList(new Attributes.Name("ID"), new Attributes.Name("Version")))) {
             return null;
         }
         ManifestModContainer container = new ManifestModContainer();
@@ -129,12 +129,12 @@ class ManifestModContainer implements ModContainer {
 
     @Override
     public Mod getInstance() {
-        if (classString == null) {
-            return null;
-        }
         if (this.instance == null) {
             try {
-                this.instance = (Mod) this.getMainClass().newInstance();
+                Class<?> clazz = this.getMainClass();
+                if (clazz == null)
+                    return null;
+                this.instance = (Mod) clazz.newInstance();
             } catch (ClassCastException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
