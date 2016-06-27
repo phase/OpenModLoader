@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.Arrays;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
@@ -101,6 +102,8 @@ public class OMLTestMod implements Mod {
         OpenModLoader.INSTANCE.getEventBus().register(BiomeColor.Grass.class, this::onGrassColor);
         OpenModLoader.INSTANCE.getEventBus().register(BiomeColor.Foliage.class, this::onFoliageColor);
         OpenModLoader.INSTANCE.getEventBus().register(BiomeColor.Water.class, this::onWaterColor);
+
+        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.LightningStruck.class, this::onLightningStrike);
 
         Config config = new Config(new File("./config/test.conf"));
         Config category1 = config.getConfig("category1", "configures stuff");
@@ -289,6 +292,12 @@ public class OMLTestMod implements Mod {
     private void onWaterColor(BiomeColor.Water event) {
         if(event.getBiome() == Biomes.FOREST) {
             event.setColorModifier(Color.RED.getRGB());
+        }
+    }
+
+    private void onLightningStrike(EntityEvent.LightningStruck event) {
+        if (event.getEntity() instanceof EntityCreeper) {
+            event.setCanceled(true);
         }
     }
 }

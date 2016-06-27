@@ -32,7 +32,15 @@
              Entity var1 = this.ridingEntity;
              this.ridingEntity = null;
              var1.removePassenger(this);
-@@ -1908,6 +1912,7 @@
+@@ -1771,6 +1775,7 @@
+     }
+ 
+     public void onStruckByLightning(EntityLightningBolt var1) {
++        if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.LightningStruck(this, var1))) return;
+         this.attackEntityFrom(DamageSource.lightningBolt, 5.0F);
+         ++this.fire;
+         if(this.fire == 0) {
+@@ -1908,6 +1913,7 @@
              this.worldObj.theProfiler.startSection("changeDimension");
              MinecraftServer var2 = this.getServer();
              int var3 = this.dimension;

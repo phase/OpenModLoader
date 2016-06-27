@@ -1,6 +1,7 @@
 package xyz.openmodloader.event.impl;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.world.World;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.Event;
@@ -105,8 +106,7 @@ public class EntityEvent extends Event {
          * dimensions.
          *
          * @param entity The entity that has fired this event.
-         * @param previousDimension The dimension this entity is travelling
-         *        from.
+         * @param previousDimension The dimension this entity is travelling from.
          * @param newDimension The dimension this entity is travelling to.
          */
         public ChangeDimension(Entity entity, int previousDimension, int newDimension) {
@@ -211,6 +211,37 @@ public class EntityEvent extends Event {
          */
         public Unmount(Entity entity, Entity riding) {
             super(entity, riding);
+        }
+    }
+
+    /**
+     * This event is fired when an entity is struck by lightning.
+     */
+    public static class LightningStruck extends EntityEvent {
+
+        /**
+         * The lightning bolt that struck the entity
+         */
+        protected final EntityLightningBolt lightningBolt;
+
+        /**
+         * Constructor for the new event fired when an entity is struck by lightning.
+         *
+         * @param entity The entity that has fired this event.
+         * @param lightningBolt the lightning bolt that struck this entity.
+         */
+        public LightningStruck(Entity entity, EntityLightningBolt lightningBolt) {
+            super(entity);
+            this.lightningBolt = lightningBolt;
+        }
+
+        /**
+         * Gets the lightning bolt that struck the entity.
+         *
+         * @return the lightning bolt that struck the entity.
+         */
+        public EntityLightningBolt getLightningBolt() {
+            return lightningBolt;
         }
     }
 }
