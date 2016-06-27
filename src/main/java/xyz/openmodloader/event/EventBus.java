@@ -28,7 +28,7 @@ public class EventBus {
         map.get(clazz).add(handler);
     }
 
-	/**
+    /**
      * Registers all the methods of the given object that take a single parameter that extends {@link Event} and have {@link EventHandler}
      * @param object
      */
