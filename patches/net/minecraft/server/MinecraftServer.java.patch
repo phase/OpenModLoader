@@ -4,7 +4,7 @@
      }
  
      public void tick() {
-+        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.ServerUpdate(this));
++        xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.ServerUpdate(this));
          long var1 = System.nanoTime();
          ++this.tickCounter;
          if(this.startProfiling) {

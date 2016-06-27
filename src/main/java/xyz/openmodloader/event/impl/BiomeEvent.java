@@ -97,7 +97,7 @@ public class BiomeEvent extends Event {
          * @return The color to use.
          */
         public static int handle(BiomeColor color) {
-            OpenModLoader.INSTANCE.getEventBus().post(color);
+            OpenModLoader.getEventBus().post(color);
             return color.getColorModifier();
         }
     }

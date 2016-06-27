@@ -154,7 +154,7 @@ class ManifestModContainer implements ModContainer {
     public Version getMinecraftVersion() {
         if (mcversion == null)
             if (mcversionString == null)
-                mcversion = OpenModLoader.INSTANCE.getMinecraftVersion();
+                mcversion = OpenModLoader.getMinecraftVersion();
             else
                 mcversion = new Version(mcversionString);
         return mcversion;

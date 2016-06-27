@@ -31,7 +31,7 @@ public class OMLServerHandler implements SidedHandler {
         if (component == null) {
             return;
         }
-        OpenModLoader.INSTANCE.getChannel()
+        OpenModLoader.getChannel()
                 .send("snackbar")
                 .set("component", component)
                 .toAll();

@@ -26,12 +26,12 @@ class OMLModContainer implements ModContainer {
 
     @Override
     public Version getVersion() {
-        return OpenModLoader.INSTANCE.getVersion();
+        return OpenModLoader.getVersion();
     }
 
     @Override
     public Version getMinecraftVersion() {
-        return OpenModLoader.INSTANCE.getMinecraftVersion();
+        return OpenModLoader.getMinecraftVersion();
     }
 
     @Override

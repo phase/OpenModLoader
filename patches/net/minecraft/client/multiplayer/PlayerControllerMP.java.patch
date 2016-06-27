@@ -4,7 +4,7 @@
              }
          }
  
-+        if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.BlockEvent.Destroy(this.mc.theWorld, this.mc.theWorld.getBlockState(var1), var1))) return false;
++        if (!xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.BlockEvent.Destroy(this.mc.theWorld, this.mc.theWorld.getBlockState(var1), var1))) return false;
          if(this.currentGameType.isCreative() && this.mc.thePlayer.getHeldItemMainhand() != null && this.mc.thePlayer.getHeldItemMainhand().getItem() instanceof ItemSword) {
              return false;
          } else {

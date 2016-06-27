@@ -84,7 +84,7 @@ public class ArmorEvent extends Event {
         } else {
             event = new ArmorEvent.Unequip(entity, armor, slot);
         }
-        return OpenModLoader.INSTANCE.getEventBus().post(event) ? event : null;
+        return OpenModLoader.getEventBus().post(event) ? event : null;
     }
 
     public static class Equip extends ArmorEvent {

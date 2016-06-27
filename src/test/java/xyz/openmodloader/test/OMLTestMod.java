@@ -45,65 +45,65 @@ public class OMLTestMod implements Mod {
 
     @Override
     public void onInitialize() {
-        OpenModLoader.INSTANCE.getLogger().info("Loading test mod");
+        OpenModLoader.getLogger().info("Loading test mod");
 
-        OpenModLoader.INSTANCE.getEventBus().register(BlockEvent.Place.class, this::onBlockPlace);
-        OpenModLoader.INSTANCE.getEventBus().register(BlockEvent.Destroy.class, this::onBlockDestroy);
-        OpenModLoader.INSTANCE.getEventBus().register(BlockEvent.DigSpeed.class, this::onBlockDigSpeed);
-        OpenModLoader.INSTANCE.getEventBus().register(BlockEvent.HarvestDrops.class, this::onHarvestDrops);
+        OpenModLoader.getEventBus().register(BlockEvent.Place.class, this::onBlockPlace);
+        OpenModLoader.getEventBus().register(BlockEvent.Destroy.class, this::onBlockDestroy);
+        OpenModLoader.getEventBus().register(BlockEvent.DigSpeed.class, this::onBlockDigSpeed);
+        OpenModLoader.getEventBus().register(BlockEvent.HarvestDrops.class, this::onHarvestDrops);
 
-        OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.Open.class, this::onGuiOpen);
-        OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.Draw.class, this::onGuiDraw);
-        OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.SplashLoad.class, this::onSplashLoad);
+        OpenModLoader.getEventBus().register(GuiEvent.Open.class, this::onGuiOpen);
+        OpenModLoader.getEventBus().register(GuiEvent.Draw.class, this::onGuiDraw);
+        OpenModLoader.getEventBus().register(GuiEvent.SplashLoad.class, this::onSplashLoad);
 
-        OpenModLoader.INSTANCE.getEventBus().register(EnchantmentEvent.Item.class, this::onItemEnchanted);
-        OpenModLoader.INSTANCE.getEventBus().register(EnchantmentEvent.Level.class, this::onEnchantmentLevelCheck);
+        OpenModLoader.getEventBus().register(EnchantmentEvent.Item.class, this::onItemEnchanted);
+        OpenModLoader.getEventBus().register(EnchantmentEvent.Level.class, this::onEnchantmentLevelCheck);
 
-        OpenModLoader.INSTANCE.getEventBus().register(ExplosionEvent.class, this::onExplosion);
+        OpenModLoader.getEventBus().register(ExplosionEvent.class, this::onExplosion);
 
-        OpenModLoader.INSTANCE.getEventBus().register(ScreenshotEvent.class, this::onScreenshot);
+        OpenModLoader.getEventBus().register(ScreenshotEvent.class, this::onScreenshot);
 
-        OpenModLoader.INSTANCE.getEventBus().register(CommandEvent.class, this::onCommandRan);
+        OpenModLoader.getEventBus().register(CommandEvent.class, this::onCommandRan);
 
-        OpenModLoader.INSTANCE.getEventBus().register(InputEvent.Keyboard.class, this::onKeyPressed);
-        OpenModLoader.INSTANCE.getEventBus().register(InputEvent.Mouse.class, this::onMouseClick);
+        OpenModLoader.getEventBus().register(InputEvent.Keyboard.class, this::onKeyPressed);
+        OpenModLoader.getEventBus().register(InputEvent.Mouse.class, this::onMouseClick);
 
-        OpenModLoader.INSTANCE.getEventBus().register(MessageEvent.Chat.class, event -> {
+        OpenModLoader.getEventBus().register(MessageEvent.Chat.class, event -> {
             if (event.getSide() == Side.CLIENT) {
                 String message = event.getMessage().getUnformattedText();
                 if (message.equals(I18n.format("tile.bed.occupied")) ||
                         message.equals(I18n.format("tile.bed.noSleep")) ||
                         message.equals(I18n.format("tile.bed.notSafe")) ||
                         message.equals(I18n.format("tile.bed.notValid"))) {
-                    OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(event.getMessage());
+                    OpenModLoader.getSidedHandler().openSnackbar(event.getMessage());
                     event.setCanceled(true);
                 }
             }
         });
 
-        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Constructing.class, this::onEntityConstruct);
-        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Join.class, this::onEntityJoinWorld);
+        OpenModLoader.getEventBus().register(EntityEvent.Constructing.class, this::onEntityConstruct);
+        OpenModLoader.getEventBus().register(EntityEvent.Join.class, this::onEntityJoinWorld);
 
-        OpenModLoader.INSTANCE.getEventBus().register(ArmorEvent.Equip.class, this::onArmorEquip);
-        OpenModLoader.INSTANCE.getEventBus().register(ArmorEvent.Unequip.class, this::onArmorUnequip);
+        OpenModLoader.getEventBus().register(ArmorEvent.Equip.class, this::onArmorEquip);
+        OpenModLoader.getEventBus().register(ArmorEvent.Unequip.class, this::onArmorUnequip);
 
-        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.ChangeDimension.class, this::onChangeDimension);
+        OpenModLoader.getEventBus().register(EntityEvent.ChangeDimension.class, this::onChangeDimension);
 
-        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Mount.class, this::onMount);
-        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Unmount.class, this::onUnmount);
+        OpenModLoader.getEventBus().register(EntityEvent.Mount.class, this::onMount);
+        OpenModLoader.getEventBus().register(EntityEvent.Unmount.class, this::onUnmount);
         
-        OpenModLoader.INSTANCE.getEventBus().register(BiomeColor.Grass.class, this::onGrassColor);
-        OpenModLoader.INSTANCE.getEventBus().register(BiomeColor.Foliage.class, this::onFoliageColor);
-        OpenModLoader.INSTANCE.getEventBus().register(BiomeColor.Water.class, this::onWaterColor);
+        OpenModLoader.getEventBus().register(BiomeColor.Grass.class, this::onGrassColor);
+        OpenModLoader.getEventBus().register(BiomeColor.Foliage.class, this::onFoliageColor);
+        OpenModLoader.getEventBus().register(BiomeColor.Water.class, this::onWaterColor);
 
-        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.LightningStruck.class, this::onLightningStrike);
+        OpenModLoader.getEventBus().register(EntityEvent.LightningStruck.class, this::onLightningStrike);
 
-        OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.Craft.class, this::onCraft);
-        OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.Smelt.class, this::onSmelt);
-        OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.ItemPickup.class, this::onPickup);
+        OpenModLoader.getEventBus().register(PlayerEvent.Craft.class, this::onCraft);
+        OpenModLoader.getEventBus().register(PlayerEvent.Smelt.class, this::onSmelt);
+        OpenModLoader.getEventBus().register(PlayerEvent.ItemPickup.class, this::onPickup);
 
-        OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.Track.Start.class, this::onStartTracking);
-        OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.Track.Stop.class, this::onStopTracking);
+        OpenModLoader.getEventBus().register(PlayerEvent.Track.Start.class, this::onStartTracking);
+        OpenModLoader.getEventBus().register(PlayerEvent.Track.Stop.class, this::onStopTracking);
 
         Config config = new Config(new File("./config/test.conf"));
         Config category1 = config.getConfig("category1", "configures stuff");
@@ -123,7 +123,7 @@ public class OMLTestMod implements Mod {
                 .createPacket("test")
                     .with("str", DataTypes.STRING)
                     .handle((context, packet) -> {
-                        System.out.println("PHYSICAL SIDE: " + OpenModLoader.INSTANCE.getSidedHandler().getSide());
+                        System.out.println("PHYSICAL SIDE: " + OpenModLoader.getSidedHandler().getSide());
                         System.out.println("THREAD: " + Thread.currentThread().getName());
                         System.out.println("DATA: " + packet.get("str", DataTypes.STRING));
                     })
@@ -135,7 +135,7 @@ public class OMLTestMod implements Mod {
     }
 
     private void onBlockPlace(BlockEvent.Place event) {
-        OpenModLoader.INSTANCE.getLogger().info("Placed block: " + event.getBlockState() + " isRemote: " + event.getWorld().isRemote);
+        OpenModLoader.getLogger().info("Placed block: " + event.getBlockState() + " isRemote: " + event.getWorld().isRemote);
         if (event.getBlockState().getBlock() == Blocks.GRASS) {
             event.setBlockState(Blocks.DIRT.getDefaultState());
         } if (event.getWorld() instanceof WorldServer && event.getBlockState().getBlock() == Blocks.BEDROCK) {
@@ -146,7 +146,7 @@ public class OMLTestMod implements Mod {
     }
 
     private void onBlockDestroy(BlockEvent.Destroy event) {
-        OpenModLoader.INSTANCE.getLogger().info("Destroyed block: " + event.getBlockState() + " isRemote: " + event.getWorld().isRemote);
+        OpenModLoader.getLogger().info("Destroyed block: " + event.getBlockState() + " isRemote: " + event.getWorld().isRemote);
         if (event.getBlockState().getBlock() == Blocks.GRASS) {
             event.setCanceled(true);
         }
@@ -159,12 +159,12 @@ public class OMLTestMod implements Mod {
     }
 
     private void onGuiOpen(GuiEvent.Open event) {
-        OpenModLoader.INSTANCE.getLogger().info("Opening gui: " + event.getGui());
+        OpenModLoader.getLogger().info("Opening gui: " + event.getGui());
         if (event.getGui() instanceof GuiLanguage) {
             event.setCanceled(true);
         } else if (event.getGui() instanceof GuiMainMenu) {
             if (!UpdateManager.getOutdatedMods().isEmpty()) {
-                OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(new TextComponentString("Mod updates found!"));
+                OpenModLoader.getSidedHandler().openSnackbar(new TextComponentString("Mod updates found!"));
             }
         }
     }
@@ -176,7 +176,7 @@ public class OMLTestMod implements Mod {
     }
 
     private void onItemEnchanted(EnchantmentEvent.Item event) {
-        OpenModLoader.INSTANCE.getLogger().info(event.getItemStack().getDisplayName() + " " + event.getEnchantments().toString());
+        OpenModLoader.getLogger().info(event.getItemStack().getDisplayName() + " " + event.getEnchantments().toString());
     }
 
     private void onEnchantmentLevelCheck(EnchantmentEvent.Level event) {
@@ -184,7 +184,7 @@ public class OMLTestMod implements Mod {
             int oldLevel = event.getLevel();
             int newLevel = (oldLevel + 1) * 10;
             event.setLevel(newLevel);
-            OpenModLoader.INSTANCE.getLogger().info("Set fortune level from " + oldLevel + " to " + newLevel);
+            OpenModLoader.getLogger().info("Set fortune level from " + oldLevel + " to " + newLevel);
         }
     }
 
@@ -208,16 +208,16 @@ public class OMLTestMod implements Mod {
     }
 
     private void onHarvestDrops(BlockEvent.HarvestDrops event) {
-        OpenModLoader.INSTANCE.getLogger().info("Dropping items: " + event.getDrops() + ", with fortune: " + event.getFortune() + ", with chance: " + event.getChance());
+        OpenModLoader.getLogger().info("Dropping items: " + event.getDrops() + ", with fortune: " + event.getFortune() + ", with chance: " + event.getChance());
         event.getDrops().add(new ItemStack(Blocks.DIRT));
     }
 
     private void onCommandRan(CommandEvent event) {
-        OpenModLoader.INSTANCE.getLogger().info("Player: " + event.getSender().getName() + " ran command: " + event.getCommand().getCommandName() + " with arguments: " + Arrays.toString(event.getArgs()));
+        OpenModLoader.getLogger().info("Player: " + event.getSender().getName() + " ran command: " + event.getCommand().getCommandName() + " with arguments: " + Arrays.toString(event.getArgs()));
     }
 
     private void onKeyPressed(InputEvent.Keyboard event) {
-        OpenModLoader.INSTANCE.getLogger().info(String.format("Key pressed %c (%d)", event.getCharacter(), event.getKey()));
+        OpenModLoader.getLogger().info(String.format("Key pressed %c (%d)", event.getCharacter(), event.getKey()));
 
         if (event.getKey() == Keyboard.KEY_SEMICOLON) {
             channel.send("test")
@@ -227,7 +227,7 @@ public class OMLTestMod implements Mod {
     }
 
     private void onMouseClick(InputEvent.Mouse event) {
-        OpenModLoader.INSTANCE.getLogger().info(String.format("Mouse clicked, %d", event.getButton()));
+        OpenModLoader.getLogger().info(String.format("Mouse clicked, %d", event.getButton()));
         if (event.getButton() == Keyboard.KEY_S) {
             event.setCanceled(true);
         }
@@ -235,13 +235,13 @@ public class OMLTestMod implements Mod {
 
     private void onEntityConstruct(EntityEvent.Constructing event) {
         if (event.getEntity() instanceof EntityPlayer) {
-            OpenModLoader.INSTANCE.getLogger().info("A player was constructed.");
+            OpenModLoader.getLogger().info("A player was constructed.");
         }
     }
 
     private void onEntityJoinWorld(EntityEvent.Join event) {
         if (event.getEntity() instanceof EntityPlayer) {
-            OpenModLoader.INSTANCE.getLogger().info(String.format("A player joined the world on side %s.", event.getWorld().isRemote ? "client" : "server"));
+            OpenModLoader.getLogger().info(String.format("A player joined the world on side %s.", event.getWorld().isRemote ? "client" : "server"));
         }
         if (event.getEntity() instanceof EntityPig) {
             event.setCanceled(true);
@@ -249,17 +249,17 @@ public class OMLTestMod implements Mod {
     }
 
     private void onArmorEquip(ArmorEvent.Equip event){
-        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " equipped " + Objects.toString(event.getArmor()) + " to the " + event.getSlot().getName() + " slot");
+        OpenModLoader.getLogger().info("Entity: " + event.getEntity().getName() + " equipped " + Objects.toString(event.getArmor()) + " to the " + event.getSlot().getName() + " slot");
         event.setCanceled(true);
     }
 
     private void onArmorUnequip(ArmorEvent.Unequip event){
-        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " unequipped " + Objects.toString(event.getArmor()) + " to the " + event.getSlot().getName() + " slot");
+        OpenModLoader.getLogger().info("Entity: " + event.getEntity().getName() + " unequipped " + Objects.toString(event.getArmor()) + " to the " + event.getSlot().getName() + " slot");
         event.setCanceled(true);
     }
 
     private void onChangeDimension(EntityEvent.ChangeDimension event) {
-        OpenModLoader.INSTANCE.getLogger().info("Entity: %s is travelling from dimension %d to %d", event.getEntity(), event.getPreviousDimension(), event.getNewDimension());
+        OpenModLoader.getLogger().info("Entity: %s is travelling from dimension %d to %d", event.getEntity(), event.getPreviousDimension(), event.getNewDimension());
         if (event.getNewDimension() == -1) {
             event.setNewDimension(1);
         }
@@ -302,11 +302,11 @@ public class OMLTestMod implements Mod {
     }
 
     private void onCraft(PlayerEvent.Craft event) {
-        OpenModLoader.INSTANCE.getLogger().info(event.getPlayer().getName() + " crafted " + event.getResult());
+        OpenModLoader.getLogger().info(event.getPlayer().getName() + " crafted " + event.getResult());
     }
 
     private void onSmelt(PlayerEvent.Smelt event) {
-        OpenModLoader.INSTANCE.getLogger().info(event.getPlayer().getName() + " smelted " + event.getResult());
+        OpenModLoader.getLogger().info(event.getPlayer().getName() + " smelted " + event.getResult());
         if (event.getResult().getItem() == Items.IRON_INGOT) {
             event.setXP(1.0F);
         }
@@ -319,10 +319,10 @@ public class OMLTestMod implements Mod {
     }
 
     private void onStartTracking(PlayerEvent.Track.Start event) {
-        OpenModLoader.INSTANCE.getLogger().info(event.getPlayer().getName() + " started tracking " + event.getTracking());
+        OpenModLoader.getLogger().info(event.getPlayer().getName() + " started tracking " + event.getTracking());
     }
 
     private void onStopTracking(PlayerEvent.Track.Stop event) {
-        OpenModLoader.INSTANCE.getLogger().info(event.getPlayer().getName() + " stopped tracking " + event.getTracking());
+        OpenModLoader.getLogger().info(event.getPlayer().getName() + " stopped tracking " + event.getTracking());
     }
 }

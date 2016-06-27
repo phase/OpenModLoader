@@ -16,15 +16,13 @@ import xyz.openmodloader.network.Channel;
 import xyz.openmodloader.network.ChannelManager;
 import xyz.openmodloader.network.DataTypes;
 
-public enum OpenModLoader {
-    INSTANCE;
-
-    private Version mcversion = new Version("1.10.2");
-    private Version version = new Version("0.0.1-develop");
-    private Logger logger = LogManager.getFormatterLogger("OpenModLoader");
-    private EventBus eventBus = new EventBus();
-    private Channel channel;
-    private SidedHandler sidedHandler;
+public class OpenModLoader {
+    private static Version mcversion = new Version("1.10.2");
+    private static Version version = new Version("0.0.1-develop");
+    private static Logger logger = LogManager.getFormatterLogger("OpenModLoader");
+    private static EventBus eventBus = new EventBus();
+    private static Channel channel;
+    private static SidedHandler sidedHandler;
 
     /**
      * Initializes the API and starts mod loading.
@@ -33,8 +31,8 @@ public enum OpenModLoader {
      *
      * @param sidedHandler the sided handler
      */
-    public void minecraftConstruction(SidedHandler sidedHandler) {
-        this.sidedHandler = sidedHandler;
+    public static void minecraftConstruction(SidedHandler sidedHandler) {
+        OpenModLoader.sidedHandler = sidedHandler;
         getLogger().info("Loading OpenModLoader " + getVersion());
         getLogger().info("Running Minecraft %s on %s using Java %s", mcversion, SystemUtils.OS_NAME, SystemUtils.JAVA_VERSION);
         ModLoader.loadMods();
@@ -43,7 +41,7 @@ public enum OpenModLoader {
         channel = ChannelManager.create("oml")
                 .createPacket("snackbar")
                     .with("component", DataTypes.TEXT_COMPONENT)
-                    .handle((context, packet) -> OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(packet.get("component", DataTypes.TEXT_COMPONENT)))
+                    .handle((context, packet) -> getSidedHandler().openSnackbar(packet.get("component", DataTypes.TEXT_COMPONENT)))
                 .build();
     }
 
@@ -52,7 +50,7 @@ public enum OpenModLoader {
      *
      * @return the Minecraft version
      */
-    public Version getMinecraftVersion() {
+    public static Version getMinecraftVersion() {
         return mcversion;
     }
 
@@ -61,7 +59,7 @@ public enum OpenModLoader {
      *
      * @return the OML version
      */
-    public Version getVersion() {
+    public static Version getVersion() {
         return version;
     }
 
@@ -72,7 +70,7 @@ public enum OpenModLoader {
      *
      * @return the OML logger
      */
-    public Logger getLogger() {
+    public static Logger getLogger() {
         return logger;
     }
 
@@ -81,7 +79,7 @@ public enum OpenModLoader {
      *
      * @return the event bus
      */
-    public EventBus getEventBus() {
+    public static EventBus getEventBus() {
         return eventBus;
     }
 
@@ -90,7 +88,7 @@ public enum OpenModLoader {
      *
      * @return the sided handler
      */
-    public SidedHandler getSidedHandler() {
+    public static SidedHandler getSidedHandler() {
         return sidedHandler;
     }
 
@@ -99,7 +97,7 @@ public enum OpenModLoader {
      *
      * @return the environment
      */
-    public Environment getEnvironment() {
+    public static Environment getEnvironment() {
         return OMLStrippableTransformer.getEnvironment();
     }
 
@@ -108,7 +106,7 @@ public enum OpenModLoader {
      *
      * @return the channel
      */
-    public Channel getChannel() {
+    public static Channel getChannel() {
         return channel;
     }
 }

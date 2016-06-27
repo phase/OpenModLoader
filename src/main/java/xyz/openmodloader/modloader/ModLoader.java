@@ -18,6 +18,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+import net.minecraft.launchwrapper.LaunchClassLoader;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.CharSet;
@@ -26,6 +27,7 @@ import com.google.common.collect.Multimap;
 
 import net.minecraft.launchwrapper.Launch;
 import xyz.openmodloader.OpenModLoader;
+import xyz.openmodloader.SidedHandler;
 import xyz.openmodloader.client.gui.GuiLoadError;
 import xyz.openmodloader.event.impl.GuiEvent;
 import xyz.openmodloader.launcher.OMLAccessTransformer;
@@ -77,7 +79,7 @@ public class ModLoader {
      * Attempts to load all mods from the mods directory and the classpath. While this is public,
      * it is intended for internal use only!
      * 
-     * <br>This is called from {@link OMLTweaker#injectIntoClassLoader()}.
+     * <br>This is called from {@link OMLTweaker#injectIntoClassLoader(LaunchClassLoader)}}.
      *
      * @throws Exception the exception
      */
@@ -107,10 +109,10 @@ public class ModLoader {
                 ModContainer depContainer = ID_MAP.get(depParts[0]);
                 if (depContainer == null) {
                     missingDeps.add(depParts.length > 1 ? depParts[0] + " v" + depParts[1] : depParts[0]);
-                    OpenModLoader.INSTANCE.getLogger().error("Missing dependency '%s' for mod '%s'.", depParts[0], mod.getName());
+                    OpenModLoader.getLogger().error("Missing dependency '%s' for mod '%s'.", depParts[0], mod.getName());
                 } else if (depParts.length > 1 && !depContainer.getVersion().atLeast(new Version(depParts[1]))) {
                     oudatedDeps.add(depParts.length > 1 ? depParts[0] + " v" + depParts[1] : depParts[0]);
-                    OpenModLoader.INSTANCE.getLogger().error("Outdated dependency '%s' for mod '%s'. Expected version '%s', but got version '%s'.", depContainer.getName(), mod.getName(), depParts[1], depContainer.getVersion());
+                    OpenModLoader.getLogger().error("Outdated dependency '%s' for mod '%s'. Expected version '%s', but got version '%s'.", depContainer.getName(), mod.getName(), depParts[1], depContainer.getVersion());
                 }
             }
         }
@@ -119,7 +121,7 @@ public class ModLoader {
             MODS.clear();
             ID_MAP.clear();
             if (OMLStrippableTransformer.getSide() == Side.CLIENT) {
-                OpenModLoader.INSTANCE.getEventBus().register(GuiEvent.Open.class, (e) -> e.setGui(new GuiLoadError(missingDeps, oudatedDeps, duplicates)));
+                OpenModLoader.getEventBus().register(GuiEvent.Open.class, (e) -> e.setGui(new GuiLoadError(missingDeps, oudatedDeps, duplicates)));
             } else {
                 throw new RuntimeException("Errors during load - see log for more information");
             }
@@ -218,7 +220,7 @@ public class ModLoader {
                 ModContainer mod2 = ID_MAP.get(mod.getModID());
                 duplicates.add(mod2.getName() + " v" + mod2.getVersion() + " (" + mod2.getModID() + " from " + mod2.getModFile().getName() + ")");
                 duplicates.add(mod.getName() + " v" + mod.getVersion() + " (" + mod.getModID() + " from " + mod.getModFile().getName() + ")");
-                OpenModLoader.INSTANCE.getLogger().error("Duplicate mod IDs for files '%s' and '%s'", mod.getModFile(), mod2.getModFile());
+                OpenModLoader.getLogger().error("Duplicate mod IDs for files '%s' and '%s'", mod.getModFile(), mod2.getModFile());
             } else {
                 unsortedMods.add(mod);
                 ID_MAP.put(mod.getModID(), mod);
@@ -237,10 +239,10 @@ public class ModLoader {
     private static ManifestModContainer loadMod(File file, Manifest manifest) {
         ManifestModContainer container = ManifestModContainer.create(file, manifest);
         if (container == null) {
-            OpenModLoader.INSTANCE.getLogger().error("Found invalid manifest in file " + file);
+            OpenModLoader.getLogger().error("Found invalid manifest in file " + file);
             return null;
         }
-        OpenModLoader.INSTANCE.getLogger().info("Found mod " + container.getName() + " with id " + container.getModID());
+        OpenModLoader.getLogger().info("Found mod " + container.getName() + " with id " + container.getModID());
         if (container.getModID().isEmpty()) {
             throw new RuntimeException("Empty mod ID for mod '" + container.getName() + "'!");
         }
@@ -252,11 +254,11 @@ public class ModLoader {
         if (container.getModID().equals("oml")) {
             throw new RuntimeException("'oml' is a reserved mod id!");
         }
-        if (!container.getMinecraftVersion().equals(OpenModLoader.INSTANCE.getMinecraftVersion())) {
-            OpenModLoader.INSTANCE.getLogger().warn("Mod '%s' is expecting Minecraft %s, but we are running on Minecraft %s!", container.getName(), container.getMinecraftVersion(), OpenModLoader.INSTANCE.getMinecraftVersion());
+        if (!container.getMinecraftVersion().equals(OpenModLoader.getMinecraftVersion())) {
+            OpenModLoader.getLogger().warn("Mod '%s' is expecting Minecraft %s, but we are running on Minecraft %s!", container.getName(), container.getMinecraftVersion(), OpenModLoader.getMinecraftVersion());
         }
         if (container.getSide() != Side.UNIVERSAL && container.getSide() != OMLStrippableTransformer.getSide()) {
-            OpenModLoader.INSTANCE.getLogger().info("Invalid side %s for mod %s. The mod will not be loaded.", OMLStrippableTransformer.getSide(), container.getName());
+            OpenModLoader.getLogger().info("Invalid side %s for mod %s. The mod will not be loaded.", OMLStrippableTransformer.getSide(), container.getName());
         }
         return container;
     }
@@ -265,13 +267,13 @@ public class ModLoader {
      * Iterates through all registered mods and enables them. If there is an
      * issue in registering the mod, it will be disabled.
      * 
-     * <br>This is called from {@link OpenModLoader#minecraftConstruction()}.
+     * <br>This is called from {@link OpenModLoader#minecraftConstruction(SidedHandler)}}.
      */
     public static void loadMods() {
         // load the instances
         for (ModContainer mod : MODS) {
             // if this is the wrong side, skip the mod
-            if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
+            if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.getSidedHandler().getSide()) {
                 continue;
             }
             Mod instance = mod.getInstance();
@@ -289,7 +291,7 @@ public class ModLoader {
                             }
                             field.set(null, instance);
                         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-                            OpenModLoader.INSTANCE.getLogger().error("Could not set @Instance field", e);
+                            OpenModLoader.getLogger().error("Could not set @Instance field", e);
                         }
                     }
                 }
@@ -298,7 +300,7 @@ public class ModLoader {
         // initialize the mods and start update checker
         for (ModContainer mod : MODS) {
             // if this is the wrong side, skip the mod
-            if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
+            if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.getSidedHandler().getSide()) {
                 continue;
             }
             Mod instance = mod.getInstance();
@@ -310,7 +312,7 @@ public class ModLoader {
                 try {
                     UpdateManager.registerUpdater(mod, new JsonUpdateContainer(new URL(mod.getUpdateURL())));
                 } catch (MalformedURLException e) {
-                    OpenModLoader.INSTANCE.getLogger().catching(e);
+                    OpenModLoader.getLogger().catching(e);
                 }
             }
         }

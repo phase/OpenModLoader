@@ -89,6 +89,6 @@ public class CommandEvent extends Event {
      */
     public static String[] handle(String[] args, ICommand command, ICommandSender sender) {
         final CommandEvent event = new CommandEvent(args, command, sender);
-        return OpenModLoader.INSTANCE.getEventBus().post(event) ? event.getArgs() : null;
+        return OpenModLoader.getEventBus().post(event) ? event.getArgs() : null;
     }
 }

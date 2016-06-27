@@ -5,7 +5,7 @@
              }
  
 +            xyz.openmodloader.event.impl.ScreenshotEvent event = new xyz.openmodloader.event.impl.ScreenshotEvent(var6, var7);
-+            if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(event)) return event.getResultMessage(); else var7 = event.getScreenshotFile();
++            if (!xyz.openmodloader.OpenModLoader.getEventBus().post(event)) return event.getResultMessage(); else var7 = event.getScreenshotFile();
 +            if (!var7.getParentFile().exists()) var7.getParentFile().mkdirs();
              ImageIO.write(var6, "png", var7);
              TextComponentString var8 = new TextComponentString(var7.getName());

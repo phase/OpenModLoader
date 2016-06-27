@@ -40,7 +40,7 @@ public class OMLClientHandler implements SidedHandler {
             throw new RuntimeException(e);
         }
 
-        OpenModLoader.INSTANCE.getEventBus().register(UpdateEvent.ClientUpdate.class, event -> {
+        OpenModLoader.getEventBus().register(UpdateEvent.ClientUpdate.class, event -> {
             if (GuiSnackbar.CURRENT_SNACKBAR != null) {
                 GuiSnackbar.CURRENT_SNACKBAR.updateSnackbar();
             } else if (!GuiSnackbar.SNACKBAR_LIST.isEmpty()) {
@@ -49,7 +49,7 @@ public class OMLClientHandler implements SidedHandler {
             }
         });
 
-        OpenModLoader.INSTANCE.getEventBus().register(UpdateEvent.RenderUpdate.class, event -> {
+        OpenModLoader.getEventBus().register(UpdateEvent.RenderUpdate.class, event -> {
             if (GuiSnackbar.CURRENT_SNACKBAR != null) {
                 GuiSnackbar.CURRENT_SNACKBAR.drawSnackbar();
             }
@@ -88,7 +88,7 @@ public class OMLClientHandler implements SidedHandler {
     public static List<String> getMainMenuStrings() {
         List<String> list = new ArrayList<>();
         list.add(ModLoader.getModList().size() + " mod" + ((ModLoader.getModList().size() == 1 ? "" : "s") + " enabled"));
-        list.add("Version " + OpenModLoader.INSTANCE.getVersion());
+        list.add("Version " + OpenModLoader.getVersion());
         list.add("OpenModLoader");
         return list;
     }

@@ -1,5 +1,7 @@
 package xyz.openmodloader.event;
 
+import xyz.openmodloader.OpenModLoader;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -7,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * A bus for posting events to and registering event listeners.
  *
- * @see xyz.openmodloader.OpenModLoader#EVENT_BUS
+ * @see OpenModLoader#getEventBus()
  */
 public class EventBus {
     private final ConcurrentHashMap<Class<? extends Event>, List<EventExecutor<?>>> map = new ConcurrentHashMap<>();
@@ -33,11 +35,11 @@ public class EventBus {
      * @param event The event to post to the bus
      * @return {@code true} if the event fired successfully or {@code false} if it was canceled
      */
-    public boolean post(Event event) {
+    public <T extends Event> boolean post(T event) {
         Class<? extends Event> clazz = event.getClass();
         if (map.containsKey(clazz)) {
-            List<EventExecutor<?>> handlers = map.get(clazz);
-            for (EventExecutor handler : handlers) {
+            List<EventExecutor<T>> handlers = (List<EventExecutor<T>>) (List<?>) map.get(clazz);
+            for (EventExecutor<T> handler : handlers) {
                 handler.execute(event);
                 if (event.isCanceled()) {
                     return false;

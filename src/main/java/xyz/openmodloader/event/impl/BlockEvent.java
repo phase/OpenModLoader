@@ -80,7 +80,7 @@ public class BlockEvent extends Event {
          */
         public static IBlockState handle(World world, IBlockState state, BlockPos pos) {
             xyz.openmodloader.event.impl.BlockEvent.Place event = new xyz.openmodloader.event.impl.BlockEvent.Place(world, state, pos);
-            return OpenModLoader.INSTANCE.getEventBus().post(event) ? event.getBlockState() : null;
+            return OpenModLoader.getEventBus().post(event) ? event.getBlockState() : null;
         }
     }
 
@@ -155,7 +155,7 @@ public class BlockEvent extends Event {
          */
         public static float handle(float digSpeed, World world, IBlockState state, BlockPos pos) {
             DigSpeed event = new DigSpeed(digSpeed, world, state, pos);
-            return !OpenModLoader.INSTANCE.getEventBus().post(event) || event.getDigSpeed() < 0.0F ? 0.0F : event.getDigSpeed();
+            return !OpenModLoader.getEventBus().post(event) || event.getDigSpeed() < 0.0F ? 0.0F : event.getDigSpeed();
         }
     }
 
@@ -240,7 +240,7 @@ public class BlockEvent extends Event {
          */
         public static List<ItemStack> handle(World world, IBlockState state, BlockPos pos, float chance, int fortune, List<ItemStack> drops) {
             BlockEvent.HarvestDrops event = new xyz.openmodloader.event.impl.BlockEvent.HarvestDrops(world, state, pos, chance, fortune, drops);
-            OpenModLoader.INSTANCE.getEventBus().post(event);
+            OpenModLoader.getEventBus().post(event);
             return event.getDrops();
         }
     }

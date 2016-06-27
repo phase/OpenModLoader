@@ -4,7 +4,7 @@
      }
  
      protected void updateEquipmentIfNeeded(EntityItem var1) {
-+        if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.ItemPickup(this, var1))) return;
++        if (!xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.ItemPickup(this, var1))) return;
          ItemStack var2 = var1.getEntityItem();
          EntityEquipmentSlot var3 = getSlotForItemStack(var2);
          boolean var4 = true;

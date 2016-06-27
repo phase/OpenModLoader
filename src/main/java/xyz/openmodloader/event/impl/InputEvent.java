@@ -28,7 +28,7 @@ public class InputEvent extends Event {
 
         public static boolean handle(int button) {
             InputEvent.Mouse event = new InputEvent.Mouse(button);
-            return OpenModLoader.INSTANCE.getEventBus().post(event);
+            return OpenModLoader.getEventBus().post(event);
         }
     }
 
@@ -68,7 +68,7 @@ public class InputEvent extends Event {
             if (org.lwjgl.input.Keyboard.getEventKeyState()) {
                 int keyCode = org.lwjgl.input.Keyboard.getEventKey() == 0 ? org.lwjgl.input.Keyboard.getEventCharacter() + 256 : org.lwjgl.input.Keyboard.getEventKey();
                 xyz.openmodloader.event.impl.InputEvent.Keyboard event = new xyz.openmodloader.event.impl.InputEvent.Keyboard(org.lwjgl.input.Keyboard.getEventCharacter(), keyCode);
-                return OpenModLoader.INSTANCE.getEventBus().post(event);
+                return OpenModLoader.getEventBus().post(event);
             }
             return true;
         }

@@ -4,7 +4,7 @@
      }
  
      private boolean canAddEntity(Entity var1) {
-+        if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var1))) return false;
++        if (!xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var1))) return false;
          if(var1.isDead) {
              LOGGER.warn("Tried to add entity {} but it was marked as removed already", new Object[]{EntityList.getEntityString(var1)});
              return false;

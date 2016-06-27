@@ -14,7 +14,7 @@ public class Context {
      * Default context constructor, using the physical side
      */
     public Context() {
-        this(OpenModLoader.INSTANCE.getSidedHandler().getSide());
+        this(OpenModLoader.getSidedHandler().getSide());
     }
 
     public Context(Side side) {

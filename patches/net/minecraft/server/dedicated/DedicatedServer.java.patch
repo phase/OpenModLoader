@@ -4,7 +4,7 @@
      }
  
      public boolean startServer() throws IOException {
-+        xyz.openmodloader.OpenModLoader.INSTANCE.minecraftConstruction(new xyz.openmodloader.server.OMLServerHandler(this));
++        xyz.openmodloader.OpenModLoader.minecraftConstruction(new xyz.openmodloader.server.OMLServerHandler(this));
          Thread var1 = new Thread("Server console handler") {
              public void run() {
                  BufferedReader var1 = new BufferedReader(new InputStreamReader(System.in));

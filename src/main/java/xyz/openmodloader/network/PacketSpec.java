@@ -107,11 +107,11 @@ public class PacketSpec {
     public Channel handleOnMainThread(BiConsumer<Context, Packet> handler) {
         return handle((context, packet) -> {
             if (context.getSide() == Side.CLIENT) {
-                OpenModLoader.INSTANCE.getSidedHandler().handleOnMainThread(() -> {
+                OpenModLoader.getSidedHandler().handleOnMainThread(() -> {
                     handler.accept(context, packet);
                 });
             } else if (context.getSide() == Side.SERVER) {
-                MinecraftServer server = OpenModLoader.INSTANCE.getSidedHandler().getServer();
+                MinecraftServer server = OpenModLoader.getSidedHandler().getServer();
                 server.addScheduledTask(() -> {
                     handler.accept(context, packet);
                 });
@@ -129,11 +129,11 @@ public class PacketSpec {
     public Channel handleOnMainThread(BiConsumer<Context, Packet> clientHandler, BiConsumer<Context, Packet> serverHandler) {
         return handle((context, packet) -> {
             if (context.getSide() == Side.CLIENT) {
-                OpenModLoader.INSTANCE.getSidedHandler().handleOnMainThread(() -> {
+                OpenModLoader.getSidedHandler().handleOnMainThread(() -> {
                     clientHandler.accept(context, packet);
                 });
             } else if (context.getSide() == Side.SERVER) {
-                MinecraftServer server = OpenModLoader.INSTANCE.getSidedHandler().getServer();
+                MinecraftServer server = OpenModLoader.getSidedHandler().getServer();
                 server.addScheduledTask(() -> {
                     serverHandler.accept(context, packet);
                 });

@@ -131,7 +131,7 @@ public class PlayerEvent extends EntityEvent {
          */
         public static float handle(EntityPlayer player, ItemStack result, float xp) {
             final PlayerEvent.Smelt event = new PlayerEvent.Smelt(player, result, xp);
-            OpenModLoader.INSTANCE.getEventBus().post(event);
+            OpenModLoader.getEventBus().post(event);
             return Math.min(1.0F, event.xp);
         }
     }

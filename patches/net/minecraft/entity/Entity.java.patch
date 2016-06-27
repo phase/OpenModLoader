@@ -4,7 +4,7 @@
          this.dataManager.register(CUSTOM_NAME, "");
          this.dataManager.register(SILENT, Boolean.valueOf(false));
          this.dataManager.register(field_189655_aD, Boolean.valueOf(false));
-+        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Constructing(this));
++        xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Constructing(this));
          this.entityInit();
      }
  
@@ -12,7 +12,7 @@
      }
  
      public void onUpdate() {
-+        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.EntityUpdate(this));
++        xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.EntityUpdate(this));
          if(!this.worldObj.isRemote) {
              this.setFlag(6, this.isGlowing());
          }
@@ -20,7 +20,7 @@
  
      public boolean startRiding(Entity var1, boolean var2) {
          if(var2 || this.canBeRidden(var1) && var1.canFitPassenger(this)) {
-+            if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Mount(this, var1))) return false;
++            if (!xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Mount(this, var1))) return false;
              if(this.isRiding()) {
                  this.dismountRidingEntity();
              }
@@ -28,7 +28,7 @@
  
      public void dismountRidingEntity() {
          if(this.ridingEntity != null) {
-+            if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Unmount(this, ridingEntity))) return;
++            if (!xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Unmount(this, ridingEntity))) return;
              Entity var1 = this.ridingEntity;
              this.ridingEntity = null;
              var1.removePassenger(this);
@@ -36,7 +36,7 @@
      }
  
      public void onStruckByLightning(EntityLightningBolt var1) {
-+        if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.LightningStruck(this, var1))) return;
++        if (!xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.LightningStruck(this, var1))) return;
          this.attackEntityFrom(DamageSource.lightningBolt, 5.0F);
          ++this.fire;
          if(this.fire == 0) {
@@ -52,11 +52,11 @@
      }
  
      public void addTrackingPlayer(EntityPlayerMP var1) {
-+        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.PlayerEvent.Track.Start(var1, this));
++        xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.PlayerEvent.Track.Start(var1, this));
      }
  
      public void removeTrackingPlayer(EntityPlayerMP var1) {
-+        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.PlayerEvent.Track.Stop(var1, this));
++        xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.PlayerEvent.Track.Stop(var1, this));
      }
  
      public float getRotatedYaw(Rotation var1) {

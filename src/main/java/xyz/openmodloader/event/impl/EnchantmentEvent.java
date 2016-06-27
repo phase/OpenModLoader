@@ -140,7 +140,7 @@ public class EnchantmentEvent extends Event {
          */
         public static List<EnchantmentData> handle(EntityPlayer player, ItemStack stack, ItemStack fuel, int levels, List<EnchantmentData> enchantments) {
             final Item event = new Item(player, stack, fuel, levels, enchantments);
-            return OpenModLoader.INSTANCE.getEventBus().post(event) ? event.getEnchantments() : null;
+            return OpenModLoader.getEventBus().post(event) ? event.getEnchantments() : null;
         }
     }
 
@@ -246,7 +246,7 @@ public class EnchantmentEvent extends Event {
          */
         public static int handle(EntityLivingBase entityLiving, Enchantment enchantment, ItemStack heldItem, int level) {
             final Level event = new Level(entityLiving, enchantment, heldItem, level);
-            OpenModLoader.INSTANCE.getEventBus().post(event);
+            OpenModLoader.getEventBus().post(event);
             return event.getLevel();
         }
     }

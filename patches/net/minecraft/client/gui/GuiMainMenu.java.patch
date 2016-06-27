@@ -4,7 +4,7 @@
                  }
              }
  
-+            xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.GuiEvent.SplashLoad(this, var2));
++            xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.GuiEvent.SplashLoad(this, var2));
              if(!var2.isEmpty()) {
                  while(true) {
                      this.splashText = (String)var2.get(RANDOM.nextInt(var2.size()));

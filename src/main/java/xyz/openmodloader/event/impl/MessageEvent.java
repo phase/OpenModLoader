@@ -43,7 +43,7 @@ public class MessageEvent extends Event {
          */
         public static ITextComponent handle(ITextComponent message, Side side) {
             final MessageEvent.Chat event = new MessageEvent.Chat(message, side);
-            return OpenModLoader.INSTANCE.getEventBus().post(event) ? event.getMessage() : null;
+            return OpenModLoader.getEventBus().post(event) ? event.getMessage() : null;
         }
     }
 
@@ -69,7 +69,7 @@ public class MessageEvent extends Event {
          */
         public static ITextComponent handle(ITextComponent message, Side side) {
             final MessageEvent.Snackbar event = new MessageEvent.Snackbar(message, side);
-            return OpenModLoader.INSTANCE.getEventBus().post(event) ? event.getMessage() : null;
+            return OpenModLoader.getEventBus().post(event) ? event.getMessage() : null;
         }
     }
 

@@ -158,7 +158,7 @@ public class EntityEvent extends Event {
          */
         public static int handle(Entity entity, int previousDimension, int newDimension) {
             final EntityEvent.ChangeDimension event = new EntityEvent.ChangeDimension(entity, previousDimension, newDimension);
-            OpenModLoader.INSTANCE.getEventBus().post(event);
+            OpenModLoader.getEventBus().post(event);
             return event.isCanceled() ? event.previousDimension : event.newDimension;
         }
     }

@@ -149,7 +149,7 @@ public class RenderEvent extends Event {
          */
         public static boolean onRender(Render<?> render, Entity entity, double x, double y, double z, float yaw, float partialTicks) {
             GlStateManager.pushMatrix();
-            final boolean successful = OpenModLoader.INSTANCE.getEventBus().post(new Entities(render, entity, x, y, z, yaw, partialTicks));
+            final boolean successful = OpenModLoader.getEventBus().post(new Entities(render, entity, x, y, z, yaw, partialTicks));
             GlStateManager.popMatrix();
             return successful;
         }
@@ -328,7 +328,7 @@ public class RenderEvent extends Event {
          */
         public static boolean onRender(LayerRenderer<?> layer, EntityLivingBase entity, float limbSwing, float limbSwingAmount, float partialTicks, float tickAge, float headYaw, float headPitch, float scale) {
             GlStateManager.pushMatrix();
-            final boolean successful = OpenModLoader.INSTANCE.getEventBus().post(new Layers(layer, entity, limbSwing, limbSwingAmount, partialTicks, tickAge, headYaw, headPitch, scale));
+            final boolean successful = OpenModLoader.getEventBus().post(new Layers(layer, entity, limbSwing, limbSwingAmount, partialTicks, tickAge, headYaw, headPitch, scale));
             GlStateManager.popMatrix();
             return successful;
         }
@@ -459,7 +459,7 @@ public class RenderEvent extends Event {
          */
         public static boolean onRender(Entity entity, double x, double y, double z, float yaw, float partialTicks) {
             GlStateManager.pushMatrix();
-            final boolean successful = OpenModLoader.INSTANCE.getEventBus().post(new Shadows(entity, x, y, z, yaw, partialTicks));
+            final boolean successful = OpenModLoader.getEventBus().post(new Shadows(entity, x, y, z, yaw, partialTicks));
             GlStateManager.popMatrix();
             return successful;
         }
@@ -589,7 +589,7 @@ public class RenderEvent extends Event {
          */
         public static boolean onRender(Entity entity, double x, double y, double z, float yaw, float partialTicks) {
             GlStateManager.pushMatrix();
-            final boolean successful = OpenModLoader.INSTANCE.getEventBus().post(new Fires(entity, x, y, z, yaw, partialTicks));
+            final boolean successful = OpenModLoader.getEventBus().post(new Fires(entity, x, y, z, yaw, partialTicks));
             GlStateManager.popMatrix();
             return successful;
         }

@@ -4,7 +4,7 @@
                  this.updateAllPlayersSleepingFlag();
              }
  
-+            if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var1)) && !var4) return false;
++            if (!xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var1)) && !var4) return false;
              this.getChunkFromChunkCoords(var2, var3).addEntity(var1);
              this.loadedEntityList.add(var1);
              this.onEntityAdded(var1);
@@ -22,7 +22,7 @@
      }
  
      public void tick() {
-+        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.WorldUpdate(this));
++        xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.UpdateEvent.WorldUpdate(this));
          this.updateWeather();
      }
  
@@ -34,7 +34,7 @@
          this.loadedEntityList.addAll(var1);
  
          for(Entity var3 : var1) {
-+            if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var3))) continue;
++            if (!xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var3))) continue;
 +            this.loadedEntityList.add(var3);
              this.onEntityAdded(var3);
          }
@@ -43,7 +43,7 @@
          }
  
          if(!this.loadedEntityList.contains(var1)) {
-+            if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var1))) return;
++            if (!xyz.openmodloader.OpenModLoader.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.Join(var1))) return;
              this.loadedEntityList.add(var1);
          }
  
