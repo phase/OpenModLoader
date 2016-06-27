@@ -1,0 +1,10 @@
+--- /net/minecraft/inventory
++++ /net/minecraft/inventory
+@@ -92,6 +92,7 @@
+     }
+ 
+     public void onPickupFromSlot(EntityPlayer var1, ItemStack var2) {
++        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.PlayerEvent.Craft(var1, var2));
+         this.onCrafting(var2);
+         ItemStack[] var3 = CraftingManager.getInstance().getRemainingItems(this.craftMatrix, var1.worldObj);
+ 

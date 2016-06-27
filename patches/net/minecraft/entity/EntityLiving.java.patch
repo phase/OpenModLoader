@@ -1,6 +1,14 @@
 --- /net/minecraft/entity
 +++ /net/minecraft/entity
-@@ -741,7 +741,8 @@
+@@ -492,6 +492,7 @@
+     }
+ 
+     protected void updateEquipmentIfNeeded(EntityItem var1) {
++        if (!xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.EntityEvent.ItemPickup(this, var1))) return;
+         ItemStack var2 = var1.getEntityItem();
+         EntityEquipmentSlot var3 = getSlotForItemStack(var2);
+         boolean var4 = true;
+@@ -741,7 +742,8 @@
              this.inventoryHands[var1.getIndex()] = var2;
              break;
          case ARMOR:

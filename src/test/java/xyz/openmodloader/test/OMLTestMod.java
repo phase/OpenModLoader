@@ -10,6 +10,7 @@ import java.util.Arrays;
 import net.minecraft.block.Block;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.init.Items;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
@@ -29,17 +30,8 @@ import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.client.gui.GuiModInfo;
 import xyz.openmodloader.client.gui.GuiModList;
 import xyz.openmodloader.config.Config;
-import xyz.openmodloader.event.impl.ArmorEvent;
+import xyz.openmodloader.event.impl.*;
 import xyz.openmodloader.event.impl.BiomeEvent.BiomeColor;
-import xyz.openmodloader.event.impl.BlockEvent;
-import xyz.openmodloader.event.impl.CommandEvent;
-import xyz.openmodloader.event.impl.EnchantmentEvent;
-import xyz.openmodloader.event.impl.EntityEvent;
-import xyz.openmodloader.event.impl.ExplosionEvent;
-import xyz.openmodloader.event.impl.GuiEvent;
-import xyz.openmodloader.event.impl.InputEvent;
-import xyz.openmodloader.event.impl.MessageEvent;
-import xyz.openmodloader.event.impl.ScreenshotEvent;
 import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.modloader.Mod;
 import xyz.openmodloader.modloader.version.UpdateManager;
@@ -104,6 +96,10 @@ public class OMLTestMod implements Mod {
         OpenModLoader.INSTANCE.getEventBus().register(BiomeColor.Water.class, this::onWaterColor);
 
         OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.LightningStruck.class, this::onLightningStrike);
+
+        OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.Craft.class, this::onCraft);
+        OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.Smelt.class, this::onSmelt);
+        OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.ItemPickup.class, this::onPickup);
 
         Config config = new Config(new File("./config/test.conf"));
         Config category1 = config.getConfig("category1", "configures stuff");
@@ -297,6 +293,23 @@ public class OMLTestMod implements Mod {
 
     private void onLightningStrike(EntityEvent.LightningStruck event) {
         if (event.getEntity() instanceof EntityCreeper) {
+            event.setCanceled(true);
+        }
+    }
+
+    private void onCraft(PlayerEvent.Craft event) {
+        OpenModLoader.INSTANCE.getLogger().info(event.getPlayer().getName() + " crafted " + event.getResult());
+    }
+
+    private void onSmelt(PlayerEvent.Smelt event) {
+        OpenModLoader.INSTANCE.getLogger().info(event.getPlayer().getName() + " smelted " + event.getResult());
+        if (event.getResult().getItem() == Items.IRON_INGOT) {
+            event.setXP(1.0F);
+        }
+    }
+
+    private void onPickup(EntityEvent.ItemPickup event) {
+        if (event.getItem().getEntityItem().getItem() == Items.APPLE) {
             event.setCanceled(true);
         }
     }

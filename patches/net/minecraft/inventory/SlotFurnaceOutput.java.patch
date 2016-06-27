@@ -1,0 +1,18 @@
+--- /net/minecraft/inventory
++++ /net/minecraft/inventory
+@@ -47,6 +47,7 @@
+         if(!this.thePlayer.worldObj.isRemote) {
+             int var2 = this.removeCount;
+             float var3 = FurnaceRecipes.instance().getSmeltingExperience(var1);
++            var3 = xyz.openmodloader.event.impl.PlayerEvent.Smelt.handle(thePlayer, var1, var3);
+             if(var3 == 0.0F) {
+                 var2 = 0;
+             } else if(var3 < 1.0F) {
+@@ -64,6 +65,7 @@
+                 this.thePlayer.worldObj.spawnEntityInWorld(new EntityXPOrb(this.thePlayer.worldObj, this.thePlayer.posX, this.thePlayer.posY + 0.5D, this.thePlayer.posZ + 0.5D, var5));
+             }
+         }
++        else xyz.openmodloader.event.impl.PlayerEvent.Smelt.handle(thePlayer, var1, FurnaceRecipes.instance().getSmeltingExperience(var1));
+ 
+         this.removeCount = 0;
+         if(var1.getItem() == Items.IRON_INGOT) {

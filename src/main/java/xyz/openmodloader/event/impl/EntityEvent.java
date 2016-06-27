@@ -2,6 +2,7 @@ package xyz.openmodloader.event.impl;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.world.World;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.Event;
@@ -242,6 +243,42 @@ public class EntityEvent extends Event {
          */
         public EntityLightningBolt getLightningBolt() {
             return lightningBolt;
+        }
+    }
+
+    /**
+     * This event is fired when an item is picked up.
+     */
+    public static class ItemPickup extends EntityEvent {
+
+        /**
+         * The item being picked up.
+         */
+        protected final EntityItem item;
+
+        /**
+         * Constructor for the new event fired when an item is picked up.
+         *
+         * @param entity the entity picking up an item.
+         * @param item the item being picked up.
+         */
+        public ItemPickup(Entity entity, EntityItem item) {
+            super(entity);
+            this.item = item;
+        }
+
+        /**
+         * Gets the item being picked up.
+         *
+         * @return the item being picked up.
+         */
+        public EntityItem getItem() {
+            return item;
+        }
+
+        @Override
+        public boolean isCancelable() {
+            return true;
         }
     }
 }
