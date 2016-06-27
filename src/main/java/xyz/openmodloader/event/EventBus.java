@@ -1,8 +1,7 @@
 package xyz.openmodloader.event;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import xyz.openmodloader.OpenModLoader;
 
@@ -13,7 +12,7 @@ import xyz.openmodloader.OpenModLoader;
  */
 public class EventBus {
 
-    private final ConcurrentHashMap<Class<? extends Event>, List<EventExecutor<?>>> map = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class<? extends Event>, ConcurrentLinkedQueue<EventExecutor<?>>> map = new ConcurrentHashMap<>();
 
     /**
      * Registers a handler for the given event type.
@@ -23,9 +22,9 @@ public class EventBus {
      * @param <T>     The event type.
      */
     public <T extends Event> void register(Class<T> clazz, EventExecutor<T> handler) {
-        List<EventExecutor<?>> handlers = map.get(clazz);
+        ConcurrentLinkedQueue<EventExecutor<?>> handlers = map.get(clazz);
         if (handlers == null) {
-            handlers = new ArrayList<>();
+            handlers = new ConcurrentLinkedQueue<>();
             map.put(clazz, handlers);
         }
         handlers.add(handler);
@@ -40,7 +39,7 @@ public class EventBus {
      */
     public <T extends Event> boolean post(T event) {
         Class<? extends Event> clazz = event.getClass();
-        List<EventExecutor<T>> handlers = (List<EventExecutor<T>>) (List<?>) map.get(clazz);
+        ConcurrentLinkedQueue<EventExecutor<T>> handlers = (ConcurrentLinkedQueue<EventExecutor<T>>) (ConcurrentLinkedQueue<?>) map.get(clazz);
         if (handlers != null) {
             for (EventExecutor<T> handler : handlers) {
                 handler.execute(event);
