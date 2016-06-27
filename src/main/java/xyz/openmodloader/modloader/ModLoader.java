@@ -28,8 +28,6 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.SidedHandler;
-import xyz.openmodloader.client.gui.GuiLoadError;
-import xyz.openmodloader.event.impl.GuiEvent;
 import xyz.openmodloader.launcher.OMLAccessTransformer;
 import xyz.openmodloader.launcher.OMLStrippableTransformer;
 import xyz.openmodloader.launcher.OMLTweaker;
@@ -37,6 +35,7 @@ import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.modloader.version.JsonUpdateContainer;
 import xyz.openmodloader.modloader.version.UpdateManager;
 import xyz.openmodloader.modloader.version.Version;
+import xyz.openmodloader.util.InternalUtils;
 
 /**
  * The class responsible for registering and loading mods.
@@ -124,7 +123,8 @@ public class ModLoader {
             MODS.clear();
             ID_MAP.clear();
             if (OMLStrippableTransformer.getSide() == Side.CLIENT) {
-                OpenModLoader.getEventBus().register(GuiEvent.Open.class, (e) -> e.setGui(new GuiLoadError(missingDeps, oudatedDeps, duplicates)));
+                // something weird is going on, see the comment for InternalUtils.openErrorGui()
+                InternalUtils.openErrorGui(missingDeps, oudatedDeps, duplicates);
             } else {
                 throw new RuntimeException("Errors during load - see log for more information");
             }

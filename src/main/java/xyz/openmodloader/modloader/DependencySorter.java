@@ -10,7 +10,7 @@ class DependencySorter {
     public static List<ManifestModContainer> sort(Iterable<ManifestModContainer> unsorted) {
         LinkedList<ManifestModContainer> sorted = Lists.newLinkedList();
         for (ManifestModContainer mod: unsorted) {
-            if (sorted.isEmpty() || mod.getDependencySet().isEmpty())
+            if (sorted.isEmpty() || mod.getDependencies().length == 0)
                 sorted.addFirst(mod);
             else {
                 boolean b = false;
