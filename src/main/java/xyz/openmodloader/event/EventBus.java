@@ -2,9 +2,8 @@ package xyz.openmodloader.event;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * A bus for posting events to and registering event listeners.
@@ -12,7 +11,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @see xyz.openmodloader.OpenModLoader#getEventBus()
  */
 public class EventBus {
-    private final ConcurrentHashMap<Class<? extends Event>, List<EventExecutor<?>>> map = new ConcurrentHashMap<>();
+
+    private final ConcurrentHashMap<Class<? extends Event>, ConcurrentLinkedQueue<EventExecutor<?>>> map = new ConcurrentHashMap<>();
 
     /**
      * Registers a handler for the given event type.
@@ -22,10 +22,12 @@ public class EventBus {
      * @param <T>     The event type.
      */
     public <T extends Event> void register(Class<T> clazz, EventExecutor<T> handler) {
-        if (!map.containsKey(clazz)) {
-            map.put(clazz, new ArrayList<>());
+        ConcurrentLinkedQueue<EventExecutor<?>> handlers = map.get(clazz);
+        if (handlers == null) {
+            handlers = new ConcurrentLinkedQueue<>();
+            map.put(clazz, handlers);
         }
-        map.get(clazz).add(handler);
+        handlers.add(handler);
     }
 
     /**
@@ -59,8 +61,8 @@ public class EventBus {
      */
     public <T extends Event> boolean post(T event) {
         Class<? extends Event> clazz = event.getClass();
-        if (map.containsKey(clazz)) {
-            List<EventExecutor<T>> handlers = (List<EventExecutor<T>>) (List<?>) map.get(clazz);
+        ConcurrentLinkedQueue<EventExecutor<T>> handlers = (ConcurrentLinkedQueue<EventExecutor<T>>) (ConcurrentLinkedQueue<?>) map.get(clazz);
+        if (handlers != null) {
             for (EventExecutor<T> handler : handlers) {
                 handler.execute(event);
                 if (event.isCanceled()) {
