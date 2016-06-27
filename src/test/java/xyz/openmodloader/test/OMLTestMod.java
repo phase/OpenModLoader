@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
+import java.util.Objects;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -37,7 +38,7 @@ import xyz.openmodloader.modloader.Mod;
 import xyz.openmodloader.modloader.version.UpdateManager;
 import xyz.openmodloader.network.Channel;
 import xyz.openmodloader.network.ChannelManager;
-import xyz.openmodloader.network.DataType;
+import xyz.openmodloader.network.DataTypes;
 
 public class OMLTestMod implements Mod {
     private Channel channel;
@@ -117,11 +118,11 @@ public class OMLTestMod implements Mod {
     private void testNetwork() {
         channel = ChannelManager.create("OMLTest")
                 .createPacket("test")
-                    .with("str", DataType.STRING)
+                    .with("str", DataTypes.STRING)
                     .handle((context, packet) -> {
                         System.out.println("PHYSICAL SIDE: " + OpenModLoader.INSTANCE.getSidedHandler().getSide());
                         System.out.println("THREAD: " + Thread.currentThread().getName());
-                        System.out.println("DATA: " + packet.get("str", DataType.STRING));
+                        System.out.println("DATA: " + packet.get("str", DataTypes.STRING));
                     })
                 .build();
     }
@@ -245,12 +246,12 @@ public class OMLTestMod implements Mod {
     }
 
     private void onArmorEquip(ArmorEvent.Equip event){
-        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " equipped " + event.getArmor().getItem().getUnlocalizedName() + " to the " + event.getSlot().getName() + " slot");
+        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " equipped " + Objects.toString(event.getArmor()) + " to the " + event.getSlot().getName() + " slot");
         event.setCanceled(true);
     }
 
     private void onArmorUnequip(ArmorEvent.Unequip event){
-        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " unequipped " + event.getArmor().getItem().getUnlocalizedName() + " to the " + event.getSlot().getName() + " slot");
+        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " unequipped " + Objects.toString(event.getArmor()) + " to the " + event.getSlot().getName() + " slot");
         event.setCanceled(true);
     }
 

@@ -12,7 +12,7 @@ import xyz.openmodloader.modloader.version.UpdateManager;
 import xyz.openmodloader.modloader.version.Version;
 import xyz.openmodloader.network.Channel;
 import xyz.openmodloader.network.ChannelManager;
-import xyz.openmodloader.network.DataType;
+import xyz.openmodloader.network.DataTypes;
 
 public enum OpenModLoader {
     INSTANCE;
@@ -33,8 +33,8 @@ public enum OpenModLoader {
         getSidedHandler().onInitialize();
         channel = ChannelManager.create("oml")
                 .createPacket("snackbar")
-                    .with("component", DataType.TEXT_COMPONENT)
-                    .handle((context, packet) -> OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(packet.get("component", DataType.TEXT_COMPONENT)))
+                    .with("component", DataTypes.TEXT_COMPONENT)
+                    .handle((context, packet) -> OpenModLoader.INSTANCE.getSidedHandler().openSnackbar(packet.get("component", DataTypes.TEXT_COMPONENT)))
                 .build();
         }
 
