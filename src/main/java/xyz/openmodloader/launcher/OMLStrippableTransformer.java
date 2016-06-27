@@ -156,9 +156,9 @@ public class OMLStrippableTransformer implements IClassTransformer {
         if (environment == null) {
             try {
                 Class.forName("net.minecraft.block.Block", false, Launch.classLoader);
-                environment = Environment.DEVELOPMENT;
+                environment = Environment.DEOBFUSCATED;
             } catch (ClassNotFoundException e) {
-                environment = Environment.PRODUCTION;
+                environment = Environment.OBFUSCATED;
             }
         }
         return environment;
