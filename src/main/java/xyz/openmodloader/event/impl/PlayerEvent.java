@@ -1,5 +1,6 @@
 package xyz.openmodloader.event.impl;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import xyz.openmodloader.OpenModLoader;
@@ -123,15 +124,78 @@ public class PlayerEvent extends EntityEvent {
         /**
          * Hook to make related patches smaller.
          *
-         * @param  player The player that has fired this event.
-         * @param  result The result from the smelting recipe.
-         * @param  xp The amount of xp to receive.
+         * @param player The player that has fired this event.
+         * @param result The result from the smelting recipe.
+         * @param xp The amount of xp to receive.
          * @return the amount of to receive.
          */
         public static float handle(EntityPlayer player, ItemStack result, float xp) {
             final PlayerEvent.Smelt event = new PlayerEvent.Smelt(player, result, xp);
             OpenModLoader.INSTANCE.getEventBus().post(event);
             return Math.min(1.0F, event.xp);
+        }
+    }
+
+    /**
+     * The base class for entity-tracking related events.
+     */
+    public static class Track extends PlayerEvent {
+
+        /**
+         * The entity being tracked by the player.
+         */
+        protected final Entity tracking;
+
+        /**
+         * Base constructor for entity-tracking related events.
+         *
+         * @param player the player tracking the entity.
+         * @param tracking the entity being tracked.
+         */
+        public Track(EntityPlayer player, Entity tracking) {
+            super(player);
+            this.tracking = tracking;
+        }
+
+        /**
+         * Gets the entity that is being tracked by the player.
+         *
+         * @return the entity that is being tracked by the player.
+         */
+        public Entity getTracking() {
+            return tracking;
+        }
+
+        /**
+         * This event is fired when a player starts tracking an entity.
+         */
+        public static class Start extends Track {
+
+            /**
+             * Constructor for new event that is fired when a player starts tracking an entity.
+             *
+             * @param player the player tracking the entity.
+             * @param tracking the entity being tracked.
+             */
+            public Start(EntityPlayer player, Entity tracking) {
+                super(player, tracking);
+            }
+        }
+
+        /**
+         * This event is fired when a player stops tracking an entity.
+         */
+        public static class Stop extends Track {
+
+            /**
+             * Constructor for new event that is fired when a player stops tracking an entity.
+             *
+             * @param player the player tracking the entity.
+             * @param tracking the entity being tracked.
+             */
+            public Stop(EntityPlayer player, Entity tracking) {
+                super(player, tracking);
+            }
         }
     }
 }

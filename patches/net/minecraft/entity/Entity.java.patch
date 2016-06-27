@@ -48,3 +48,15 @@
              WorldServer var4 = var2.worldServerForDimension(var3);
              WorldServer var5 = var2.worldServerForDimension(var1);
              this.dimension = var1;
+@@ -2228,9 +2234,11 @@
+     }
+ 
+     public void addTrackingPlayer(EntityPlayerMP var1) {
++        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.PlayerEvent.Track.Start(var1, this));
+     }
+ 
+     public void removeTrackingPlayer(EntityPlayerMP var1) {
++        xyz.openmodloader.OpenModLoader.INSTANCE.getEventBus().post(new xyz.openmodloader.event.impl.PlayerEvent.Track.Stop(var1, this));
+     }
+ 
+     public float getRotatedYaw(Rotation var1) {

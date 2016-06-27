@@ -102,6 +102,9 @@ public class OMLTestMod implements Mod {
         OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.Smelt.class, this::onSmelt);
         OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.ItemPickup.class, this::onPickup);
 
+        OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.Track.Start.class, this::onStartTracking);
+        OpenModLoader.INSTANCE.getEventBus().register(PlayerEvent.Track.Stop.class, this::onStopTracking);
+
         Config config = new Config(new File("./config/test.conf"));
         Config category1 = config.getConfig("category1", "configures stuff");
         category1.getBoolean("boolean1", true, "this is a boolean");
@@ -313,5 +316,13 @@ public class OMLTestMod implements Mod {
         if (event.getItem().getEntityItem().getItem() == Items.APPLE) {
             event.setCanceled(true);
         }
+    }
+
+    private void onStartTracking(PlayerEvent.Track.Start event) {
+        OpenModLoader.INSTANCE.getLogger().info(event.getPlayer().getName() + " started tracking " + event.getTracking());
+    }
+
+    private void onStopTracking(PlayerEvent.Track.Stop event) {
+        OpenModLoader.INSTANCE.getLogger().info(event.getPlayer().getName() + " stopped tracking " + event.getTracking());
     }
 }
