@@ -70,7 +70,7 @@ public class GuiEvent extends Event {
         /**
          * Constructor for a new event that is fired when a GUI is initialized.
          *
-         * @param gui        The GUI to be initialized.
+         * @param gui The GUI to be initialized.
          * @param buttonList The list of buttons that are used by the GUI.
          */
         public Init(GuiScreen gui, List<GuiButton> buttonList) {
@@ -101,7 +101,7 @@ public class GuiEvent extends Event {
         /**
          * Constructs a new event that is fired when a button is clicked.
          *
-         * @param gui    The GUI that contains the button.
+         * @param gui The GUI that contains the button.
          * @param button The button that was clicked.
          */
         public ButtonClick(GuiScreen gui, GuiButton button) {
@@ -134,7 +134,7 @@ public class GuiEvent extends Event {
         /**
          * Constructs a new event that is fired when a GUI is drawn.
          *
-         * @param gui          The GUI being drawn.
+         * @param gui The GUI being drawn.
          * @param partialTicks
          */
         public Draw(GuiScreen gui, float partialTicks) {
@@ -155,14 +155,14 @@ public class GuiEvent extends Event {
     public static class SplashLoad extends GuiEvent {
 
         /**
-         * The list of splash text messages for the main menu to use when deciding a
-         * splash text.
+         * The list of splash text messages for the main menu to use when
+         * deciding a splash text.
          */
         private final List<String> splashTexts;
 
         /**
-         * Constructs an event that is fired when the main menu splash text list is
-         * being populated.
+         * Constructs an event that is fired when the main menu splash text list
+         * is being populated.
          *
          * @param splashTexts
          */
@@ -172,9 +172,9 @@ public class GuiEvent extends Event {
         }
 
         /**
-         * Gets the list of all current splash text messages. Messages added to this
-         * list will have a chance to appear on the main menu as a splash text
-         * message. Messages can also be removed.
+         * Gets the list of all current splash text messages. Messages added to
+         * this list will have a chance to appear on the main menu as a splash
+         * text message. Messages can also be removed.
          *
          * @return The list of splash text messages.
          */

@@ -51,14 +51,14 @@ public class ExplosionEvent extends Event {
     /**
      * Constructor for a new event that is fired when an explosion is created.
      *
-     * @param world         The world that the explosion is created in.
-     * @param entity        The source of the event.
-     * @param x             The X coordinate of the explosion.
-     * @param y             The Y coordinate of the explosion.
-     * @param z             The Z coordinate of the explosion.
+     * @param world The world that the explosion is created in.
+     * @param entity The source of the event.
+     * @param x The X coordinate of the explosion.
+     * @param y The Y coordinate of the explosion.
+     * @param z The Z coordinate of the explosion.
      * @param explosionSize The size of the explosion.
-     * @param isFlaming     Whether or not the explosion is on fire.
-     * @param isSmoking     Whether or not the explosion is smoking.
+     * @param isFlaming Whether or not the explosion is on fire.
+     * @param isSmoking Whether or not the explosion is smoking.
      */
     public ExplosionEvent(World world, Entity entity, double x, double y, double z, float explosionSize, boolean isFlaming, boolean isSmoking) {
         this.world = world;
@@ -205,14 +205,14 @@ public class ExplosionEvent extends Event {
     /**
      * Hook to make related patches much smaller.
      *
-     * @param world         The world that the explosion is created in.
-     * @param entity        The source of the event.
-     * @param x             The X coordinate of the explosion.
-     * @param y             The Y coordinate of the explosion.
-     * @param z             The Z coordinate of the explosion.
+     * @param world The world that the explosion is created in.
+     * @param entity The source of the event.
+     * @param x The X coordinate of the explosion.
+     * @param y The Y coordinate of the explosion.
+     * @param z The Z coordinate of the explosion.
      * @param explosionSize The size of the explosion.
-     * @param isFlaming     Whether or not the explosion is on fire.
-     * @param isSmoking     Whether or not the explosion is smoking.
+     * @param isFlaming Whether or not the explosion is on fire.
+     * @param isSmoking Whether or not the explosion is smoking.
      * @return The explosion to create in the world.
      */
     public static Explosion onExplosion(World world, Entity entity, double x, double y, double z, float explosionSize, boolean isFlaming, boolean isSmoking) {

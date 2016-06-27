@@ -6,7 +6,9 @@ import net.minecraft.world.World;
 import xyz.openmodloader.event.Event;
 
 /**
- * Parent class for generic update events. All events that fall within this scope should extend this class. They should also be added as an inner class however this is not required.
+ * Parent class for generic update events. All events that fall within this
+ * scope should extend this class. They should also be added as an inner class
+ * however this is not required.
  */
 public class UpdateEvent extends Event {
 
@@ -21,7 +23,8 @@ public class UpdateEvent extends Event {
         private World world;
 
         /**
-         * Constructs a new event that is fired when the world has an update tick.
+         * Constructs a new event that is fired when the world has an update
+         * tick.
          *
          * @param world The world that has updated.
          */
@@ -50,7 +53,8 @@ public class UpdateEvent extends Event {
         private final Entity entity;
 
         /**
-         * Constructs a new event that is fired when an entity has an update tick.
+         * Constructs a new event that is fired when an entity has an update
+         * tick.
          *
          * @param entity The entity that has updated.
          */

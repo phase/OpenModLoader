@@ -6,9 +6,9 @@ import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.event.Event;
 
 /**
- * Parent class for entity related events. All events that fall within this scope
- * should extend this class. They should also be added as an inner class however
- * this is not required.
+ * Parent class for entity related events. All events that fall within this
+ * scope should extend this class. They should also be added as an inner class
+ * however this is not required.
  */
 public class EntityEvent extends Event {
 
@@ -35,12 +35,14 @@ public class EntityEvent extends Event {
     }
 
     /**
-     * This event is fired when an entity is first constructed via the {@link Entity} constructor.
+     * This event is fired when an entity is first constructed via the
+     * {@link Entity} constructor.
      */
     public static class Constructing extends EntityEvent {
 
         /**
-         * Constructor for the new event that is fired when an entity is constructed.
+         * Constructor for the new event that is fired when an entity is
+         * constructed.
          *
          * @param entity The entity being constructed.
          */
@@ -60,7 +62,8 @@ public class EntityEvent extends Event {
         protected final World world;
 
         /**
-         * Constructor for the new event that is fired when an entity joins the world.
+         * Constructor for the new event that is fired when an entity joins the
+         * world.
          *
          * @param entity The entity joining the world.
          */
@@ -98,10 +101,12 @@ public class EntityEvent extends Event {
         protected int newDimension;
 
         /**
-         * Constructor for the new even that is fired when an entity changes dimensions.
+         * Constructor for the new even that is fired when an entity changes
+         * dimensions.
          *
          * @param entity The entity that has fired this event.
-         * @param previousDimension The dimension this entity is travelling from.
+         * @param previousDimension The dimension this entity is travelling
+         *        from.
          * @param newDimension The dimension this entity is travelling to.
          */
         public ChangeDimension(Entity entity, int previousDimension, int newDimension) {

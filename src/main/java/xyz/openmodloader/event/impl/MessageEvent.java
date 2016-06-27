@@ -24,10 +24,11 @@ public class MessageEvent extends Event {
     public static class Chat extends MessageEvent {
 
         /**
-         * Constructs a new event that is fired when a chat message is displayed.
+         * Constructs a new event that is fired when a chat message is
+         * displayed.
          *
          * @param message The message that was received.
-         * @param side    The side that the event is being fired on.
+         * @param side The side that the event is being fired on.
          */
         public Chat(ITextComponent message, Side side) {
             super(message, side);
@@ -37,7 +38,7 @@ public class MessageEvent extends Event {
          * Hook to make related patches much cleaner.
          *
          * @param message The message that was received.
-         * @param side    The side that it was received on.
+         * @param side The side that it was received on.
          * @return The message to actually display.
          */
         public static ITextComponent handle(ITextComponent message, Side side) {
@@ -49,10 +50,11 @@ public class MessageEvent extends Event {
     public static class Snackbar extends MessageEvent {
 
         /**
-         * Constructs a new event that is fired when a chat message is displayed.
+         * Constructs a new event that is fired when a chat message is
+         * displayed.
          *
          * @param message The message that was received.
-         * @param side    The side that the event is being fired on.
+         * @param side The side that the event is being fired on.
          */
         public Snackbar(ITextComponent message, Side side) {
             super(message, side);
@@ -62,7 +64,7 @@ public class MessageEvent extends Event {
          * Hook to make related patches much cleaner.
          *
          * @param message The message that was received.
-         * @param side    The side that it was received on.
+         * @param side The side that it was received on.
          * @return The message to actually display.
          */
         public static ITextComponent handle(ITextComponent message, Side side) {

@@ -28,9 +28,9 @@ public class CommandEvent extends Event {
     /**
      * Constructs a new event that is fired when a command is ran.
      *
-     * @param args    The Arguments sent
+     * @param args The Arguments sent
      * @param command The command ran
-     * @param sender  The person who ran the command
+     * @param sender The person who ran the command
      */
     public CommandEvent(String[] args, ICommand command, ICommandSender sender) {
         this.args = args;
@@ -82,9 +82,9 @@ public class CommandEvent extends Event {
     /**
      * Hook to make related patches much cleaner.
      *
-     * @param args    The arguments used in the command
+     * @param args The arguments used in the command
      * @param command The command ran
-     * @param sender  The sender who ran the command
+     * @param sender The sender who ran the command
      * @return The message to actually display.
      */
     public static String[] handle(String[] args, ICommand command, ICommandSender sender) {

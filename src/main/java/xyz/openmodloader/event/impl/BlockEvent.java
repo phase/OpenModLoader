@@ -37,7 +37,7 @@ public class BlockEvent extends Event {
      *
      * @param world The world where the event took place.
      * @param state The state of the block involved with the event.
-     * @param pos   The position of the event.
+     * @param pos The position of the event.
      */
     public BlockEvent(World world, IBlockState state, BlockPos pos) {
         this.world = world;
@@ -55,7 +55,7 @@ public class BlockEvent extends Event {
          *
          * @param world The world where the event took place.
          * @param state The state of the block involved with the event.
-         * @param pos   The position of the event.
+         * @param pos The position of the event.
          */
         public Place(World world, IBlockState state, BlockPos pos) {
             super(world, state, pos);
@@ -75,7 +75,7 @@ public class BlockEvent extends Event {
          *
          * @param world The world where the event took place.
          * @param state The state of the block involved with the event.
-         * @param pos   The position of the event.
+         * @param pos The position of the event.
          * @return The state for the block to be placed.
          */
         public static IBlockState handle(World world, IBlockState state, BlockPos pos) {
@@ -94,7 +94,7 @@ public class BlockEvent extends Event {
          *
          * @param world The world where the event took place.
          * @param state The state of the block involved with the event.
-         * @param pos   The position of the event.
+         * @param pos The position of the event.
          */
         public Destroy(World world, IBlockState state, BlockPos pos) {
             super(world, state, pos);
@@ -117,9 +117,9 @@ public class BlockEvent extends Event {
          * mined.
          *
          * @param digSpeed The speed that the block is being mined at.
-         * @param world    The world where the event took place.
-         * @param state    The state of the block involved with the event.
-         * @param pos      The position of the event.
+         * @param world The world where the event took place.
+         * @param state The state of the block involved with the event.
+         * @param pos The position of the event.
          */
         public DigSpeed(float digSpeed, World world, IBlockState state, BlockPos pos) {
             super(world, state, pos);
@@ -148,9 +148,9 @@ public class BlockEvent extends Event {
          * Hook to make related patches much cleaner.
          *
          * @param digSpeed The speed at which the block is being mined.
-         * @param world    The world where the event took place.
-         * @param state    The state of the block involved with the event.
-         * @param pos      The position of the event.
+         * @param world The world where the event took place.
+         * @param state The state of the block involved with the event.
+         * @param pos The position of the event.
          * @return The state for the block to be placed.
          */
         public static float handle(float digSpeed, World world, IBlockState state, BlockPos pos) {
@@ -160,8 +160,8 @@ public class BlockEvent extends Event {
     }
 
     /**
-     * An event that is fired just after a block is mined to collect the drops of the block
-     * This event is only called in server side
+     * An event that is fired just after a block is mined to collect the drops
+     * of the block This event is only called in server side
      */
     public static class HarvestDrops extends BlockEvent {
 
@@ -171,7 +171,8 @@ public class BlockEvent extends Event {
         private float chance;
 
         /**
-         * The level of the fortune enchantment in the tool used to mine the block
+         * The level of the fortune enchantment in the tool used to mine the
+         * block
          */
         private int fortune;
 
@@ -184,12 +185,12 @@ public class BlockEvent extends Event {
          * Constructor for the base block event. This constructor should only be
          * accessed through super calls.
          *
-         * @param world   The world where the event took place.
-         * @param state   The state of the block involved with the event.
-         * @param pos     The position of the event.
-         * @param chance  The probability to drop one item
+         * @param world The world where the event took place.
+         * @param state The state of the block involved with the event.
+         * @param pos The position of the event.
+         * @param chance The probability to drop one item
          * @param fortune The level of fortune used to mine the block
-         * @param drops   The list of items that the block will drop
+         * @param drops The list of items that the block will drop
          */
         public HarvestDrops(World world, IBlockState state, BlockPos pos, float chance, int fortune, List<ItemStack> drops) {
             super(world, state, pos);
@@ -228,12 +229,13 @@ public class BlockEvent extends Event {
         /**
          * Hook to make related patches much cleaner.
          *
-         * @param world   The world where the event took place.
-         * @param state   The state of the block involved with the event.
-         * @param pos     The position of the event.
-         * @param chance  The probability to drop one item
-         * @param fortune The level of fortune in the tool used to mine the block
-         * @param drops   The list of drops that the block can drop
+         * @param world The world where the event took place.
+         * @param state The state of the block involved with the event.
+         * @param pos The position of the event.
+         * @param chance The probability to drop one item
+         * @param fortune The level of fortune in the tool used to mine the
+         *        block
+         * @param drops The list of drops that the block can drop
          * @return The list of items that the block will drop
          */
         public static List<ItemStack> handle(World world, IBlockState state, BlockPos pos, float chance, int fortune, List<ItemStack> drops) {

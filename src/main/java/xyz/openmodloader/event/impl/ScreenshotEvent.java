@@ -31,7 +31,7 @@ public class ScreenshotEvent extends Event {
     /**
      * Constructs a new event that is fired when a screenshot is taken.
      *
-     * @param image          The image data for the screenshot.
+     * @param image The image data for the screenshot.
      * @param screenshotFile The file for the screenshot.
      */
     public ScreenshotEvent(BufferedImage image, File screenshotFile) {
@@ -80,7 +80,7 @@ public class ScreenshotEvent extends Event {
      * Sets the message that is sent to the player to a new one.
      *
      * @param resultMessage The new message to send to the player after the
-     *                      event has finished.
+     *        event has finished.
      */
     public void setResultMessage(ITextComponent resultMessage) {
         this.resultMessage = resultMessage;

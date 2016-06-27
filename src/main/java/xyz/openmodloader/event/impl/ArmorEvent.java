@@ -33,8 +33,8 @@ public class ArmorEvent extends Event {
      * accessed through super calls.
      *
      * @param entity The entity that has fired this event.
-     * @param armor  The ItemArmor that was used
-     * @param slot   The equipment slot that was used.
+     * @param armor The ItemArmor that was used
+     * @param slot The equipment slot that was used.
      */
     public ArmorEvent(Entity entity, ItemStack armor, EntityEquipmentSlot slot) {
         this.entity = entity;
@@ -90,11 +90,12 @@ public class ArmorEvent extends Event {
     public static class Equip extends ArmorEvent {
 
         /**
-         * Constructor for this Equip event which is fired when a piece of armor is equipped.
+         * Constructor for this Equip event which is fired when a piece of armor
+         * is equipped.
          *
          * @param entity The entity that equipped the armor
-         * @param armor  The ItemArmor that was equipped
-         * @param slot   The equipment slot that was equipped
+         * @param armor The ItemArmor that was equipped
+         * @param slot The equipment slot that was equipped
          */
         public Equip(Entity entity, ItemStack armor, EntityEquipmentSlot slot) {
             super(entity, armor, slot);
@@ -103,11 +104,12 @@ public class ArmorEvent extends Event {
 
     public static class Unequip extends ArmorEvent {
         /**
-         * Constructor for this Equip event which is fired when a piece of armor is unequipped.
+         * Constructor for this Equip event which is fired when a piece of armor
+         * is unequipped.
          *
          * @param entity The entity that unequipped the armor
-         * @param armor  The ItemArmor that was unequipped
-         * @param slot   The equipment slot that was unequipped
+         * @param armor The ItemArmor that was unequipped
+         * @param slot The equipment slot that was unequipped
          */
         public Unequip(Entity entity, ItemStack armor, EntityEquipmentSlot slot) {
             super(entity, armor, slot);
