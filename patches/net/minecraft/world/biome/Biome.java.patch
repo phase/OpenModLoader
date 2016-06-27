@@ -1,0 +1,29 @@
+--- /net/minecraft/world/biome
++++ /net/minecraft/world/biome
+@@ -229,7 +229,7 @@
+     public int getGrassColorAtPos(BlockPos var1) {
+         double var2 = (double)MathHelper.clamp_float(this.getFloatTemperature(var1), 0.0F, 1.0F);
+         double var4 = (double)MathHelper.clamp_float(this.getRainfall(), 0.0F, 1.0F);
+-        return ColorizerGrass.getGrassColor(var2, var4);
++        return xyz.openmodloader.event.impl.BiomeEvent.BiomeColor.handle(new xyz.openmodloader.event.impl.BiomeEvent.Grass(this, ColorizerGrass.getGrassColor(var2, var4)));
+     }
+ 
+     @Strippable(
+@@ -238,7 +238,7 @@
+     public int getFoliageColorAtPos(BlockPos var1) {
+         double var2 = (double)MathHelper.clamp_float(this.getFloatTemperature(var1), 0.0F, 1.0F);
+         double var4 = (double)MathHelper.clamp_float(this.getRainfall(), 0.0F, 1.0F);
+-        return ColorizerFoliage.getFoliageColor(var2, var4);
++        return xyz.openmodloader.event.impl.BiomeEvent.BiomeColor.handle(new xyz.openmodloader.event.impl.BiomeEvent.Foliage(this, ColorizerFoliage.getFoliageColor(var2, var4)));
+     }
+ 
+     public void genTerrainBlocks(World var1, Random var2, ChunkPrimer var3, int var4, int var5, double var6) {
+@@ -350,7 +350,7 @@
+         side = Side.CLIENT
+     )
+     public final int getWaterColor() {
+-        return this.waterColor;
++        return xyz.openmodloader.event.impl.BiomeEvent.BiomeColor.handle(new xyz.openmodloader.event.impl.BiomeEvent.Grass(this, this.waterColor));
+     }
+ 
+     public final boolean isSnowyBiome() {

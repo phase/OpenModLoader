@@ -18,6 +18,7 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
@@ -28,6 +29,7 @@ import xyz.openmodloader.client.gui.GuiModInfo;
 import xyz.openmodloader.client.gui.GuiModList;
 import xyz.openmodloader.config.Config;
 import xyz.openmodloader.event.impl.ArmorEvent;
+import xyz.openmodloader.event.impl.BiomeEvent.BiomeColor;
 import xyz.openmodloader.event.impl.BlockEvent;
 import xyz.openmodloader.event.impl.CommandEvent;
 import xyz.openmodloader.event.impl.EnchantmentEvent;
@@ -95,6 +97,10 @@ public class OMLTestMod implements Mod {
 
         OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Mount.class, this::onMount);
         OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Unmount.class, this::onUnmount);
+        
+        OpenModLoader.INSTANCE.getEventBus().register(BiomeColor.Grass.class, this::onGrassColor);
+        OpenModLoader.INSTANCE.getEventBus().register(BiomeColor.Foliage.class, this::onFoliageColor);
+        OpenModLoader.INSTANCE.getEventBus().register(BiomeColor.Water.class, this::onWaterColor);
 
         Config config = new Config(new File("./config/test.conf"));
         Config category1 = config.getConfig("category1", "configures stuff");
@@ -265,6 +271,24 @@ public class OMLTestMod implements Mod {
     private void onUnmount(EntityEvent.Unmount event) {
         if (event.getRiding() instanceof EntityHorse) {
             event.setCanceled(true);
+        }
+    }
+    
+    private void onGrassColor(BiomeColor.Grass event) {
+        if(event.getBiome() == Biomes.FOREST) {
+            event.setColorModifier(Color.RED.getRGB());
+        }
+    }
+    
+    private void onFoliageColor(BiomeColor.Foliage event) {
+        if(event.getBiome() == Biomes.FOREST) {
+            event.setColorModifier(Color.RED.getRGB());
+        }
+    }
+    
+    private void onWaterColor(BiomeColor.Water event) {
+        if(event.getBiome() == Biomes.FOREST) {
+            event.setColorModifier(Color.RED.getRGB());
         }
     }
 }
