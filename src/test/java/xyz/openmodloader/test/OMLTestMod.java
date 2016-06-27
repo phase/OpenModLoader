@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
+import java.util.Objects;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -245,12 +246,12 @@ public class OMLTestMod implements Mod {
     }
 
     private void onArmorEquip(ArmorEvent.Equip event){
-        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " equipped " + event.getArmor().getItem().getUnlocalizedName() + " to the " + event.getSlot().getName() + " slot");
+        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " equipped " + Objects.toString(event.getArmor()) + " to the " + event.getSlot().getName() + " slot");
         event.setCanceled(true);
     }
 
     private void onArmorUnequip(ArmorEvent.Unequip event){
-        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " unequipped " + event.getArmor().getItem().getUnlocalizedName() + " to the " + event.getSlot().getName() + " slot");
+        OpenModLoader.INSTANCE.getLogger().info("Entity: " + event.getEntity().getName() + " unequipped " + Objects.toString(event.getArmor()) + " to the " + event.getSlot().getName() + " slot");
         event.setCanceled(true);
     }
 
