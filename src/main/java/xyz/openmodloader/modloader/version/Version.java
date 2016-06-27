@@ -57,7 +57,9 @@ public class Version {
 
     @Override
     public String toString() {
-        return getMajor() + "." + getMinor() + "." + getPatch() + (tag == null ? "" :  "-" + tag);
+        if (!getTag().isEmpty())
+            return getMajor() + "." + getMinor() + "." + getPatch() + '-' + getTag();
+        return getMajor() + "." + getMinor() + "." + getPatch();
     }
 
     @Override
