@@ -31,6 +31,7 @@ import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.client.gui.GuiModInfo;
 import xyz.openmodloader.client.gui.GuiModList;
 import xyz.openmodloader.config.Config;
+import xyz.openmodloader.event.EventHandler;
 import xyz.openmodloader.event.impl.*;
 import xyz.openmodloader.event.impl.BiomeEvent.BiomeColor;
 import xyz.openmodloader.launcher.strippable.Side;
@@ -91,7 +92,7 @@ public class OMLTestMod implements Mod {
 
         OpenModLoader.getEventBus().register(EntityEvent.Mount.class, this::onMount);
         OpenModLoader.getEventBus().register(EntityEvent.Unmount.class, this::onUnmount);
-        
+
         OpenModLoader.getEventBus().register(BiomeColor.Grass.class, this::onGrassColor);
         OpenModLoader.getEventBus().register(BiomeColor.Foliage.class, this::onFoliageColor);
         OpenModLoader.getEventBus().register(BiomeColor.Water.class, this::onWaterColor);
@@ -132,6 +133,19 @@ public class OMLTestMod implements Mod {
 
     private void testBlock() {
         Block.REGISTRY.register(512, new ResourceLocation("omltest:test"), new BlockTest());
+    }
+
+    public void onChat(MessageEvent.Chat event) {
+        if (event.getSide() == Side.CLIENT) {
+            String message = event.getMessage().getUnformattedText();
+            if (message.equals(I18n.format("tile.bed.occupied")) ||
+                    message.equals(I18n.format("tile.bed.noSleep")) ||
+                    message.equals(I18n.format("tile.bed.notSafe")) ||
+                    message.equals(I18n.format("tile.bed.notValid"))) {
+                OpenModLoader.getSidedHandler().openSnackbar(event.getMessage());
+                event.setCanceled(true);
+            }
+        }
     }
 
     private void onBlockPlace(BlockEvent.Place event) {
@@ -276,19 +290,19 @@ public class OMLTestMod implements Mod {
             event.setCanceled(true);
         }
     }
-    
+
     private void onGrassColor(BiomeColor.Grass event) {
         if(event.getBiome() == Biomes.FOREST) {
             event.setColorModifier(Color.RED.getRGB());
         }
     }
-    
+
     private void onFoliageColor(BiomeColor.Foliage event) {
         if(event.getBiome() == Biomes.FOREST) {
             event.setColorModifier(Color.RED.getRGB());
         }
     }
-    
+
     private void onWaterColor(BiomeColor.Water event) {
         if(event.getBiome() == Biomes.FOREST) {
             event.setColorModifier(Color.RED.getRGB());

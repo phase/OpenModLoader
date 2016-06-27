@@ -1,14 +1,14 @@
 package xyz.openmodloader.event;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import xyz.openmodloader.OpenModLoader;
 
 /**
  * A bus for posting events to and registering event listeners.
  *
- * @see OpenModLoader#getEventBus()
+ * @see xyz.openmodloader.OpenModLoader#getEventBus()
  */
 public class EventBus {
 
@@ -28,6 +28,28 @@ public class EventBus {
             map.put(clazz, handlers);
         }
         handlers.add(handler);
+    }
+
+    /**
+     * Registers all the methods of the given object that take a single parameter that extends {@link Event} and have {@link EventHandler}
+     * @param object
+     */
+    public void register(Object object) {
+        for (Method m : object.getClass().getDeclaredMethods()) {
+            if (m.isAnnotationPresent(EventHandler.class)) {
+                Parameter[] params = m.getParameters();
+                if (params.length == 1 && Event.class.isAssignableFrom(params[0].getType())) {
+                    m.setAccessible(true);
+                    register((Class<? extends Event>)params[0].getType(), (e) -> {
+                        try {
+                            m.invoke(object, e);
+                        } catch (ReflectiveOperationException ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                }
+            }
+        }
     }
 
     /**
