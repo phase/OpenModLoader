@@ -153,13 +153,64 @@ public class EntityEvent extends Event {
          * @param entity the entity travelling through dimensions.
          * @param previousDimension the dimension the entity is coming from.
          * @param newDimension the dimension the entity is travelling to.
-         *
          * @return the new dimension to travel to.
          */
         public static int handle(Entity entity, int previousDimension, int newDimension) {
             final EntityEvent.ChangeDimension event = new EntityEvent.ChangeDimension(entity, previousDimension, newDimension);
             OpenModLoader.INSTANCE.getEventBus().post(event);
             return event.isCanceled() ? event.previousDimension : event.newDimension;
+        }
+    }
+
+    /**
+     * This event is fired when an entity mounts another entity.
+     */
+    public static class Mount extends EntityEvent {
+
+        /**
+         * The entity this entity is riding.
+         */
+        protected final Entity riding;
+
+        /**
+         * Constructor for the new event that is fired when an entity mounts another entity.
+         *
+         * @param entity The entity that has fired this event.
+         * @param riding The entity this entity is riding.
+         */
+        public Mount(Entity entity, Entity riding) {
+            super(entity);
+            this.riding = riding;
+        }
+
+        /**
+         * Gets the entity that this entity is riding.
+         *
+         * @return the entity this entity is riding.
+         */
+        public Entity getRiding() {
+            return riding;
+        }
+
+        @Override
+        public boolean isCancelable() {
+            return true;
+        }
+    }
+
+    /**
+     * This event is fired when an entity unmounts from another entity.
+     */
+    public static class Unmount extends Mount {
+
+        /**
+         * Constructor for the new event that is fired when an entity mounts another entity.
+         *
+         * @param entity The entity that has fired this event.
+         * @param riding The entity this entity was riding.
+         */
+        public Unmount(Entity entity, Entity riding) {
+            super(entity, riding);
         }
     }
 }

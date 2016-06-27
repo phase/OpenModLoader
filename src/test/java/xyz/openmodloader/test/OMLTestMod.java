@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.Arrays;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
@@ -91,6 +92,9 @@ public class OMLTestMod implements Mod {
         OpenModLoader.INSTANCE.getEventBus().register(ArmorEvent.Unequip.class, this::onArmorUnequip);
 
         OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.ChangeDimension.class, this::onChangeDimension);
+
+        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Mount.class, this::onMount);
+        OpenModLoader.INSTANCE.getEventBus().register(EntityEvent.Unmount.class, this::onUnmount);
 
         Config config = new Config(new File("./config/test.conf"));
         Config category1 = config.getConfig("category1", "configures stuff");
@@ -249,6 +253,18 @@ public class OMLTestMod implements Mod {
         OpenModLoader.INSTANCE.getLogger().info("Entity: %s is travelling from dimension %d to %d", event.getEntity(), event.getPreviousDimension(), event.getNewDimension());
         if (event.getNewDimension() == -1) {
             event.setNewDimension(1);
+        }
+    }
+
+    private void onMount(EntityEvent.Mount event) {
+        if (event.getRiding() instanceof EntityPig) {
+            event.setCanceled(true);
+        }
+    }
+
+    private void onUnmount(EntityEvent.Unmount event) {
+        if (event.getRiding() instanceof EntityHorse) {
+            event.setCanceled(true);
         }
     }
 }
