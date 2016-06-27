@@ -2,10 +2,9 @@ package xyz.openmodloader.modloader;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +30,7 @@ import xyz.openmodloader.client.gui.GuiLoadError;
 import xyz.openmodloader.event.impl.GuiEvent;
 import xyz.openmodloader.launcher.OMLAccessTransformer;
 import xyz.openmodloader.launcher.OMLStrippableTransformer;
+import xyz.openmodloader.launcher.OMLTweaker;
 import xyz.openmodloader.launcher.strippable.Side;
 import xyz.openmodloader.modloader.version.JsonUpdateContainer;
 import xyz.openmodloader.modloader.version.UpdateManager;
@@ -74,8 +74,10 @@ public class ModLoader {
     private static final Map<String, ModContainer> UNM_ID_MAP = Collections.unmodifiableMap(ID_MAP);
 
     /**
-     * Attempts to load all mods from the mods directory. While this is public,
+     * Attempts to load all mods from the mods directory and the classpath. While this is public,
      * it is intended for internal use only!
+     * 
+     * <br>This is called from {@link OMLTweaker#injectIntoClassLoader()}.
      *
      * @throws Exception the exception
      */
@@ -262,10 +264,13 @@ public class ModLoader {
     /**
      * Iterates through all registered mods and enables them. If there is an
      * issue in registering the mod, it will be disabled.
+     * 
+     * <br>This is called from {@link OpenModLoader#minecraftConstruction()}.
      */
     public static void loadMods() {
         // load the instances
         for (ModContainer mod : MODS) {
+            // if this is the wrong side, skip the mod
             if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
                 continue;
             }
@@ -292,34 +297,21 @@ public class ModLoader {
         }
         // initialize the mods and start update checker
         for (ModContainer mod : MODS) {
-            try {
-                if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
-                    continue;
+            // if this is the wrong side, skip the mod
+            if (mod.getSide() != Side.UNIVERSAL && mod.getSide() != OpenModLoader.INSTANCE.getSidedHandler().getSide()) {
+                continue;
+            }
+            Mod instance = mod.getInstance();
+            if (instance != null) {
+                instance.onInitialize();
+            }
+            // run the update checker
+            if (!UpdateManager.hasUpdateContainer(mod) && mod.getUpdateURL() != null) {
+                try {
+                    UpdateManager.registerUpdater(mod, new JsonUpdateContainer(new URL(mod.getUpdateURL())));
+                } catch (MalformedURLException e) {
+                    OpenModLoader.INSTANCE.getLogger().catching(e);
                 }
-                Mod instance = mod.getInstance();
-                if (instance != null) {
-                    instance.onInitialize();
-                }
-                if (!UpdateManager.hasUpdateContainer(mod) && mod.getUpdateURL() != null) {
-                    InputStream stream = null;
-                    try {
-                        stream = new URL(mod.getUpdateURL()).openStream();
-                        UpdateManager.registerUpdater(mod, new JsonUpdateContainer(stream));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } finally {
-                        if (stream != null) {
-                            try {
-                                stream.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            } catch (RuntimeException e) {
-                OpenModLoader.INSTANCE.getLogger().warn("An error occurred while enabling mod " + mod.getModID());
-                throw new RuntimeException(e);
             }
         }
     }

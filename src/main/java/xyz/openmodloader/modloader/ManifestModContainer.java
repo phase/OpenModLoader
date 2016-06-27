@@ -1,17 +1,5 @@
 package xyz.openmodloader.modloader;
 
-import com.google.common.collect.Sets;
-import com.google.gson.annotations.SerializedName;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.launchwrapper.Launch;
-import net.minecraft.util.ResourceLocation;
-import xyz.openmodloader.OpenModLoader;
-import xyz.openmodloader.launcher.strippable.Side;
-import xyz.openmodloader.launcher.strippable.Strippable;
-import xyz.openmodloader.modloader.version.Version;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +9,19 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+
+import com.google.common.collect.Sets;
+import com.google.gson.annotations.SerializedName;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.launchwrapper.Launch;
+import net.minecraft.util.ResourceLocation;
+import xyz.openmodloader.OpenModLoader;
+import xyz.openmodloader.launcher.strippable.Side;
+import xyz.openmodloader.launcher.strippable.Strippable;
+import xyz.openmodloader.modloader.version.Version;
 
 class ManifestModContainer implements ModContainer {
     private transient Class<?> mainClass;
@@ -92,8 +93,11 @@ class ManifestModContainer implements ModContainer {
         if (this.mainClass == null) {
             try {
                 this.mainClass = Class.forName(this.classString, true, Launch.classLoader);
+                if (!Mod.class.isAssignableFrom(mainClass)) {
+                    throw new RuntimeException("Mod class '" + mainClass.getName() + "' for mod '" + name + " does not implement " + Mod.class.getName());
+                }
             } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Could not find mod class '" + classString + "' for mod '" + name + '\'', e);
             }
         }
         return mainClass;
@@ -181,6 +185,7 @@ class ManifestModContainer implements ModContainer {
         return description;
     }
 
+    @Override
     public File getModFile() {
         return modFile;
     }
