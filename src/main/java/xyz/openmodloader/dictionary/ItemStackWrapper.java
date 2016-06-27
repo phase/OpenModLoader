@@ -43,22 +43,6 @@ public class ItemStackWrapper {
         if (getClass() != obj.getClass())
             return false;
         ItemStack other = ((ItemStackWrapper) obj).stack;
-        if (other == null)
-            return this.stack == null;
-        if (this.stack == null)
-            return other == null;
-        if (stack.getItem() == null) {
-            if (other.getItem() != null)
-                return false;
-        } else if (!stack.getItem().equals(other.getItem()))
-            return false;
-        if (stack.getItemDamage() != other.getItemDamage())
-            return false;
-        if (stack.getTagCompound() == null) {
-            if (other.getTagCompound() != null)
-                return false;
-        } else if (!stack.getTagCompound().equals(other.getTagCompound()))
-            return false;
-        return true;
+        return ItemStack.areItemsEqual(stack, other) && ItemStack.areItemStackTagsEqual(stack, other);
     }
 }
