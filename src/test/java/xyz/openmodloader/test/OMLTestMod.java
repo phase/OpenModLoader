@@ -37,7 +37,7 @@ import xyz.openmodloader.modloader.Mod;
 import xyz.openmodloader.modloader.version.UpdateManager;
 import xyz.openmodloader.network.Channel;
 import xyz.openmodloader.network.ChannelManager;
-import xyz.openmodloader.network.DataType;
+import xyz.openmodloader.network.DataTypes;
 
 public class OMLTestMod implements Mod {
     private Channel channel;
@@ -117,11 +117,11 @@ public class OMLTestMod implements Mod {
     private void testNetwork() {
         channel = ChannelManager.create("OMLTest")
                 .createPacket("test")
-                    .with("str", DataType.STRING)
+                    .with("str", DataTypes.STRING)
                     .handle((context, packet) -> {
                         System.out.println("PHYSICAL SIDE: " + OpenModLoader.INSTANCE.getSidedHandler().getSide());
                         System.out.println("THREAD: " + Thread.currentThread().getName());
-                        System.out.println("DATA: " + packet.get("str", DataType.STRING));
+                        System.out.println("DATA: " + packet.get("str", DataTypes.STRING));
                     })
                 .build();
     }
