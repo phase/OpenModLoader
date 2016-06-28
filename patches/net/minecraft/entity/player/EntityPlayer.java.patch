@@ -1,5 +1,14 @@
 --- /net/minecraft/entity/player
 +++ /net/minecraft/entity/player
+@@ -1255,7 +1255,7 @@
+     }
+ 
+     private boolean isInBed() {
+-        return this.worldObj.getBlockState(this.playerLocation).getBlock() == Blocks.BED;
++        return xyz.openmodloader.event.impl.PlayerEvent.SleepCheck.handle(this, playerLocation);
+     }
+ 
+     @Nullable
 @@ -1653,8 +1653,8 @@
              this.playEquipSound(var2);
              this.inventory.offHandInventory[0] = var2;

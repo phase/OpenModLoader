@@ -2,7 +2,9 @@ package xyz.openmodloader.event.impl;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import xyz.openmodloader.OpenModLoader;
 
 /**
@@ -196,6 +198,71 @@ public class PlayerEvent extends EntityEvent {
             public Stop(EntityPlayer player, Entity tracking) {
                 super(player, tracking);
             }
+        }
+    }
+
+    /**
+     * An even that is fired to check if the player can sleep at the given location.
+     * Fired from {@link EntityPlayer#isInBed()}
+     */
+    public static class SleepCheck extends PlayerEvent {
+
+        /**
+         * The player's position
+         *
+         * @see #getPos()
+         */
+        private final BlockPos pos;
+
+        /**
+         * If the player can sleep
+         * By default, this uses the vanilla implementation (if the block at the player's position is a bed, the player can sleep)
+         *
+         * @see #getResult()
+         * @see #setResult(boolean)
+         */
+        private boolean result;
+
+        private SleepCheck(EntityPlayer player, BlockPos pos, boolean result) {
+            super(player);
+            this.pos = pos;
+            this.result = result;
+        }
+
+        /**
+         * @return The player's position
+         */
+        public BlockPos getPos() {
+            return pos;
+        }
+
+        /**
+         * @return If the player can sleep
+         */
+        public boolean getResult() {
+            return result;
+        }
+
+        /**
+         * Set's if the player can sleep
+         *
+         * @param result {@code true} if the player can sleep, {@code false} if they can't
+         */
+        public void setResult(boolean result) {
+            this.result = result;
+        }
+
+        /**
+         * Convenience method for checking if the given player can sleep at the given position
+         *
+         * @param player The player
+         * @param pos The player's position
+         * @return If the player can sleep
+         */
+        public static boolean handle(EntityPlayer player, BlockPos pos) {
+            SleepCheck event = new SleepCheck(player, pos, player.worldObj.getBlockState(pos).getBlock() == Blocks.BED);
+            OpenModLoader.getEventBus().post(event);
+            return event.result;
         }
     }
 }

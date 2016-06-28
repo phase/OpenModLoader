@@ -31,7 +31,6 @@ import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.client.gui.GuiModInfo;
 import xyz.openmodloader.client.gui.GuiModList;
 import xyz.openmodloader.config.Config;
-import xyz.openmodloader.event.EventHandler;
 import xyz.openmodloader.event.impl.*;
 import xyz.openmodloader.event.impl.BiomeEvent.BiomeColor;
 import xyz.openmodloader.launcher.strippable.Side;
@@ -102,6 +101,7 @@ public class OMLTestMod implements Mod {
         OpenModLoader.getEventBus().register(PlayerEvent.Craft.class, this::onCraft);
         OpenModLoader.getEventBus().register(PlayerEvent.Smelt.class, this::onSmelt);
         OpenModLoader.getEventBus().register(PlayerEvent.ItemPickup.class, this::onPickup);
+        OpenModLoader.getEventBus().register(PlayerEvent.SleepCheck.class, this::onSleepCheck);
 
         OpenModLoader.getEventBus().register(PlayerEvent.Track.Start.class, this::onStartTracking);
         OpenModLoader.getEventBus().register(PlayerEvent.Track.Stop.class, this::onStopTracking);
@@ -338,5 +338,9 @@ public class OMLTestMod implements Mod {
 
     private void onStopTracking(PlayerEvent.Track.Stop event) {
         OpenModLoader.getLogger().info(event.getPlayer().getName() + " stopped tracking " + event.getTracking());
+    }
+
+    private void onSleepCheck(PlayerEvent.SleepCheck event) {
+        OpenModLoader.getLogger().info("Sleep check occurred for %s at %s, default result is %s", event.getPlayer(), event.getPos(), event.getResult());
     }
 }
