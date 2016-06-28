@@ -1,6 +1,16 @@
 --- /net/minecraft/entity/player
 +++ /net/minecraft/entity/player
-@@ -1255,7 +1255,7 @@
+@@ -1174,7 +1174,8 @@
+ 
+         this.setSize(0.2F, 0.2F);
+         if(this.worldObj.isBlockLoaded(var1)) {
+-            EnumFacing var7 = (EnumFacing)this.worldObj.getBlockState(var1).getValue(BlockHorizontal.FACING);
++            IBlockState state = worldObj.getBlockState(var1);
++            EnumFacing var7 = state.getProperties().containsKey(BlockHorizontal.FACING) ? this.worldObj.getBlockState(var1).getValue(BlockHorizontal.FACING) : EnumFacing.NORTH;
+             float var3 = 0.5F;
+             float var8 = 0.5F;
+             switch(var7) {
+@@ -1255,7 +1256,7 @@
      }
  
      private boolean isInBed() {
@@ -9,7 +19,17 @@
      }
  
      @Nullable
-@@ -1653,8 +1653,8 @@
+@@ -1279,7 +1280,8 @@
+     )
+     public float getBedOrientationInDegrees() {
+         if(this.playerLocation != null) {
+-            EnumFacing var1 = (EnumFacing)this.worldObj.getBlockState(this.playerLocation).getValue(BlockHorizontal.FACING);
++            IBlockState state = worldObj.getBlockState(playerLocation);
++            EnumFacing var1 = state.getProperties().containsKey(BlockHorizontal.FACING) ? this.worldObj.getBlockState(this.playerLocation).getValue(BlockHorizontal.FACING) : EnumFacing.NORTH;
+             switch(var1) {
+             case SOUTH:
+                 return 90.0F;
+@@ -1653,8 +1655,8 @@
              this.playEquipSound(var2);
              this.inventory.offHandInventory[0] = var2;
          } else if(var1.getSlotType() == EntityEquipmentSlot.a.ARMOR) {
