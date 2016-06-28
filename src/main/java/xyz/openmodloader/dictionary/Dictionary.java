@@ -9,13 +9,8 @@ import com.google.common.collect.Sets;
 
 public class Dictionary<E> {
 
-    /**
-     * The material dictionary.
-     */
-    public static final ItemStackDictionary MATERIALS = new ItemStackDictionary();
-
-    private final SetMultimap<String, E> map = 
-            Multimaps.newSetMultimap(Maps.newConcurrentMap(), () -> Sets.newConcurrentHashSet());
+    private final SetMultimap<String, E> map =
+            Multimaps.newSetMultimap(Maps.newConcurrentMap(), Sets::newConcurrentHashSet);
 
     /**
      * Registers a value.
