@@ -22,6 +22,7 @@ public class ReflectionHelper {
 				Field f = clazz.getDeclaredField(name);
 				f.setAccessible(true);
 				f.set(object, value);
+				return;
 			} catch (NoSuchFieldException ignored) {}
 		}
 		throw new IllegalArgumentException(String.format("Class %s does not contain any of the fields %s", clazz.getName(), Arrays.toString(names)));
