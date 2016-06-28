@@ -16,13 +16,15 @@ import xyz.openmodloader.network.Channel;
 import xyz.openmodloader.network.ChannelManager;
 import xyz.openmodloader.network.DataTypes;
 
-public class OpenModLoader {
+public final class OpenModLoader {
     private static Version mcversion = new Version("1.10.2");
     private static Version version = new Version("0.0.1-develop");
     private static Logger logger = LogManager.getFormatterLogger("OpenModLoader");
     private static EventBus eventBus = new EventBus();
     private static Channel channel;
     private static SidedHandler sidedHandler;
+
+    private OpenModLoader() {}
 
     /**
      * Initializes the API and starts mod loading.
