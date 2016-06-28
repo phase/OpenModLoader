@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Consumer;
 
 /**
  * A bus for posting events to and registering event listeners.
@@ -12,7 +13,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class EventBus {
 
-    private final ConcurrentHashMap<Class<? extends Event>, ConcurrentLinkedQueue<EventExecutor<?>>> map = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class<? extends Event>, ConcurrentLinkedQueue<Consumer<?>>> map = new ConcurrentHashMap<>();
 
     /**
      * Registers a handler for the given event type.
@@ -21,8 +22,8 @@ public class EventBus {
      * @param handler The event handler.
      * @param <T>     The event type.
      */
-    public <T extends Event> void register(Class<T> clazz, EventExecutor<T> handler) {
-        ConcurrentLinkedQueue<EventExecutor<?>> handlers = map.get(clazz);
+    public <T extends Event> void register(Class<T> clazz, Consumer<T> handler) {
+        ConcurrentLinkedQueue<Consumer<?>> handlers = map.get(clazz);
         if (handlers == null) {
             handlers = new ConcurrentLinkedQueue<>();
             map.put(clazz, handlers);
@@ -61,10 +62,10 @@ public class EventBus {
      */
     public <T extends Event> boolean post(T event) {
         Class<? extends Event> clazz = event.getClass();
-        ConcurrentLinkedQueue<EventExecutor<T>> handlers = (ConcurrentLinkedQueue<EventExecutor<T>>) (ConcurrentLinkedQueue<?>) map.get(clazz);
+        ConcurrentLinkedQueue<Consumer<T>> handlers = (ConcurrentLinkedQueue<Consumer<T>>) (ConcurrentLinkedQueue<?>) map.get(clazz);
         if (handlers != null) {
-            for (EventExecutor<T> handler : handlers) {
-                handler.execute(event);
+            for (Consumer<T> handler : handlers) {
+                handler.accept(event);
                 if (event.isCanceled()) {
                     return false;
                 }
