@@ -1,6 +1,6 @@
 package xyz.openmodloader.util;
 
-import java.util.Set;
+import java.util.Collection;
 
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.client.gui.GuiLoadError;
@@ -18,7 +18,7 @@ public class InternalUtils {
      * modloader package, the game crashes on servers, even when it's wrapped in both
      * a side check and @Strippable. If I do it here, it works.
      */
-    public static void openErrorGui(Set<String> missingDeps, Set<String> oudatedDeps, Set<String> duplicates) {
+    public static void openErrorGui(Collection<?> missingDeps, Collection<?> oudatedDeps, Collection<?> duplicates) {
         OpenModLoader.getEventBus().register(GuiEvent.Open.class, (e) -> e.setGui(new GuiLoadError(missingDeps, oudatedDeps, duplicates)));
     }
 }

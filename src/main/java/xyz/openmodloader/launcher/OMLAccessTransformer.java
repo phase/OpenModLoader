@@ -1,13 +1,12 @@
 package xyz.openmodloader.launcher;
 
 import java.lang.reflect.Modifier;
+import java.util.List;
 import java.util.Set;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.FieldNode;
-import org.objectweb.asm.tree.MethodNode;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
@@ -62,5 +61,13 @@ public class OMLAccessTransformer implements IClassTransformer {
 
     public static Multimap<String, String> getEntries() {
         return entries;
+    }
+
+    public static void loadAccessTransformers(List<String> lines) {
+        Multimap<String, String> ats = OMLAccessTransformer.getEntries();
+        lines.stream().filter(line -> line.matches("\\w+((\\.\\w+)+|)\\s+(\\w+(\\(\\S+|)|\\*\\(\\)|\\*)")).forEach(line -> {
+            String[] parts = line.split("\\s");
+            ats.put(parts[0], parts[1]);
+        });
     }
 }
