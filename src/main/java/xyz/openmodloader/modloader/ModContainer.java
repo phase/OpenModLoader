@@ -12,13 +12,6 @@ import xyz.openmodloader.modloader.version.Version;
  * The Interface ModContainer.
  */
 public interface ModContainer {
-    
-    /**
-     * Gets the logo.
-     *
-     * @return the logo
-     */
-    String getLogo();
 
     /**
      * Gets the logo texture.

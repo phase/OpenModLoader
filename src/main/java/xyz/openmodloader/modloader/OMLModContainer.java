@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -55,19 +56,16 @@ class OMLModContainer implements ModContainer {
     }
 
     @Override
-    public String getLogo() {
-        return "logo.png";
-    }
-
-    @Override
     @Strippable(side = Side.CLIENT)
     public ResourceLocation getLogoTexture() {
         if (this.logo == null) {
             try {
-                InputStream stream = this.getClass().getResourceAsStream("/logo.png");
+                URL url = this.getClass().getProtectionDomain().getCodeSource().getLocation();
+                InputStream stream = new URL(url.toString() + "/logo.png").openStream();
                 BufferedImage image = ImageIO.read(stream);
                 DynamicTexture texture = new DynamicTexture(image);
                 this.logo = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("mods/" + getModID(), texture);
+                stream.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

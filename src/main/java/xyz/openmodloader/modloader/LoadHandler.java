@@ -168,7 +168,13 @@ class LoadHandler {
                         JarFile jar = new JarFile(file);
                         Manifest manifest = jar.getManifest();
                         if (manifest != null && manifest.getMainAttributes().containsKey(new Attributes.Name("ID"))) {
-                            registerMod(file, manifest);
+                            ManifestModContainer mod = registerMod(file, manifest);
+                            // load the logo (oh I hate this code...)
+                            if (mod.getLogo() != null) {
+                                try (InputStream in = jar.getInputStream(jar.getJarEntry(mod.getLogo()))) {
+                                    mod.setLogo(IOUtils.toByteArray(in));
+                                }
+                            }
                             Enumeration<JarEntry> entries = jar.entries();
                             while (entries.hasMoreElements()) {
                                 JarEntry e = entries.nextElement();
@@ -230,7 +236,7 @@ class LoadHandler {
      * @param file the file
      * @param manifest the manifest
      */
-    private void registerMod(File file, Manifest manifest) {
+    private ManifestModContainer registerMod(File file, Manifest manifest) {
         ManifestModContainer mod = loadMod(file, manifest);
         if (mod != null) {
             if (idMap.containsKey(mod.getModID())) {
@@ -243,6 +249,7 @@ class LoadHandler {
                 idMap.put(mod.getModID(), mod);
             }
         }
+        return mod;
     }
 
     /**

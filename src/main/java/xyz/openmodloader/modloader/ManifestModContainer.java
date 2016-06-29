@@ -1,14 +1,18 @@
 package xyz.openmodloader.modloader;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import com.google.common.collect.Sets;
 import com.google.gson.annotations.SerializedName;
@@ -20,10 +24,10 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import xyz.openmodloader.OpenModLoader;
 import xyz.openmodloader.launcher.strippable.Side;
-import xyz.openmodloader.launcher.strippable.Strippable;
 import xyz.openmodloader.modloader.version.Version;
 
 class ManifestModContainer implements ModContainer {
+
     private transient Class<?> mainClass;
     private transient ResourceLocation logoTexture;
     private transient Mod instance;
@@ -31,6 +35,7 @@ class ManifestModContainer implements ModContainer {
     private transient Version mcversion;
     private transient Side side;
     private transient File modFile;
+    private transient byte[] logoBytes;
 
     @SerializedName("Mod-Class")
     private String classString;
@@ -97,6 +102,9 @@ class ManifestModContainer implements ModContainer {
                     throw new RuntimeException("Mod class '" + mainClass.getName() + "' for mod '" + name + " does not implement " + Mod.class.getName());
                 }
             } catch (ClassNotFoundException e) {
+                if (e.getCause() instanceof RuntimeException && e.getCause().getMessage().equals("Loading class " + classString + " on wrong side " + OpenModLoader.getSidedHandler().getSide())) {
+                    throw new RuntimeException("Mod '" + getName() + " is using @Strippable(side = X) on its main class. Use the Side field in the manifest instead!", e);
+                }
                 throw new RuntimeException("Could not find mod class '" + classString + "' for mod '" + name + '\'', e);
             }
         }
@@ -104,22 +112,20 @@ class ManifestModContainer implements ModContainer {
     }
 
     @Override
-    @Strippable(side = Side.CLIENT)
-    public String getLogo() {
-        return logo;
-    }
-
-    @Override
     public ResourceLocation getLogoTexture() {
-        if (this.logoTexture == null && this.logo != null) {
+        if (logoTexture == null && (logoBytes != null || logo != null)) {
             try {
-                InputStream stream = ManifestModContainer.class.getResourceAsStream("/" + this.logo);
-                if (stream == null) {
-                    return null;
+                InputStream in = null;
+                if (logoBytes == null) {
+                    in = new URL(getModFile().toURI().toURL().toString() + '/' + logo).openStream();;
+                } else {
+                    in = new ByteArrayInputStream(logoBytes);
                 }
-                BufferedImage image = TextureUtil.readBufferedImage(stream);
+                BufferedImage image = TextureUtil.readBufferedImage(in);
                 DynamicTexture texture = new DynamicTexture(image);
                 this.logoTexture = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("mods/" + getModID(), texture);
+                in.close();
+                logoBytes = null;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -207,13 +213,13 @@ class ManifestModContainer implements ModContainer {
 
     @Override
     public String[] getTransformers() {
-        return transformers == null ? new String[0] : transformers.split("\\s*,\\s*");
+        return transformers == null ? ArrayUtils.EMPTY_STRING_ARRAY : transformers.split("\\s*,\\s*");
     }
 
     @Override
     public String[] getDependencies() {
         if (dependencies == null || dependencies.matches("\\s*")) {
-            return new String[0];
+            return ArrayUtils.EMPTY_STRING_ARRAY;
         }
         return dependencies.split("\\s*,\\s*");
     }
@@ -228,5 +234,13 @@ class ManifestModContainer implements ModContainer {
             set.add(s.split("\\s:\\s")[0]);
         }
         return set;
+    }
+
+    void setLogo(byte[] bs) {
+        this.logoBytes = bs;
+    }
+
+    String getLogo() {
+        return logo;
     }
 }
